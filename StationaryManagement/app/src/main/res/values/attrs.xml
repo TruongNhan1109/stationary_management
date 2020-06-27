@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="MButtonAction">
+        <attr name="setButtonActionTextSize" format="reference|dimension"/>
+        <attr name="setButtonActionTextColor" format="reference|color"/>
+    </declare-styleable>
+
+
+    <declare-styleable name="MButtonText">
+        <attr name="setButtonTextTextSize" format="reference|dimension"/>
+
+    </declare-styleable>
+
+</resources>

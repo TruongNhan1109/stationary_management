@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">@color/color_blue_mac_os</color>
+
+    <!-- All Color -->
+
+    <!-- Black -->
+    <color name="color_black">#000000</color>
+    <color name="color__black_70">#B3000000</color>
+    <color name="color_black_50">#80000000</color>
+    <color name="color_black_30">#4D000000</color>
+
+    <!-- White -->
+    <color name="color_white">#ffffff</color>
+    <color name="color_white_transparent_70">#B3FFFFFF</color>
+    <color name="color_white_transparent_50">#80FFFFFF</color>
+    <color name="color_white_transparent_30">#4DFFFFFF</color>
+    <color name="color_transparent">#00FFFFFF</color>
+
+    <!-- Red -->
+    <color name="color_deep_red">#c62828</color>
+    <color name="color_red">#f44336</color>
+    <color name="color_light_red">#ef5350</color>
+    <color name="color_red_mac_os">#fd343a</color>
+
+    <!-- Purple -->
+    <color name="color_deep_purple">#673ab7</color>
+    <color name="color_purple">#7c4dff</color>
+    <color name="color_light_purple">#9575cd </color>
+    <color name="color_purple_one_ui">#7C7EEB</color>
+    <color name="color_light_blue_one_ui">#1FB1CA</color>
+
+    <!-- Blue -->
+    <color name="color_deep_blue">#1976d2</color>
+    <color name="color_blue">#2196f3</color>
+    <color name="color_light_blue">#29b6f6</color>
+    <color name="color_blue_one_ui">#70AFFC</color>
+    <color name="color_blue_mac_os">#0162fe</color>
+
+    <!-- Cyan -->
+    <color name="color_cyan"> #00bcd4</color>
+
+    <!-- Teal -->
+    <color name="color_teal">#00bfa5</color>
+
+    <!-- Green -->
+    <color name="color_deep_green">#388e3c</color>
+    <color name="color_green">#4caf50</color>
+    <color name="color_light_green">#66bb6a</color>
+    <color name="color_green_mac_os">#09fb51</color>
+
+    <!-- Yellow -->
+    <color name="color_deep_yellow">#fdd835</color>
+    <color name="color_yellow">#ffeb3b</color>
+    <color name="color_light_yellow">#fff176</color>
+
+    <!-- Amber -->
+    <color name="color_amber">#ffc107</color>
+
+    <!-- Orange -->
+    <color name="color_deep_orange">#ff6d00</color>
+    <color name="color_orange">#ff9800</color>
+    <color name="color_light_orange">#ffa726</color>
+    <color name="color_orange_mac_os">#ffbe27</color>
+
+    <!-- Brown -->
+    <color name="color_brown">#a1887f</color>
+
+    <!-- Grey -->
+    <color name="color_deep_grey">#757575</color>
+    <color name="color_grey">#9e9e9e</color>
+    <color name="color_light_gray">#e0e0e0 </color>
+    <color name="color_grey_mac_os">#444442</color>
+    <color name="color_light_gray_mac_os">#e3e3e3</color>
+
+    <!-- Another -->
+    <color name="color_light">#f2f2f2</color>
+    <color name="color_dark">#252525</color>
+
+</resources>

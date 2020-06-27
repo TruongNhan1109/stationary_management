@@ -1,0 +1,19 @@
+#
+# generated on 2020/06/26 11:32:51
+#
+# --table-start--
+dataClass=com.ldc.projectmaster.data.local.model.test.TestDatabase
+tableName=TestDataBase
+# --table-fields-start--
+# --field-start--
+fieldName=id
+columnName=id
+id=true
+generatedId=true
+# --field-end--
+# --field-start--
+fieldName=name
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
