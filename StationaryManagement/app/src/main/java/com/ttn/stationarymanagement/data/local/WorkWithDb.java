@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.ldc.projectmaster.data.local.interactor.TestDatabaseUseCase;
-import com.ldc.projectmaster.data.local.model.test.TestDatabase;
+import com.ttn.stationarymanagement.data.local.model.test.TestDatabase;
 import com.ttn.stationarymanagement.presentation.baseview.MyApp;
 
 import java.sql.SQLException;

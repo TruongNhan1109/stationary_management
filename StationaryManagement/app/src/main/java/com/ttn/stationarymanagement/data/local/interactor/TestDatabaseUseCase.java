@@ -1,7 +1,7 @@
 package com.ldc.projectmaster.data.local.interactor;
 
 import com.j256.ormlite.dao.Dao;
-import com.ldc.projectmaster.data.local.model.test.TestDatabase;
+import com.ttn.stationarymanagement.data.local.model.test.TestDatabase;
 
 import java.sql.SQLException;
 import java.util.List;

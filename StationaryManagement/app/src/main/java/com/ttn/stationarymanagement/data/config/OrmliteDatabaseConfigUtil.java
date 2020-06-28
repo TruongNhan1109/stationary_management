@@ -1,7 +1,8 @@
-package com.ldc.projectmaster.data.config;
+package com.ttn.stationarymanagement.data.config;
 
 import com.j256.ormlite.android.apptools.OrmLiteConfigUtil;
-import com.ldc.projectmaster.data.local.model.test.TestDatabase;
+import com.ttn.stationarymanagement.data.local.model.test.TestDatabase;
+
 
 import java.io.File;
 import java.io.IOException;

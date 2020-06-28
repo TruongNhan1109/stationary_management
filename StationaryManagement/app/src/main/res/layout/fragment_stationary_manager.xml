@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/color_light_gray"
+    android:background="@color/color_grey_background"
     android:layout_height="match_parent">
 
     <LinearLayout
@@ -24,6 +24,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
                     android:orientation="horizontal">
 
                     <!-- Total -->
@@ -38,12 +39,12 @@
                             android:layout_height="match_parent">
 
                             <ImageView
-                                android:layout_width="32dp"
+                                android:layout_width="42dp"
                                 android:layout_marginLeft="5dp"
                                 android:scaleType="centerInside"
                                 android:layout_marginTop="5dp"
-                                android:src="@drawable/ic_calculator_round_color_24"
-                                android:layout_height="32dp"/>
+                                android:src="@drawable/ic_calculator_32"
+                                android:layout_height="42dp"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -51,7 +52,7 @@
                                 android:layout_marginLeft="5dp"
                                 android:layout_marginBottom="5dp"
                                 android:layout_alignParentBottom="true"
-                                android:textSize="16sp"
+                                android:textSize="18sp"
                                 android:textColor="@color/color_purple"
                                 android:text="Tổng cộng"/>
 
@@ -83,12 +84,12 @@
                             android:layout_height="match_parent">
 
                             <ImageView
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
+                                android:layout_width="42dp"
+                                android:layout_height="42dp"
                                 android:layout_marginLeft="5dp"
                                 android:layout_marginTop="5dp"
                                 android:scaleType="centerInside"
-                                android:src="@drawable/ic_price_round_color_24" />
+                                android:src="@drawable/ic_money_32" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -96,7 +97,7 @@
                                 android:layout_marginLeft="5dp"
                                 android:layout_marginBottom="5dp"
                                 android:layout_alignParentBottom="true"
-                                android:textSize="16sp"
+                                android:textSize="18sp"
                                 android:textColor="@color/color_orange"
                                 android:text="Tổng cộng"/>
 

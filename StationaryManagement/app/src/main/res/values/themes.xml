@@ -5,7 +5,24 @@
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:fitsSystemWindows">false</item>
-        <item name="colorAccent">#BA0B0B</item>
+        <item name="colorAccent">@color/color_blue_mac_os</item>
+    </style>
+
+    <style name="FullTransparentTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:fitsSystemWindows">false</item>
+        <item name="colorAccent">@color/color_blue_mac_os</item>
+        <item name="android:windowShowWallpaper">true</item>
+        <item name="colorPrimary">@color/color_transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="colorPrimaryDark">@color/color_transparent</item>
+    </style>
+
+    <style name="TransparentToolbar" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="windowActionBarOverlay">true</item>
+        <item name="titleTextColor">@color/color_black</item>
     </style>
 
 
@@ -20,6 +37,12 @@
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:statusBarColor">@color/color_white</item>
         <item name="colorPrimary">@color/color_white</item>
+    </style>
+
+    <style name="SplashscreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/background_splashscreen</item>
+        <item name="colorPrimary">@color/color_black</item>
+        <item name="colorPrimaryDark">@color/color_black</item>
     </style>
 
 </resources>

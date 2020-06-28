@@ -8,8 +8,8 @@ import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
-import com.ldc.projectmaster.data.local.model.test.TestDatabase;
 import com.ttn.stationarymanagement.R;
+import com.ttn.stationarymanagement.data.local.model.test.TestDatabase;
 
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:drawable="@color/color_black"/>
+
+    <item
+        android:drawable="@mipmap/app_icon"
+        android:gravity="center" android:width="92dp" android:height="92dp">
+    </item>
+
+</layer-list>

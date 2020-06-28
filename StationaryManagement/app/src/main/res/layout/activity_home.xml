@@ -18,7 +18,12 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:paddingBottom="20dp"
+        app:itemTextColor="@color/color_blue_mac_os"
+        android:background="#D9FFFFFF"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_main"
-        app:menu="@menu/activity_main_drawer" />
+        app:menu="@menu/app_main_drawer" />
+
+
 </androidx.drawerlayout.widget.DrawerLayout>

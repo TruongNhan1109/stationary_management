@@ -1,6 +1,5 @@
 package com.ttn.stationarymanagement.presentation.fragment;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.ttn.stationarymanagement.R;
 import com.ttn.stationarymanagement.data.local.model.stationery.VanPhongPham;
-import com.ttn.stationarymanagement.presentation.activity.HomeActivity;
 import com.ttn.stationarymanagement.presentation.activity.NewProductActivity;
 import com.ttn.stationarymanagement.presentation.adapter.GroupProductAdapter;
 import com.ttn.stationarymanagement.presentation.baseview.BaseFragment;

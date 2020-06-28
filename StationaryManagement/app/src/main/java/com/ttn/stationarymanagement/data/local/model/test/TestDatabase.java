@@ -1,4 +1,4 @@
-package com.ldc.projectmaster.data.local.model.test;
+package com.ttn.stationarymanagement.data.local.model.test;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;

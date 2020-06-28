@@ -1,8 +1,8 @@
 #
-# generated on 2020/06/26 11:32:51
+# generated on 2020/06/28 09:52:53
 #
 # --table-start--
-dataClass=com.ldc.projectmaster.data.local.model.test.TestDatabase
+dataClass=com.ttn.stationarymanagement.data.local.model.test.TestDatabase
 tableName=TestDataBase
 # --table-fields-start--
 # --field-start--
