@@ -1,6 +1,8 @@
 package com.ttn.stationarymanagement.data.config;
 
 import com.j256.ormlite.android.apptools.OrmLiteConfigUtil;
+import com.ttn.stationarymanagement.data.local.model.PhongBan;
+import com.ttn.stationarymanagement.data.local.model.VaiTro;
 import com.ttn.stationarymanagement.data.local.model.test.TestDatabase;
 
 
@@ -14,6 +16,9 @@ public class OrmliteDatabaseConfigUtil extends OrmLiteConfigUtil {
 
     public static final Class<?>[] classes = new Class[] {
         TestDatabase.class,
+            VaiTro.class,
+            PhongBan.class,
+
     };
 
     public static void main(String[] args) throws IOException, SQLException {

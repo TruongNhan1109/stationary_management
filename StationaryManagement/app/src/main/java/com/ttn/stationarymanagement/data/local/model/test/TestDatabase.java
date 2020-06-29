@@ -6,7 +6,7 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "TestDataBase")
 public class TestDatabase {
 
-        @DatabaseField(id = true, columnName = "id", generatedId = true)
+        @DatabaseField(columnName = "id", generatedId = true)
         private Integer id;
 
         @DatabaseField

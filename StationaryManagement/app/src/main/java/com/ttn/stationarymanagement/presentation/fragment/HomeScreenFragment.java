@@ -21,6 +21,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
 
 import static com.ttn.stationarymanagement.data.config.Constants.FUNCTION_ALLOCATION;
 import static com.ttn.stationarymanagement.data.config.Constants.FUNCTION_DEPARTMENT_MANAGER;
@@ -101,7 +102,7 @@ public class HomeScreenFragment extends BaseFragment {
 
         adapterAppFunction = new AppFunctionAdapter(getContext(), listFunctions);
         rvListFuntion.setHasFixedSize(true);
-        rvListFuntion.setAdapter(adapterAppFunction);
+        rvListFuntion.setAdapter( new ScaleInAnimationAdapter(adapterAppFunction));
 
 
     }

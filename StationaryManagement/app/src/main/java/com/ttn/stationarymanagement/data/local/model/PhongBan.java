@@ -6,7 +6,7 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "PhongBan")
 public class PhongBan {
 
-    @DatabaseField(id = true, generatedId = true)
+    @DatabaseField(generatedId = true)
     private long MaPB;
 
     @DatabaseField
@@ -21,6 +21,9 @@ public class PhongBan {
     public PhongBan(String name, String note) {
         this.TenPB = name;
         this.GhiChu = note;
+    }
+
+    public PhongBan() {
     }
 
 

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,6 +14,9 @@ import com.ttn.stationarymanagement.R;
 import com.ttn.stationarymanagement.data.local.model.VaiTro;
 
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class RoleAdapter extends RecyclerView.Adapter<RoleAdapter.RoleViewHolder> {
 
@@ -34,6 +39,23 @@ public class RoleAdapter extends RecyclerView.Adapter<RoleAdapter.RoleViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull RoleViewHolder holder, int position) {
+        VaiTro mItem = listRole.get(position);
+
+        holder.tvNameRole.setText(mItem.getTenVaiTro() != null ? mItem.getTenVaiTro() : "");
+
+        holder.itemView.setOnClickListener(v -> {
+            if (mListener != null) {
+                mListener.onItemClick(position);
+            }
+        });
+
+
+        holder.ibtRemove.setOnClickListener(v -> {
+            if (mListener != null) {
+                mListener.onRemoveButtonClick(position);
+            }
+        });
+
 
     }
 
@@ -42,12 +64,29 @@ public class RoleAdapter extends RecyclerView.Adapter<RoleAdapter.RoleViewHolder
         return listRole.size();
     }
 
-
     public class RoleViewHolder extends RecyclerView.ViewHolder {
+
+        @BindView(R.id.tv_item_role_name)
+        TextView tvNameRole;
+
+        @BindView(R.id.ibt_item_role_remove)
+        ImageButton ibtRemove;
 
         public RoleViewHolder(@NonNull View itemView) {
             super(itemView);
+            ButterKnife.bind(this, itemView);
         }
+    }
+
+    public void setListener(RoleAdapterListener listener) {
+        this.mListener = listener;
+    }
+
+    private RoleAdapterListener mListener;
+
+    public interface RoleAdapterListener {
+        public void onItemClick(int position);
+        public void onRemoveButtonClick(int position);
     }
 
 }

@@ -56,7 +56,7 @@ public class GetDataToCommunicate {
     }
 
     public static String getCurrentDate() {
-        String dateTime = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+        String dateTime = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date());
         return dateTime;
     }
 

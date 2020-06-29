@@ -9,7 +9,11 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import com.ttn.stationarymanagement.R;
+import com.ttn.stationarymanagement.data.local.model.PhongBan;
+import com.ttn.stationarymanagement.data.local.model.VaiTro;
 import com.ttn.stationarymanagement.data.local.model.test.TestDatabase;
+
+import java.util.Date;
 
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
@@ -24,6 +28,9 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     // ---------------------------------------------------------------
 
     private Dao<TestDatabase, Long> testDao;
+    private Dao<VaiTro, Long>  roleDao;
+    private Dao<PhongBan, Long> departmentDao;
+
 
     // --------------------------------------------------------------
     @Override
@@ -32,6 +39,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         try {
 
             TableUtils.createTable(connectionSource, TestDatabase.class);
+            TableUtils.createTable(connectionSource, VaiTro.class);
+            TableUtils.createTable(connectionSource, PhongBan.class);
 
         } catch (SQLException | java.sql.SQLException e) {
             e.printStackTrace();
@@ -61,4 +70,17 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         return testDao;
     }
 
+    public Dao<VaiTro, Long> getRoleDao() throws java.sql.SQLException {
+        if (roleDao == null) {
+            roleDao = getDao(VaiTro.class);
+        }
+        return roleDao;
+    }
+
+    public Dao<PhongBan, Long> getDepartmentDao() throws java.sql.SQLException {
+        if (departmentDao == null) {
+            departmentDao = getDao(PhongBan.class);
+        }
+        return departmentDao;
+    }
 }

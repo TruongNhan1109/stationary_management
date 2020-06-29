@@ -57,4 +57,9 @@ dependencies {
     implementation 'com.j256.ormlite:ormlite-android:4.48'
     implementation 'com.j256.ormlite:ormlite-core:4.48'
     implementation 'jp.wasabeef:blurry:3.0.0'
+    implementation 'com.github.rey5137:material:1.2.5'
+    implementation 'com.github.ybq:Android-SpinKit:1.4.0'
+    implementation 'com.github.GrenderG:Toasty:1.4.2'
+
+    implementation 'br.com.simplepass:loading-button-android:2.2.0'
 }

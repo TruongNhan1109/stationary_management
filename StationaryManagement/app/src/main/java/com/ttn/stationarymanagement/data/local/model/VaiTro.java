@@ -4,10 +4,12 @@ package com.ttn.stationarymanagement.data.local.model;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.util.Date;
+
 @DatabaseTable(tableName = "VaiTro")
 public class VaiTro {
 
-    @DatabaseField(id = true, columnName = "MaVT", generatedId = true)
+    @DatabaseField(columnName = "MaVT", generatedId = true)
     private long MaVT;
 
     @DatabaseField
@@ -20,6 +22,8 @@ public class VaiTro {
    public VaiTro(String name) {
        this.TenVaiTro = name;
    }
+
+   public VaiTro(){}
 
     public long getMaVT() {
         return MaVT;

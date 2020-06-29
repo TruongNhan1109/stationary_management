@@ -1,4 +1,4 @@
-package com.ldc.projectmaster.data.local.interactor;
+package com.ttn.stationarymanagement.data.local.interactor;
 
 import com.j256.ormlite.dao.Dao;
 import com.ttn.stationarymanagement.data.local.model.test.TestDatabase;

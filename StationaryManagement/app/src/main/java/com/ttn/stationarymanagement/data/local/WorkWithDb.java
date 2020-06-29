@@ -1,9 +1,12 @@
 package com.ttn.stationarymanagement.data.local;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
-import com.ldc.projectmaster.data.local.interactor.TestDatabaseUseCase;
+import com.ttn.stationarymanagement.data.local.interactor.RoleUseCase;
+import com.ttn.stationarymanagement.data.local.interactor.TestDatabaseUseCase;
+import com.ttn.stationarymanagement.data.local.model.VaiTro;
 import com.ttn.stationarymanagement.data.local.model.test.TestDatabase;
 import com.ttn.stationarymanagement.presentation.baseview.MyApp;
 
@@ -75,5 +78,62 @@ public class WorkWithDb {
         }
         return new ArrayList<>();
     }
+
+
+    // VaiTro Table --------------------------------------------------------------------------------
+
+    public boolean insert(VaiTro role) {
+        try {
+           return  RoleUseCase.create(databaseHelper.getRoleDao(), role) == 1;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return  false;
+    }
+
+    public boolean update(VaiTro role) {
+        try {
+            RoleUseCase.update(databaseHelper.getRoleDao(), role);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean delete(VaiTro role) {
+        try {
+            RoleUseCase.delete(databaseHelper.getRoleDao(), role);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public VaiTro getRoleById(long id) {
+        VaiTro role = new VaiTro();
+        try {
+            role = RoleUseCase.getById(databaseHelper.getRoleDao(), id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return role;
+
+    }
+
+    public List<VaiTro> getAllRole() {
+        try {
+            List<VaiTro> list = RoleUseCase.getAll(databaseHelper.getRoleDao());
+            return list;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+
+    // Department Table -----------------------------------------------------
+
+
 
 }

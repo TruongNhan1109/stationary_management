@@ -1,5 +1,5 @@
 #
-# generated on 2020/06/28 09:52:53
+# generated on 2020/06/29 12:02:56
 #
 # --table-start--
 dataClass=com.ttn.stationarymanagement.data.local.model.test.TestDatabase
@@ -8,11 +8,48 @@ tableName=TestDataBase
 # --field-start--
 fieldName=id
 columnName=id
-id=true
 generatedId=true
 # --field-end--
 # --field-start--
 fieldName=name
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=com.ttn.stationarymanagement.data.local.model.VaiTro
+tableName=VaiTro
+# --table-fields-start--
+# --field-start--
+fieldName=MaVT
+columnName=MaVT
+generatedId=true
+# --field-end--
+# --field-start--
+fieldName=TenVaiTro
+# --field-end--
+# --field-start--
+fieldName=NgayTao
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=com.ttn.stationarymanagement.data.local.model.PhongBan
+tableName=PhongBan
+# --table-fields-start--
+# --field-start--
+fieldName=MaPB
+generatedId=true
+# --field-end--
+# --field-start--
+fieldName=TenPB
+# --field-end--
+# --field-start--
+fieldName=NgayTao
+# --field-end--
+# --field-start--
+fieldName=GhiChu
 # --field-end--
 # --table-fields-end--
 # --table-end--
