@@ -4,8 +4,10 @@ import android.content.Context;
 import android.util.Log;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
+import com.ttn.stationarymanagement.data.local.interactor.DepartmentUseCase;
 import com.ttn.stationarymanagement.data.local.interactor.RoleUseCase;
 import com.ttn.stationarymanagement.data.local.interactor.TestDatabaseUseCase;
+import com.ttn.stationarymanagement.data.local.model.PhongBan;
 import com.ttn.stationarymanagement.data.local.model.VaiTro;
 import com.ttn.stationarymanagement.data.local.model.test.TestDatabase;
 import com.ttn.stationarymanagement.presentation.baseview.MyApp;
@@ -134,6 +136,56 @@ public class WorkWithDb {
 
     // Department Table -----------------------------------------------------
 
+    public boolean insert(PhongBan phongBan) {
+        try {
+            return  DepartmentUseCase.create(databaseHelper.getDepartmentDao(), phongBan) == 1;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return  false;
+    }
+
+    public boolean update(PhongBan phongBan) {
+        try {
+            DepartmentUseCase.update(databaseHelper.getDepartmentDao(), phongBan);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean delete(PhongBan phongBan) {
+        try {
+            DepartmentUseCase.delete(databaseHelper.getDepartmentDao(), phongBan);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public PhongBan getDepartmentById(long id) {
+
+        PhongBan phongBan = new PhongBan();
+        try {
+            phongBan = DepartmentUseCase.getById(databaseHelper.getDepartmentDao(), id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return phongBan;
+
+    }
+
+    public List<PhongBan> getAllDepartment() {
+        try {
+            List<PhongBan> list = DepartmentUseCase.getAll(databaseHelper.getDepartmentDao());
+            return list;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
 
 
 }

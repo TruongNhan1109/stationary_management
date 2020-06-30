@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/color_grey_background"
     android:layout_height="match_parent"
     tools:context=".presentation.activity.NewProductActivity">
 
@@ -10,8 +11,157 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
         <include layout="@layout/toolbar"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            style="@style/area_layout_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="150dp"
+                            app:cardCornerRadius="12dp"
+                            android:layout_height="120dp">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:src="@drawable/ic_picture_blue_48"
+                                android:layout_height="match_parent"/>
+
+                        </androidx.cardview.widget.CardView>
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="7dp"
+                            android:text="Name Product"
+                            android:textSize="22sp"
+                            android:textColor="@color/color_blue_mac_os"/>
+
+                    </LinearLayout>
+
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20sp"
+                        android:orientation="vertical">
+
+
+                        <!-- Tên Sản Phẩm  -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Tên sản phẩm"
+                                android:layout_marginBottom="5dp"
+                                android:textColor="@color/color_black"
+                                android:textSize="20sp"/>
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:maxLines="1"
+                                android:drawableLeft="@drawable/ic_box_color_24"
+                                android:drawablePadding="3dp"
+                                android:background="@drawable/state_background_text_box_white"
+                                android:hint="Nhập tên sản phẩm"/>
+
+                        </LinearLayout>
+
+
+                        <!-- Đơn vi tính -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Đơn vị"
+                                android:layout_marginBottom="5dp"
+                                android:textColor="@color/color_black"
+                                android:textSize="20sp"/>
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:maxLines="1"
+                                android:drawableLeft="@drawable/ic_unit_color_24"
+                                android:drawablePadding="3dp"
+                                android:background="@drawable/state_background_text_box_white"
+                                android:hint="Nhập đơn vị"/>
+
+                        </LinearLayout>
+
+
+                        <!-- Số lượng -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Số lượng"
+                                android:layout_marginBottom="5dp"
+                                android:textColor="@color/color_black"
+                                android:textSize="20sp"/>
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:maxLines="1"
+                                android:drawableLeft="@drawable/ic_unit_color_24"
+                                android:drawablePadding="3dp"
+                                android:background="@drawable/state_background_text_box_white"
+                                android:hint="Nhập số lượng"/>
+
+                        </LinearLayout>
+
+
+
+
+                    </LinearLayout>
+
+
+
+
+
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+
+
 
 
     </LinearLayout>

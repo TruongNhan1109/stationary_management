@@ -8,11 +8,12 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.ttn.stationarymanagement.R;
+import com.ttn.stationarymanagement.presentation.baseview.BaseActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class NewProductActivity extends AppCompatActivity {
+public class NewProductActivity extends BaseActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -36,4 +37,6 @@ public class NewProductActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Thêm sản phẩm");
     }
+
+
 }

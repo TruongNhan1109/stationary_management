@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,19 +17,27 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ttn.stationarymanagement.R;
+import com.ttn.stationarymanagement.data.local.WorkWithDb;
 import com.ttn.stationarymanagement.data.local.model.PhongBan;
 import com.ttn.stationarymanagement.data.local.model.VaiTro;
+import com.ttn.stationarymanagement.data.local.model.stationery.VanPhongPham;
 import com.ttn.stationarymanagement.presentation.adapter.DepartmentAdapter;
 import com.ttn.stationarymanagement.presentation.adapter.RoleAdapter;
 import com.ttn.stationarymanagement.presentation.baseview.BaseFragment;
 import com.ttn.stationarymanagement.presentation.dialog_fragment.AddDepartmentDialog;
 import com.ttn.stationarymanagement.presentation.dialog_fragment.AddRoleDialog;
+import com.ttn.stationarymanagement.utils.CustomToast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Scheduler;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class DepartmentManagerFragment extends BaseFragment {
 
@@ -40,6 +49,8 @@ public class DepartmentManagerFragment extends BaseFragment {
 
     private List<PhongBan> listDepartment;
     private DepartmentAdapter adapterDepartment;
+
+    private CompositeDisposable compositeDisposable;
 
     public static DepartmentManagerFragment newInstance() {
         Bundle args = new Bundle();
@@ -63,20 +74,122 @@ public class DepartmentManagerFragment extends BaseFragment {
 
         setControls();
         getDataAndSetView();
+        setEvents();
+    }
+
+    private void setEvents() {
+
+        adapterDepartment.setListenter(new DepartmentAdapter.DepartmentAdapterListener() {
+            @Override
+            public void onItemClick(int position) {
+
+                AddDepartmentDialog addDepartmentDialog = AddDepartmentDialog.newInstance(listDepartment.get(position).getTenPB(), listDepartment.get(position).getGhiChu());
+                addDepartmentDialog.setListener(new AddDepartmentDialog.AddDepartmentDilaogListener() {
+                    @Override
+                    public void onAddSuccesstion() {
+
+                    }
+
+                    @Override
+                    public void onUpload(String department, String note) {
+
+                        PhongBan phongBan = listDepartment.get(position);
+                        phongBan.setTenPB(department);
+                        phongBan.setGhiChu(note);
+
+                        Observable<Boolean> obUpload = Observable.create(r -> {
+                            try {
+                                r.onNext(WorkWithDb.getInstance().update(phongBan));
+                                r.onComplete();
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                               r.onError(e);
+                            }
+                        });
+
+                        compositeDisposable.add(obUpload.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(aBoolean -> {
+                            if (aBoolean) {
+                                CustomToast.showToastSuccesstion(getContext(), "Cập nhật thành công", Toast.LENGTH_SHORT);
+                                adapterDepartment.notifyItemChanged(position);
+                            } else {
+                                CustomToast.showToastError(getContext(), "Cập nhật thất bại", Toast.LENGTH_SHORT);
+                            }
+                        }, throwable -> {
+                            CustomToast.showToastError(getContext(), "Cập nhật thất bại", Toast.LENGTH_SHORT);
+                        }));
+
+                    }
+                });
+
+                addDepartmentDialog.show(getChildFragmentManager(), AddDepartmentDialog.TAG);
+            }
+
+            @Override
+            public void onItemRemove(int position) {
+
+                Observable<Boolean> obUpload = Observable.create(r -> {
+                    try {
+                        r.onNext(WorkWithDb.getInstance().delete(listDepartment.get(position)));
+                        r.onComplete();
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        r.onError(e);
+                    }
+                });
+
+                compositeDisposable.add(obUpload.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(aBoolean -> {
+                    if (aBoolean) {
+
+                        CustomToast.showToastSuccesstion(getContext(), "Xóa thành công", Toast.LENGTH_SHORT);
+                        listDepartment.remove(position);
+                        adapterDepartment.notifyItemRemoved(position);
+                        adapterDepartment.notifyItemRangeChanged(position, listDepartment.size());
+                    } else {
+                        CustomToast.showToastError(getContext(), "Xóa  thất bại", Toast.LENGTH_SHORT);
+                    }
+                }, throwable -> {
+                    CustomToast.showToastError(getContext(), "Xóa thất bại", Toast.LENGTH_SHORT);
+                }));
+            }
+        });
+
+
     }
 
     private void getDataAndSetView() {
 
-        PhongBan phongBan = new PhongBan("Phong 1", "Ghi chú");
-        listDepartment.add(phongBan);
-        listDepartment.add(phongBan);
-        listDepartment.add(phongBan);
-        listDepartment.add(phongBan);
-        adapterDepartment.notifyDataSetChanged();
+        Observable<Boolean> obGetData = Observable.create(r -> {
+            try {
+                listDepartment.clear();
+                listDepartment.addAll(WorkWithDb.getInstance().getAllDepartment());
+                r.onNext(true);
+                r.onComplete();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                r.onError(e);
+            }
+        });
+
+        compositeDisposable.add(obGetData.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(aBoolean -> {
+            if (listDepartment.size() > 0) {
+                rvListDepartment.setVisibility(View.VISIBLE);
+                tvNotifyEmpty.setVisibility(View.GONE);
+                adapterDepartment.notifyDataSetChanged();
+
+            } else {
+                rvListDepartment.setVisibility(View.GONE);
+                tvNotifyEmpty.setVisibility(View.VISIBLE);
+            }
+        }));
 
     }
 
     private void setControls() {
+        compositeDisposable = new CompositeDisposable();
+
         listDepartment = new ArrayList<>();
         adapterDepartment = new DepartmentAdapter(getContext(), listDepartment);
 
@@ -98,8 +211,19 @@ public class DepartmentManagerFragment extends BaseFragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.mn_department_manager_add:
-                AddDepartmentDialog addDepartmentDialog = AddDepartmentDialog.newInstance();
-                addDepartmentDialog.show(getChildFragmentManager(), "");
+                AddDepartmentDialog addDepartmentDialog = AddDepartmentDialog.newInstance("", "");
+                addDepartmentDialog.setListener(new AddDepartmentDialog.AddDepartmentDilaogListener() {
+                    @Override
+                    public void onAddSuccesstion() {
+                        getDataAndSetView();
+                    }
+
+                    @Override
+                    public void onUpload(String department, String note) {
+                    }
+                });
+
+                addDepartmentDialog.show(getChildFragmentManager(), AddDepartmentDialog.TAG);
                 return true;
         }
         return super.onOptionsItemSelected(item);

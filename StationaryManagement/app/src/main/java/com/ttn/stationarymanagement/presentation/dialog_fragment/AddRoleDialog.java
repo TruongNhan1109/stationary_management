@@ -102,6 +102,7 @@ public class AddRoleDialog extends DialogFragment {
         if (!TextUtils.isEmpty(nameRole)) {
             edtRole.setText(nameRole);
             isUpload = true;
+            btnAdd.setText("Cập nhật");
         }
 
     }

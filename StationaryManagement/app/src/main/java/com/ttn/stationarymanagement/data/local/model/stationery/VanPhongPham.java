@@ -1,18 +1,44 @@
 package com.ttn.stationarymanagement.data.local.model.stationery;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
+@DatabaseTable(tableName = "VanPhongPham")
 public class VanPhongPham {
 
+    @DatabaseField(generatedId = true)
     private  int MaVPP;
+
+    @DatabaseField
     private String TenSP;
+
+    @DatabaseField
     private String DonVi;
+
+    @DatabaseField
     private int SoLuong;
+
+    @DatabaseField
     private double DonGia;
+
+    @DatabaseField
     private String NgayTao;
+
+    @DatabaseField
     private String NgayTD;
+
+    @DatabaseField
     private String GhiChu;
-    private String MaNVT;
+
+    @DatabaseField
     private String Anh;
+
+    @DatabaseField
     private  int DaDung;
+
+    public VanPhongPham () {
+
+    }
 
     public int getMaVPP() {
         return MaVPP;
@@ -76,14 +102,6 @@ public class VanPhongPham {
 
     public void setGhiChu(String ghiChu) {
         GhiChu = ghiChu;
-    }
-
-    public String getMaNVT() {
-        return MaNVT;
-    }
-
-    public void setMaNVT(String maNVT) {
-        MaNVT = maNVT;
     }
 
     public String getAnh() {
