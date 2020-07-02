@@ -9,6 +9,7 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import com.ttn.stationarymanagement.R;
+import com.ttn.stationarymanagement.data.local.model.NhanVien;
 import com.ttn.stationarymanagement.data.local.model.PhongBan;
 import com.ttn.stationarymanagement.data.local.model.VaiTro;
 import com.ttn.stationarymanagement.data.local.model.stationery.VanPhongPham;
@@ -32,6 +33,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private Dao<VaiTro, Long>  roleDao;
     private Dao<PhongBan, Long> departmentDao;
     private Dao<VanPhongPham, Long> productDao;
+    private Dao<NhanVien, Long>  staftDao;
 
 
     // --------------------------------------------------------------
@@ -44,6 +46,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTable(connectionSource, VaiTro.class);
             TableUtils.createTable(connectionSource, PhongBan.class);
             TableUtils.createTable(connectionSource, VanPhongPham.class);
+            TableUtils.createTable(connectionSource, NhanVien.class);
 
 
         } catch (SQLException | java.sql.SQLException e) {
