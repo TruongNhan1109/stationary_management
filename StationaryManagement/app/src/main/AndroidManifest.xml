@@ -2,34 +2,26 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ttn.stationarymanagement">
     <!-- All Permissions -->
-
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:required="true" />
-
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
     <uses-permission
         android:name="android.permission.INTERNET"
         android:required="false" />
-
     <uses-permission
         android:name="android.permission.ACCESS_NETWORK_STATE"
         android:required="false" />
-
     <uses-permission
         android:name="android.permission.ACCESS_WIFI_STATE"
         android:required="false" />
-
     <uses-permission
         android:name="android.permission.CHANGE_NETWORK_STATE"
         android:required="false" />
     <uses-permission
         android:name="android.permission.CHANGE_WIFI_STATE"
         android:required="false" />
-
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
-
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.CAMERA" />
 
@@ -40,15 +32,15 @@
         android:allowBackup="true"
         android:icon="@mipmap/app_icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
         android:largeHeap="true"
         android:requestLegacyExternalStorage="true"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".presentation.activity.SplashScreenActivity"
+        <activity android:name=".presentation.activity.AddStaftActivity"></activity>
+        <activity
+            android:name=".presentation.activity.SplashScreenActivity"
             android:theme="@style/SplashscreenTheme">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
