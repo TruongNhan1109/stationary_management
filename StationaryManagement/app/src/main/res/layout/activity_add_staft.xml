@@ -99,19 +99,20 @@
                             android:textColor="@color/color_black"
                             android:textSize="20sp"/>
 
-                        <EditText
+
+                        <TextView
                             android:id="@+id/edt_activity_add_staft_date_of_birth"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:imeOptions="actionNext"
-                            android:inputType="text"
-                            android:nextFocusDown="@+id/edt_activity_new_product_unit_product"
-                            android:maxLines="1"
+                            android:background="@drawable/state_background_text_box_white"
                             android:drawableLeft="@drawable/ic_calendar_24"
                             android:drawablePadding="3dp"
-                            android:enabled="false"
-                            android:background="@drawable/state_background_text_box_white"
-                            android:hint="Chọn ngày sinh"/>
+                            android:hint="Chọn ngày sinh"
+                            android:textSize="16sp"
+                            android:imeOptions="actionNext"
+                            android:maxLines="1"
+                            android:nextFocusDown="@+id/edt_activity_new_product_unit_product" />
+
 
                     </LinearLayout>
 
