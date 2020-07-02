@@ -57,9 +57,10 @@
                                 android:text="Tổng cộng"/>
 
                             <TextView
+                                android:id="@+id/tv_fragment_stationary_manager_total_product"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="10"
+                                android:text="0"
                                 android:textSize="22sp"
                                 android:layout_alignParentRight="true"
                                 android:layout_marginTop="5dp"
@@ -102,9 +103,10 @@
                                 android:text="Tổng cộng"/>
 
                             <TextView
+                                android:id="@+id/tv_fragment_stationary_manager_total_price"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="10"
+                                android:text="0"
                                 android:textSize="22sp"
                                 android:layout_alignParentRight="true"
                                 android:layout_marginTop="5dp"
@@ -133,7 +135,35 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_fragment_stationary_manager_list_product"
                         android:layout_width="match_parent"
+                        android:visibility="visible"
                         android:layout_height="wrap_content"/>
+
+                    <LinearLayout
+                        android:id="@+id/lnl_fragment_stationary_manager_notify_emplty"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"
+                        android:visibility="gone"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <com.github.ybq.android.spinkit.SpinKitView
+                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:id="@+id/spin_kit"
+                            style="@style/SpinKitView.Large.CubeGrid"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_gravity="center"
+                            app:SpinKit_Color="@color/color_blue" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:textColor="@color/color_blue"
+                            android:textSize="22sp"
+                            android:text="Chưa có sản phẩm "/>
+
+                    </LinearLayout>
 
                 </RelativeLayout>
 

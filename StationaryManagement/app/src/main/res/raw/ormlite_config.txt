@@ -1,5 +1,5 @@
 #
-# generated on 2020/06/29 12:02:56
+# generated on 2020/07/02 08:54:29
 #
 # --table-start--
 dataClass=com.ttn.stationarymanagement.data.local.model.test.TestDatabase
@@ -50,6 +50,44 @@ fieldName=NgayTao
 # --field-end--
 # --field-start--
 fieldName=GhiChu
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=com.ttn.stationarymanagement.data.local.model.stationery.VanPhongPham
+tableName=VanPhongPham
+# --table-fields-start--
+# --field-start--
+fieldName=MaVPP
+generatedId=true
+# --field-end--
+# --field-start--
+fieldName=TenSP
+# --field-end--
+# --field-start--
+fieldName=DonVi
+# --field-end--
+# --field-start--
+fieldName=SoLuong
+# --field-end--
+# --field-start--
+fieldName=DonGia
+# --field-end--
+# --field-start--
+fieldName=NgayTao
+# --field-end--
+# --field-start--
+fieldName=NgayTD
+# --field-end--
+# --field-start--
+fieldName=GhiChu
+# --field-end--
+# --field-start--
+fieldName=Anh
+# --field-end--
+# --field-start--
+fieldName=DaDung
 # --field-end--
 # --table-fields-end--
 # --table-end--

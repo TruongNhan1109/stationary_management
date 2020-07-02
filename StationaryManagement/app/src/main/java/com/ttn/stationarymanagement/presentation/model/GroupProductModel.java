@@ -15,6 +15,8 @@ public class GroupProductModel {
         this.vanPhongPhamList = list;
     }
 
+    public GroupProductModel () {}
+
     public String getTextAlpha() {
         return textAlpha;
     }

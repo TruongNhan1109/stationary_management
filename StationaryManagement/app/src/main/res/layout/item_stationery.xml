@@ -27,9 +27,11 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <ImageView
+                        android:id="@+id/iv_item_stationery_image_product"
                         android:layout_width="32dp"
                         android:src="@drawable/ic_part_color_24"
                         android:scaleType="center"
@@ -43,6 +45,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/tv_item_stationery_name_product"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Sách"
@@ -52,20 +55,28 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:orientation="vertical">
 
                             <TextView
+                                android:id="@+id/tv_item_stationery_number"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/color_purple"
                                 android:text="Số lượng: 10"/>
 
                             <TextView
+                                android:id="@+id/tv_item_stationery_price"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
                                 android:textColor="@color/color_orange"
                                 android:text="Đơn giá 50000"/>
+
+                            <TextView
+                                android:id="@+id/tv_item_stationery_note"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/color_light_blue"
+                                android:text="Ghi chu"/>
 
                         </LinearLayout>
 
@@ -73,6 +84,7 @@
                     </LinearLayout>
 
                     <ImageButton
+                        android:id="@+id/ibt_item_stationery_show_menu"
                         android:layout_width="32dp"
                         android:layout_height="32dp"
                         android:src="@drawable/ic_more_gray_24"

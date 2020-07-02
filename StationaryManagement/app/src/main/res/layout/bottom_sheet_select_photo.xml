@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="200dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="1dp"
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:textColor="@color/color_black"
+                android:layout_height="wrap_content"
+                android:text="Bạn muốn chọn ảnh từ nguồn"/>
+
+
+            <TextView
+                android:id="@+id/tv_bottom_sheet_select_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingVertical="10dp"
+                android:text="Đóng"
+                android:textColor="@color/color_blue"
+                android:background="@drawable/shape_background_text_box_selected"
+                android:paddingHorizontal="15dp"/>
+        </LinearLayout>
+
+
+        <!-- Thư viện -->
+        <LinearLayout
+            android:id="@+id/lnl_area_select_from_library"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:src="@drawable/ic_folder_32"
+                android:scaleType="centerInside"
+                android:layout_height="32dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_blue"
+                android:layout_marginLeft="15dp"
+                android:text="Chọn ảnh từ thư viên"/>
+
+        </LinearLayout>
+
+        <!-- Camera -->
+        <LinearLayout
+            android:id="@+id/lnl_area_select_from_camera"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:src="@drawable/ic_camera_32"
+                android:scaleType="centerInside"
+                android:layout_height="32dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_blue"
+                android:layout_marginLeft="15dp"
+                android:text="Từ camera"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <com.github.ybq.android.spinkit.SpinKitView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/spin_kit"
+                style="@style/SpinKitView.Large.WanderingCubes"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_gravity="center"
+                app:SpinKit_Color="@color/color_orange" />
+
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+</RelativeLayout>

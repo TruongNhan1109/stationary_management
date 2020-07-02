@@ -3,6 +3,7 @@ package com.ttn.stationarymanagement.utils;
 import android.content.Context;
 import android.text.TextUtils;
 
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -88,6 +89,19 @@ public class GetDataToCommunicate {
 
         }
         return stringTimeUse;
+    }
+
+    public static String changeToPrice(double price) {
+        String format = "#,### đ";
+        DecimalFormat dec;
+
+        try {
+            dec = new DecimalFormat(format);
+            return dec.format(price);
+        } catch (Exception e) {
+            return price + "";
+        }
+
     }
 
 }

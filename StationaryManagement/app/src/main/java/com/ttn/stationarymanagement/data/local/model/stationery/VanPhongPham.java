@@ -7,7 +7,7 @@ import com.j256.ormlite.table.DatabaseTable;
 public class VanPhongPham {
 
     @DatabaseField(generatedId = true)
-    private  int MaVPP;
+    private  long MaVPP;
 
     @DatabaseField
     private String TenSP;
@@ -37,14 +37,13 @@ public class VanPhongPham {
     private  int DaDung;
 
     public VanPhongPham () {
-
     }
 
-    public int getMaVPP() {
+    public long getMaVPP() {
         return MaVPP;
     }
 
-    public void setMaVPP(int maVPP) {
+    public void setMaVPP(long maVPP) {
         MaVPP = maVPP;
     }
 

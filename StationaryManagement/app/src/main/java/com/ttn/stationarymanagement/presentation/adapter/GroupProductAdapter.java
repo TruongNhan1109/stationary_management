@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ttn.stationarymanagement.R;
 import com.ttn.stationarymanagement.data.local.model.stationery.VanPhongPham;
+import com.ttn.stationarymanagement.presentation.dialog_fragment.ShowDetailProductDialog;
 import com.ttn.stationarymanagement.presentation.model.GroupProductModel;
 
 import java.util.ArrayList;
@@ -46,9 +47,38 @@ public class GroupProductAdapter extends RecyclerView.Adapter<GroupProductAdapte
 
         holder.tvIndex.setText(mItem.getTextAlpha());
 
-        StationeryAdapter stationeryAdapter = new StationeryAdapter(mContext,mItem.getVanPhongPhamList() );
+        StationeryAdapter stationeryAdapter = new StationeryAdapter(mContext,mItem.getVanPhongPhamList());
+
+        stationeryAdapter.setListener(new GroupProductApapterListener() {
+            @Override
+            public void onProductClick(VanPhongPham item) {
+                if (mListener != null) {
+                    mListener.onProductClick(item);
+                }
+            }
+
+            @Override
+            public void onDeleteProduct(int positionGroup, VanPhongPham itemDelete) {
+                if (mListener != null) {
+                    mListener.onDeleteProduct(position, itemDelete);
+                }
+            }
+
+            @Override
+            public void onImportProduct(VanPhongPham item) {
+
+            }
+
+            @Override
+            public void onItemClick(VanPhongPham item) {
+                if (mListener != null) {
+                    mListener.onItemClick(item);
+                }
+            }
+        });
         holder.rvListProducts.setLayoutManager(holder.linearLayoutManager);
         holder.rvListProducts.setAdapter(stationeryAdapter);
+
     }
 
     @Override
@@ -74,6 +104,21 @@ public class GroupProductAdapter extends RecyclerView.Adapter<GroupProductAdapte
             ButterKnife.bind(this, itemView);
             linearLayoutManager = new LinearLayoutManager(mContext);
         }
+    }
+
+    private  GroupProductApapterListener mListener;
+
+    public void setListener (GroupProductApapterListener listener) {
+        this.mListener = listener;
+    }
+
+    public interface GroupProductApapterListener {
+
+        void onProductClick(VanPhongPham item);
+        void onDeleteProduct(int positionGroup, VanPhongPham itemDelete);
+        void onImportProduct(VanPhongPham item);
+        void onItemClick(VanPhongPham item);
+
     }
 
 }
