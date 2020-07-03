@@ -7,7 +7,9 @@ import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.ttn.stationarymanagement.data.local.interactor.DepartmentUseCase;
 import com.ttn.stationarymanagement.data.local.interactor.ProductUseCase;
 import com.ttn.stationarymanagement.data.local.interactor.RoleUseCase;
+import com.ttn.stationarymanagement.data.local.interactor.StaftUseCase;
 import com.ttn.stationarymanagement.data.local.interactor.TestDatabaseUseCase;
+import com.ttn.stationarymanagement.data.local.model.NhanVien;
 import com.ttn.stationarymanagement.data.local.model.PhongBan;
 import com.ttn.stationarymanagement.data.local.model.VaiTro;
 import com.ttn.stationarymanagement.data.local.model.stationery.VanPhongPham;
@@ -242,6 +244,62 @@ public class WorkWithDb {
         }
         return new ArrayList<>();
     }
+
+
+    // Staft Table ------------------------------------------------------------
+
+    public boolean insert(NhanVien NhanVien) {
+        try {
+            return  StaftUseCase.create(databaseHelper.getStaftDao(), NhanVien) == 1;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return  false;
+    }
+
+    public boolean update(NhanVien NhanVien) {
+        try {
+            StaftUseCase.update(databaseHelper.getStaftDao(), NhanVien);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean delete(NhanVien NhanVien) {
+        try {
+            StaftUseCase.delete(databaseHelper.getStaftDao(), NhanVien);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public NhanVien getStaftById(long id) {
+
+        NhanVien nhanVien = new NhanVien();
+        try {
+            nhanVien = StaftUseCase.getById(databaseHelper.getStaftDao(), id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return nhanVien;
+
+    }
+
+    public List<NhanVien> getAllStaft() {
+        try {
+            List<NhanVien> list = StaftUseCase.getAll(databaseHelper.getStaftDao());
+            return list;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+
 
 
 

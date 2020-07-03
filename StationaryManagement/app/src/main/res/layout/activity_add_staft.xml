@@ -172,7 +172,6 @@
                             android:maxLines="1"
                             android:drawableLeft="@drawable/ic_mail_24"
                             android:drawablePadding="3dp"
-                            android:enabled="false"
                             android:background="@drawable/state_background_text_box_white"
                             android:hint="Nhập email"/>
 
@@ -205,12 +204,15 @@
                             <RadioButton
                                 android:id="@+id/rdo_male"
                                 android:layout_width="wrap_content"
+                                android:checked="true"
+                                android:layout_marginRight="5dp"
                                 android:layout_height="wrap_content"
                                 android:text="Nam"/>
 
                             <RadioButton
                                 android:id="@+id/rdo_female"
                                 android:layout_width="wrap_content"
+                                android:layout_marginRight="5dp"
                                 android:layout_height="wrap_content"
                                 android:text="Nữ"/>
 
@@ -237,18 +239,33 @@
                             android:textColor="@color/color_black"
                             android:textSize="20sp"/>
 
-                        <EditText
+                        <Spinner
+                            android:id="@+id/spn_activity_add_staft_department"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:imeOptions="actionNext"
-                            android:inputType="text"
-                            android:nextFocusDown="@+id/edt_activity_new_product_unit_product"
-                            android:maxLines="1"
-                            android:drawableLeft="@drawable/ic_bag_24"
-                            android:drawablePadding="3dp"
-                            android:enabled="false"
-                            android:background="@drawable/state_background_text_box_white"
-                            android:hint="Chọn phòng ban"/>
+                            android:background="@drawable/state_background_text_box_white" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Chọn vai trò"
+                            android:layout_marginBottom="5dp"
+                            android:textColor="@color/color_black"
+                            android:textSize="20sp"/>
+
+                        <Spinner
+                            android:id="@+id/spn_activity_add_staft_role"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/state_background_text_box_white" />
 
                     </LinearLayout>
 

@@ -18,21 +18,37 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.attention.ShakeAnimator;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.ttn.stationarymanagement.R;
+import com.ttn.stationarymanagement.data.local.WorkWithDb;
+import com.ttn.stationarymanagement.data.local.model.NhanVien;
+import com.ttn.stationarymanagement.data.local.model.PhongBan;
+import com.ttn.stationarymanagement.data.local.model.VaiTro;
+import com.ttn.stationarymanagement.presentation.adapter.SelectDepartmentAdapter;
+import com.ttn.stationarymanagement.presentation.adapter.SelectRoleAdapter;
 import com.ttn.stationarymanagement.presentation.baseview.BaseActivity;
+import com.ttn.stationarymanagement.utils.AppUtils;
 import com.ttn.stationarymanagement.utils.CustomToast;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class AddStaftActivity extends BaseActivity {
 
@@ -60,12 +76,23 @@ public class AddStaftActivity extends BaseActivity {
     @BindView(R.id.edt_activity_add_staft_note)
     EditText edtNote;
 
+    @BindView(R.id.spn_activity_add_staft_role)
+    Spinner spnRole;
+
+    @BindView(R.id.spn_activity_add_staft_department)
+    Spinner spDepartment;
+
     @BindView(R.id.btn_activity_add_staft_add)
     Button btnAdd;
 
     private String imageStaft = "";
-
+    private List<VaiTro> listVaiTro;
     private int requestSelectPhoto = 1;
+    SelectRoleAdapter selectRoleAdapter;
+    private List<PhongBan> listPhongBan;
+    SelectDepartmentAdapter selectDepartmentAdapter;
+
+    private CompositeDisposable compositeDisposable;
 
     public static Intent getCallingIntent(Context context) {
         Intent intent = new Intent(context, AddStaftActivity.class);
@@ -79,9 +106,50 @@ public class AddStaftActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         setControls();
+        getDataAndSetView();
         setEvents();
 
     }
+
+    private void getDataAndSetView() {
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date currentDate = new Date();
+        edtDateOfBirth.setText(simpleDateFormat.format(currentDate));
+
+        getAllData();
+
+
+    }
+
+    private void getAllData() {
+
+        Observable<List<VaiTro>> getDataRole = Observable.create(r -> {
+
+            try {
+                r.onNext(WorkWithDb.getInstance().getAllRole());
+                r.onComplete();
+
+            } catch (Exception e) {
+              r.onError(e);
+            }
+
+        });
+
+        compositeDisposable.add(getDataRole.subscribeOn(Schedulers.newThread()).flatMap(r -> {
+            listVaiTro.addAll(r);
+           return Observable.just(WorkWithDb.getInstance().getAllDepartment());
+
+        }).observeOn(AndroidSchedulers.mainThread()).subscribe(r ->{
+
+            listPhongBan.addAll(r);
+
+            selectRoleAdapter.notifyDataSetChanged();
+            selectDepartmentAdapter.notifyDataSetChanged();
+        }));
+
+    }
+
 
     private void setEvents() {
 
@@ -117,6 +185,44 @@ public class AddStaftActivity extends BaseActivity {
         });
 
 
+        btnAdd.setOnClickListener(v -> {
+
+            if (TextUtils.isEmpty(edtNameStaft.getText().toString())) {
+
+                new ShakeAnimator().setDuration(700).setRepeatTimes(0).setTarget(edtNameStaft).start();
+                edtNameStaft.setError("Tên nhân viên không được để trống");
+                edtNameStaft.requestFocus();
+                return;
+            }
+
+            if (TextUtils.isEmpty(edtEmail.getText().toString())) {
+                new ShakeAnimator().setDuration(700).setRepeatTimes(0).setTarget(edtEmail).start();
+                edtEmail.setError("Email không được để trống");
+                edtEmail.requestFocus();
+                return;
+            }
+
+            if (!AppUtils.checkValidEmail(edtEmail.getText().toString())) {
+                new ShakeAnimator().setDuration(700).setRepeatTimes(0).setTarget(edtEmail).start();
+                edtEmail.setError("Sai cấu trúc email");
+                edtEmail.requestFocus();
+            }
+
+
+            createNewStaft();
+
+
+
+        });
+
+
+
+    }
+
+    private void createNewStaft() {
+
+    
+
 
     }
 
@@ -125,6 +231,16 @@ public class AddStaftActivity extends BaseActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Thêm nhân viên");
+
+        listVaiTro = new ArrayList();
+        compositeDisposable = new CompositeDisposable();
+
+        selectRoleAdapter = new SelectRoleAdapter(this, listVaiTro);
+        spnRole.setAdapter(selectRoleAdapter);
+
+        listPhongBan = new ArrayList();
+        selectDepartmentAdapter = new SelectDepartmentAdapter(this, listPhongBan);
+        spDepartment.setAdapter(selectDepartmentAdapter);
 
     }
 

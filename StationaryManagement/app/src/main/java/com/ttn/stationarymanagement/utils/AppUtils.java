@@ -1,4 +1,4 @@
-package com.ldc.projectmaster.utils;
+package com.ttn.stationarymanagement.utils;
 
 import android.app.Activity;
 import android.content.Context;
@@ -20,6 +20,11 @@ public class AppUtils {
             return false;
         }
 
+    }
+
+    public static boolean checkValidEmail(String email) {
+        String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
+        return email.matches(regex);
     }
 
 }

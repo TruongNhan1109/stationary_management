@@ -97,4 +97,11 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         }
         return productDao;
     }
+
+    public Dao<NhanVien, Long> getStaftDao() throws java.sql.SQLException  {
+        if (staftDao == null) {
+            staftDao = getDao(NhanVien.class);
+        }
+        return staftDao;
+    }
 }
