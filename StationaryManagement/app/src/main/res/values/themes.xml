@@ -26,19 +26,6 @@
     </style>
 
 
-    <style name="DarkTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary" >@color/color_black</item>
-        <item name="colorPrimaryDark">@color/color_black</item>
-        <item name="colorAccent">@color/color_blue_mac_os</item>
-    </style>
-
-
-    <style name="LightTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowLightStatusBar">true</item>
-        <item name="android:statusBarColor">@color/color_white</item>
-        <item name="colorPrimary">@color/color_white</item>
-    </style>
-
     <style name="SplashscreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@drawable/background_splashscreen</item>
         <item name="colorPrimary">@color/color_black</item>

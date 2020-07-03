@@ -12,10 +12,7 @@ import com.ttn.stationarymanagement.R;
 import com.ttn.stationarymanagement.data.local.model.NhanVien;
 import com.ttn.stationarymanagement.data.local.model.PhongBan;
 import com.ttn.stationarymanagement.data.local.model.VaiTro;
-import com.ttn.stationarymanagement.data.local.model.stationery.VanPhongPham;
-import com.ttn.stationarymanagement.data.local.model.test.TestDatabase;
-
-import java.util.Date;
+import com.ttn.stationarymanagement.data.local.model.VanPhongPham;
 
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
@@ -29,7 +26,6 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     // ---------------------------------------------------------------
 
-    private Dao<TestDatabase, Long> testDao;
     private Dao<VaiTro, Long>  roleDao;
     private Dao<PhongBan, Long> departmentDao;
     private Dao<VanPhongPham, Long> productDao;
@@ -42,7 +38,6 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
         try {
 
-            TableUtils.createTable(connectionSource, TestDatabase.class);
             TableUtils.createTable(connectionSource, VaiTro.class);
             TableUtils.createTable(connectionSource, PhongBan.class);
             TableUtils.createTable(connectionSource, VanPhongPham.class);
@@ -70,12 +65,6 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     }
 
-    public Dao<TestDatabase, Long> getTestDao() throws java.sql.SQLException {
-        if (testDao == null) {
-            testDao = getDao(TestDatabase.class);
-        }
-        return testDao;
-    }
 
     public Dao<VaiTro, Long> getRoleDao() throws java.sql.SQLException {
         if (roleDao == null) {

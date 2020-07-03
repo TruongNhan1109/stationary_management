@@ -4,9 +4,7 @@ import com.j256.ormlite.android.apptools.OrmLiteConfigUtil;
 import com.ttn.stationarymanagement.data.local.model.NhanVien;
 import com.ttn.stationarymanagement.data.local.model.PhongBan;
 import com.ttn.stationarymanagement.data.local.model.VaiTro;
-import com.ttn.stationarymanagement.data.local.model.stationery.VanPhongPham;
-import com.ttn.stationarymanagement.data.local.model.test.TestDatabase;
-
+import com.ttn.stationarymanagement.data.local.model.VanPhongPham;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,7 +15,6 @@ import java.sql.SQLException;
 public class OrmliteDatabaseConfigUtil extends OrmLiteConfigUtil {
 
     public static final Class<?>[] classes = new Class[] {
-        TestDatabase.class,
             VaiTro.class,
             PhongBan.class,
             VanPhongPham.class,

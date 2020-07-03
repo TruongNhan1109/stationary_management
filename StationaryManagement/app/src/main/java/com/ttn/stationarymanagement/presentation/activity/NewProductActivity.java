@@ -1,19 +1,15 @@
 package com.ttn.stationarymanagement.presentation.activity;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,20 +22,18 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.ttn.stationarymanagement.R;
 import com.ttn.stationarymanagement.data.local.WorkWithDb;
-import com.ttn.stationarymanagement.data.local.model.stationery.VanPhongPham;
+import com.ttn.stationarymanagement.data.local.model.VanPhongPham;
 import com.ttn.stationarymanagement.presentation.baseview.BaseActivity;
 import com.ttn.stationarymanagement.presentation.bottom_sheet.SelectPhotoBottomSheet;
 import com.ttn.stationarymanagement.utils.CustomToast;
 import com.ttn.stationarymanagement.utils.GetDataToCommunicate;
 
 import java.io.File;
-import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.core.Scheduler;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 

@@ -120,7 +120,6 @@ public class AddStaftActivity extends BaseActivity {
 
         getAllData();
 
-
     }
 
     private void getAllData() {
@@ -128,9 +127,8 @@ public class AddStaftActivity extends BaseActivity {
         Observable<List<VaiTro>> getDataRole = Observable.create(r -> {
 
             try {
-                r.onNext(WorkWithDb.getInstance().getAllRole());
+                r.onNext( WorkWithDb.getInstance().getAllRole());
                 r.onComplete();
-
             } catch (Exception e) {
                 r.onError(e);
             }
@@ -144,6 +142,12 @@ public class AddStaftActivity extends BaseActivity {
         }).observeOn(AndroidSchedulers.mainThread()).subscribe(r -> {
 
             listPhongBan.addAll(r);
+
+            if (listVaiTro.size() < 1 || listPhongBan.size() < 1) {
+
+                CustomToast.showToastWarning(getApplicationContext(), "Vui lòng thiết lập phòng ban và vai trò trước", Toast.LENGTH_SHORT);
+                finish();
+            }
 
             selectRoleAdapter.notifyDataSetChanged();
             selectDepartmentAdapter.notifyDataSetChanged();

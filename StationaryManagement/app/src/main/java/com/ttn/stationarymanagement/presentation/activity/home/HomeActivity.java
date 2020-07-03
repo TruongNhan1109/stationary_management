@@ -1,7 +1,10 @@
 package com.ttn.stationarymanagement.presentation.activity.home;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -23,7 +26,10 @@ import com.ttn.stationarymanagement.presentation.fragment.StatisticFragment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import butterknife.BindView;
@@ -55,8 +61,13 @@ public class HomeActivity extends BaseActivity {
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
         setControls();
+        askPermission();
         initHomeScreen();
 
+    }
+
+    private void askPermission() {
+        askPermisionWriteExternalStorage();
     }
 
     private void initHomeScreen() {
@@ -228,6 +239,56 @@ public class HomeActivity extends BaseActivity {
                 break;
         }
 
+    }
+
+    private void askPermisionWriteExternalStorage() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) { // Sẽ hiện nếu bị từ chối lần
+
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+            alertDialog.setTitle("Quyền truy cập bộ nhớ");
+            alertDialog.setMessage("Ứng dụng cần truy cập bộ nhớ để chọn ảnh");
+
+            alertDialog.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                    ActivityCompat.requestPermissions(HomeActivity.this,
+                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                            1);
+
+                }
+            });
+
+            alertDialog.setNegativeButton("Không", null);
+            alertDialog.show();
+
+        } else { // Hỏi trực tiếp
+
+            ActivityCompat.requestPermissions(HomeActivity.this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    2);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        switch (requestCode) {
+          /*  case 1:
+
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {  // Được cấp phép
+
+                    askPermisionWriteExternalStorage();
+
+                } else {        // Bị từ chối
+
+
+                }
+                break;
+*/
+        }
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
 

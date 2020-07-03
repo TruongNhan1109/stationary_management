@@ -3,8 +3,6 @@ package com.ttn.stationarymanagement.data.local;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.ttn.stationarymanagement.data.config.Constants;
 import com.ttn.stationarymanagement.presentation.baseview.MyApp;
 
@@ -134,30 +132,5 @@ public class SharedPreferenceManage {
         editor.commit();
     }
 
-    public ArrayList<String> getStringNoticication(String keyShare) {
-        Set<String> set = sharedPreferences.getStringSet(keyShare, new HashSet<String>());
-        ArrayList<String> arrayList = new ArrayList<>();
-        arrayList.addAll(set);
-        return arrayList;
-    }
-
-    public HashMap<String, Boolean> getHashMap(String keyShare) {
-        String stringHashMap = sharedPreferences.getString(keyShare, "");
-        HashMap<String, Boolean> hashMap = new HashMap<>();
-        if (!stringHashMap.equalsIgnoreCase("")) {
-            Type type = new TypeToken<HashMap<String, Boolean>>() {
-            }.getType();
-            Gson gson = new Gson();
-            hashMap = gson.fromJson(stringHashMap, type);
-        }
-        return hashMap;
-    }
-
-    public void addHashMap(String key, HashMap<String, Boolean> value) {
-        Gson gson = new Gson();
-        String hashMapString = gson.toJson(value);
-        editor.putString(key, hashMapString);
-        editor.commit();
-    }
 
 }

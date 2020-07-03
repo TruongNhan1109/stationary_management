@@ -1,6 +1,6 @@
 package com.ttn.stationarymanagement.presentation.model;
 
-import com.ttn.stationarymanagement.data.local.model.stationery.VanPhongPham;
+import com.ttn.stationarymanagement.data.local.model.VanPhongPham;
 
 import java.util.List;
 

@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.ttn.stationarymanagement.R;
 import com.ttn.stationarymanagement.data.local.WorkWithDb;
-import com.ttn.stationarymanagement.data.local.model.stationery.VanPhongPham;
+import com.ttn.stationarymanagement.data.local.model.VanPhongPham;
 import com.ttn.stationarymanagement.presentation.activity.NewProductActivity;
 import com.ttn.stationarymanagement.presentation.adapter.GroupProductAdapter;
 import com.ttn.stationarymanagement.presentation.baseview.BaseFragment;
@@ -37,7 +37,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.core.Scheduler;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 

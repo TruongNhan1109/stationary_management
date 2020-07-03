@@ -11,11 +11,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ttn.stationarymanagement.R;
-import com.ttn.stationarymanagement.data.local.model.stationery.VanPhongPham;
-import com.ttn.stationarymanagement.presentation.dialog_fragment.ShowDetailProductDialog;
+import com.ttn.stationarymanagement.data.local.model.VanPhongPham;
 import com.ttn.stationarymanagement.presentation.model.GroupProductModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;

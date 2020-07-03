@@ -2,7 +2,6 @@ package com.ttn.stationarymanagement.data.local.interactor;
 
 import com.j256.ormlite.dao.Dao;
 import com.ttn.stationarymanagement.data.local.model.VaiTro;
-import com.ttn.stationarymanagement.data.local.model.test.TestDatabase;
 
 import java.sql.SQLException;
 import java.util.List;

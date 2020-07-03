@@ -1,21 +1,6 @@
 #
-# generated on 2020/07/02 10:53:14
+# generated on 2020/07/04 02:15:23
 #
-# --table-start--
-dataClass=com.ttn.stationarymanagement.data.local.model.test.TestDatabase
-tableName=TestDataBase
-# --table-fields-start--
-# --field-start--
-fieldName=id
-columnName=id
-generatedId=true
-# --field-end--
-# --field-start--
-fieldName=name
-# --field-end--
-# --table-fields-end--
-# --table-end--
-#################################
 # --table-start--
 dataClass=com.ttn.stationarymanagement.data.local.model.VaiTro
 tableName=VaiTro
@@ -55,7 +40,7 @@ fieldName=GhiChu
 # --table-end--
 #################################
 # --table-start--
-dataClass=com.ttn.stationarymanagement.data.local.model.stationery.VanPhongPham
+dataClass=com.ttn.stationarymanagement.data.local.model.VanPhongPham
 tableName=VanPhongPham
 # --table-fields-start--
 # --field-start--

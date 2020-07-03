@@ -1,8 +1,7 @@
 package com.ttn.stationarymanagement.data.local.interactor;
 
 import com.j256.ormlite.dao.Dao;
-import com.ttn.stationarymanagement.data.local.model.PhongBan;
-import com.ttn.stationarymanagement.data.local.model.stationery.VanPhongPham;
+import com.ttn.stationarymanagement.data.local.model.VanPhongPham;
 
 import java.sql.SQLException;
 import java.util.List;

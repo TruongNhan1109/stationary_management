@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 import com.ttn.stationarymanagement.R;
-import com.ttn.stationarymanagement.data.local.model.stationery.VanPhongPham;
+import com.ttn.stationarymanagement.data.local.model.VanPhongPham;
 import com.ttn.stationarymanagement.utils.GetDataToCommunicate;
 
 import java.io.File;
