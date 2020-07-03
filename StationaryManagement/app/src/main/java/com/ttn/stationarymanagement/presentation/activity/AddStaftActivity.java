@@ -35,6 +35,7 @@ import com.ttn.stationarymanagement.presentation.adapter.SelectRoleAdapter;
 import com.ttn.stationarymanagement.presentation.baseview.BaseActivity;
 import com.ttn.stationarymanagement.utils.AppUtils;
 import com.ttn.stationarymanagement.utils.CustomToast;
+import com.ttn.stationarymanagement.utils.GetDataToCommunicate;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -131,16 +132,16 @@ public class AddStaftActivity extends BaseActivity {
                 r.onComplete();
 
             } catch (Exception e) {
-              r.onError(e);
+                r.onError(e);
             }
 
         });
 
         compositeDisposable.add(getDataRole.subscribeOn(Schedulers.newThread()).flatMap(r -> {
             listVaiTro.addAll(r);
-           return Observable.just(WorkWithDb.getInstance().getAllDepartment());
+            return Observable.just(WorkWithDb.getInstance().getAllDepartment());
 
-        }).observeOn(AndroidSchedulers.mainThread()).subscribe(r ->{
+        }).observeOn(AndroidSchedulers.mainThread()).subscribe(r -> {
 
             listPhongBan.addAll(r);
 
@@ -206,23 +207,74 @@ public class AddStaftActivity extends BaseActivity {
                 new ShakeAnimator().setDuration(700).setRepeatTimes(0).setTarget(edtEmail).start();
                 edtEmail.setError("Sai cấu trúc email");
                 edtEmail.requestFocus();
+                return;
             }
 
 
             createNewStaft();
 
 
-
         });
-
 
 
     }
 
     private void createNewStaft() {
 
-    
+        NhanVien nhanVien = new NhanVien();
+        nhanVien.setAnh(!TextUtils.isEmpty(imageStaft) ? imageStaft : "");
+        nhanVien.setTenNV(edtNameStaft.getText().toString());
+        nhanVien.setNgaySinh(edtDateOfBirth.getText().toString());
+        nhanVien.setSDT(!TextUtils.isEmpty(edtPhone.getText().toString()) ? edtPhone.getText().toString() : "");
+        nhanVien.setEmail(GetDataToCommunicate.convertStringToString(edtEmail.getText().toString()));
+        nhanVien.setNgayTao(GetDataToCommunicate.getCurrentDate());
 
+        switch(rdoGender.getCheckedRadioButtonId()) {
+            case R.id.rdo_male:
+                nhanVien.setGT(0);
+                break;
+            case R.id.rdo_female:
+                nhanVien.setGT(1);
+                break;
+            case R.id.rdo_other:
+                nhanVien.setGT(2);
+                break;
+        }
+
+        if (listVaiTro.size() > 0) {
+            VaiTro vaiTro = listVaiTro.get(spnRole.getSelectedItemPosition());
+            nhanVien.setMaVT(vaiTro.getMaVT());
+        }
+
+        if (listPhongBan.size() > 0) {
+            PhongBan phongBan = listPhongBan.get(spDepartment.getSelectedItemPosition());
+            nhanVien.setMaPB(phongBan.getMaPB());
+        }
+
+        nhanVien.setGhiChu(!TextUtils.isEmpty(edtNote.getText().toString()) ? edtNote.getText().toString() : "");
+
+        Observable<Boolean> createStaft = Observable.create(r -> {
+            try {
+                r.onNext(WorkWithDb.getInstance().insert(nhanVien));
+                r.onComplete();
+
+            } catch (Exception e) {
+                r.onError(e);
+            }
+
+        });
+
+        compositeDisposable.add(createStaft.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(r ->{
+            if (r) {
+                CustomToast.showToastSuccesstion(getApplicationContext(), "Thêm thành công", Toast.LENGTH_SHORT);
+                finish();
+            } else {
+                CustomToast.showToastError(getApplicationContext(), "Thêm thất bại", Toast.LENGTH_SHORT);
+            }
+
+        }, throwable -> {
+            CustomToast.showToastError(getApplicationContext(), "Thêm thất bại", Toast.LENGTH_SHORT);
+        }));
 
     }
 

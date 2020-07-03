@@ -104,4 +104,14 @@ public class GetDataToCommunicate {
 
     }
 
+    public static String convertStringToString(String data) {
+        if (TextUtils.isEmpty(data)) {
+            return "";
+        } else {
+            return data;
+        }
+
+    }
+
+
 }
