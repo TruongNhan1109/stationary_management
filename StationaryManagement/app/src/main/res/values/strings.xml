@@ -11,4 +11,36 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+
+    //man hinh nhan vien
+
+    <string name="tv_TenNhanVien">Tên nhân viên</string>
+    <string name="edt_Nhapten">Nhập tên nhân viên</string>
+    <string name="tv_Ngaysinh">Ngày sinh</string>
+    <string name="tv_ChonNgaysinh">Chọn ngày sinh</string>
+    <string name="tv_SDT">Số điện thoại</string>
+    <string name="edt_NhapSDt">Nhập số điện thoại</string>
+    <string name="tv_Email">Email</string>
+    <string name="edt_NhapEmail">Nhập Email</string>
+    <string name="tv_GioiTinh">Giới <tính></tính></string>
+    <string name="rdbtn_Nam">Nam</string>
+    <string name="rdbtn_Nu">Nu</string>
+    <string name="rdbtn_Khac">Khác</string>
+    <string name="tv_ChonPB">Chọn phòng ban</string>
+    <string name="tv_ChonVaiTro">Chọn vai trò</string>
+    <string name="tv_GhiChu">Ghi chú</string>
+
+
+    //Màn hình phòng background
+    <string name="TenPB">Tên phòng ban</string>
+    <string name="NoiDungGhiChuPB">Nội dung ghi chú phòng ban</string>
+
+    //Tên chức năng
+    <string name="tv_ChonChucNang">Chọn chức năng</string>
+
+    //item
+    <string name="tv_ITem">Item</string>
+
+    //fragment_statistic
+
 </resources>

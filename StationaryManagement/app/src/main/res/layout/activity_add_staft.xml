@@ -64,7 +64,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Tên nhân viên"
+                            android:text="@string/tv_TenNhanVien"
                             android:layout_marginBottom="5dp"
                             android:textColor="@color/color_black"
                             android:textSize="20sp"/>
@@ -73,14 +73,13 @@
                             android:id="@+id/edt_activity_add_staft_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:imeOptions="actionNext"
+                            android:imeOptions="actionDone"
                             android:inputType="text"
-                            android:nextFocusDown="@+id/edt_activity_new_product_unit_product"
                             android:maxLines="1"
                             android:drawableLeft="@drawable/ic_people_24"
                             android:drawablePadding="3dp"
                             android:background="@drawable/state_background_text_box_white"
-                            android:hint="Nhập tên nhân viên"/>
+                            android:hint="@string/edt_Nhapten"/>
 
                     </LinearLayout>
 
@@ -94,7 +93,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Ngày sinh"
+                            android:text="@string/tv_Ngaysinh"
                             android:layout_marginBottom="5dp"
                             android:textColor="@color/color_black"
                             android:textSize="20sp"/>
@@ -107,7 +106,7 @@
                             android:background="@drawable/state_background_text_box_white"
                             android:drawableLeft="@drawable/ic_calendar_24"
                             android:drawablePadding="3dp"
-                            android:hint="Chọn ngày sinh"
+                            android:hint="@string/tv_ChonNgaysinh"
                             android:textSize="16sp"
                             android:imeOptions="actionNext"
                             android:maxLines="1"
@@ -126,7 +125,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Số điện thoại"
+                            android:text="@string/tv_SDT"
                             android:layout_marginBottom="5dp"
                             android:textColor="@color/color_black"
                             android:textSize="20sp"/>
@@ -135,15 +134,13 @@
                             android:id="@+id/edt_activity_add_staft_phone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:imeOptions="actionNext"
+                            android:imeOptions="actionDone"
                             android:inputType="text"
-                            android:nextFocusDown="@+id/edt_activity_new_product_unit_product"
                             android:maxLines="1"
                             android:drawableLeft="@drawable/ic_phone_24"
                             android:drawablePadding="3dp"
-                            android:enabled="false"
                             android:background="@drawable/state_background_text_box_white"
-                            android:hint="Nhập số điện thoại"/>
+                            android:hint="@string/edt_NhapSDt"/>
 
                     </LinearLayout>
 
@@ -157,7 +154,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Email"
+                            android:text="@string/tv_Email"
                             android:layout_marginBottom="5dp"
                             android:textColor="@color/color_black"
                             android:textSize="20sp"/>
@@ -166,14 +163,13 @@
                             android:id="@+id/edt_activity_add_staft_email"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:imeOptions="actionNext"
+                            android:imeOptions="actionDone"
                             android:inputType="text"
-                            android:nextFocusDown="@+id/edt_activity_new_product_unit_product"
                             android:maxLines="1"
                             android:drawableLeft="@drawable/ic_mail_24"
                             android:drawablePadding="3dp"
                             android:background="@drawable/state_background_text_box_white"
-                            android:hint="Nhập email"/>
+                            android:hint="@string/edt_NhapEmail"/>
 
                     </LinearLayout>
 
@@ -189,7 +185,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Giới tính"
+                            android:text="@string/tv_GioiTinh"
                             android:layout_marginBottom="5dp"
                             android:textColor="@color/color_black"
                             android:textSize="20sp"/>
@@ -207,20 +203,20 @@
                                 android:checked="true"
                                 android:layout_marginRight="5dp"
                                 android:layout_height="wrap_content"
-                                android:text="Nam"/>
+                                android:text="@string/rdbtn_Nam"/>
 
                             <RadioButton
                                 android:id="@+id/rdo_female"
                                 android:layout_width="wrap_content"
                                 android:layout_marginRight="5dp"
                                 android:layout_height="wrap_content"
-                                android:text="Nữ"/>
+                                android:text="@string/rdbtn_Nu"/>
 
                             <RadioButton
                                 android:id="@+id/rdo_other"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Khác"/>
+                                android:text="@string/rdbtn_Khac"/>
                         </RadioGroup>
 
                     </LinearLayout>
@@ -234,7 +230,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Chọn phòng ban"
+                            android:text="@string/tv_ChonPB"
                             android:layout_marginBottom="5dp"
                             android:textColor="@color/color_black"
                             android:textSize="20sp"/>
@@ -256,7 +252,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Chọn vai trò"
+                            android:text="@string/tv_ChonVaiTro"
                             android:layout_marginBottom="5dp"
                             android:textColor="@color/color_black"
                             android:textSize="20sp"/>
@@ -279,7 +275,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Ghi chú"
+                            android:text="@string/tv_GhiChu"
                             android:layout_marginBottom="5dp"
                             android:textColor="@color/color_black"
                             android:textSize="20sp"/>
@@ -288,13 +284,11 @@
                             android:id="@+id/edt_activity_add_staft_note"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:imeOptions="actionNext"
+                            android:imeOptions="actionDone"
                             android:inputType="text"
-                            android:nextFocusDown="@+id/edt_activity_new_product_unit_product"
                             android:maxLines="1"
                             android:drawableLeft="@drawable/ic_note_line_24"
                             android:drawablePadding="3dp"
-                            android:enabled="false"
                             android:background="@drawable/state_background_text_box_white"
                             android:hint="Nhập ghi chú"/>
 

@@ -53,6 +53,8 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class AddStaftActivity extends BaseActivity {
 
+    public static int REQUEST_ADD_STAFT = 1;
+
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
@@ -271,7 +273,10 @@ public class AddStaftActivity extends BaseActivity {
         compositeDisposable.add(createStaft.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(r ->{
             if (r) {
                 CustomToast.showToastSuccesstion(getApplicationContext(), "Thêm thành công", Toast.LENGTH_SHORT);
+                Intent intent = getIntent();
+                setResult(RESULT_OK, intent);
                 finish();
+
             } else {
                 CustomToast.showToastError(getApplicationContext(), "Thêm thất bại", Toast.LENGTH_SHORT);
             }

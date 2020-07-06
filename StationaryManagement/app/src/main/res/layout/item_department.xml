@@ -40,7 +40,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
                     android:textColor="@color/color_orange"
-                    android:text="Tên vai phòng ban"/>
+                    android:text="@string/TenPB"/>
 
                 <TextView
                     android:id="@+id/tv_item_department_note"
@@ -48,11 +48,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:textSize="14sp"
-                    android:text="Nội dung ghi chú phòng ban"/>
+                    android:text="@string/NoiDungGhiChuPB"/>
 
             </LinearLayout>
-
-
 
             <ImageButton
                 android:id="@+id/ibt_item_department_remove"
@@ -61,7 +59,6 @@
                 android:src="@drawable/ic_remove_color_24"
                 android:background="@color/color_transparent"
                 />
-
 
         </LinearLayout>
 

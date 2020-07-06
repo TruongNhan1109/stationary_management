@@ -31,7 +31,7 @@
             <item
                 android:id="@+id/mn_department_manager"
                 android:icon="@drawable/ic_desktop_color_32"
-                android:title="Phòng bàn" />
+                android:title="Phòng ban" />
 
             <item
                 android:id="@+id/mn_stationary_management"

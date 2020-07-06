@@ -13,6 +13,7 @@
 
 
         <TextView
+            android:id="@+id/tv_fragment_staft_manager_total_staft"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="22sp"
@@ -20,11 +21,24 @@
             android:text="Danh sách nhân viên"/>
 
 
+
+        <TextView
+            android:id="@+id/tv_fragment_staft_manager_notify_empty"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:textColor="@color/color_blue"
+            android:text="Chưa có nhân viên nào"/>
+
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_fragment_staft_manager_list_staft"
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </RelativeLayout>
