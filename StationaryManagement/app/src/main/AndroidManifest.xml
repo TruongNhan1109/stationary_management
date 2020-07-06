@@ -37,7 +37,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".presentation.activity.AddStaftActivity"></activity>
+        <activity android:name=".presentation.activity.AllocationActivity"></activity>
+        <activity android:name=".presentation.activity.AddStaftActivity" />
         <activity
             android:name=".presentation.activity.SplashScreenActivity"
             android:theme="@style/SplashscreenTheme">
