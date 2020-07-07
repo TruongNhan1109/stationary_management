@@ -59,7 +59,9 @@
                             android:text="Chọn sản phẩm"/>
 
                         <Spinner
+                            android:id="@+id/spn_activity_allocation_select_product"
                             android:layout_marginTop="5dp"
+                            android:background="@drawable/state_background_text_box_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
 
@@ -80,7 +82,9 @@
                             android:textSize="18sp" />
 
                         <Spinner
+                            android:id="@+id/spn_activity_allocation_select_staft"
                             android:layout_marginTop="5dp"
+                            android:background="@drawable/state_background_text_box_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
                     </LinearLayout>
@@ -103,6 +107,10 @@
                             android:layout_width="match_parent"
                             android:background="@drawable/shape_background_text_box_normal"
                             android:hint="Nhập số lượng"
+                            android:inputType="number"
+                            android:imeOptions="actionDone"
+                            android:textSize="16sp"
+                            android:maxLines="1"
                             android:layout_height="wrap_content"/>
 
                     </LinearLayout>
@@ -124,7 +132,10 @@
                         <EditText
                             android:layout_width="match_parent"
                             android:background="@drawable/shape_background_text_box_normal"
-                            android:hint="giá trị"
+                            android:textSize="16sp"
+                            android:text="0"
+                            android:textColor="@color/color_red"
+                            android:enabled="false"
                             android:layout_height="wrap_content"/>
 
                     </LinearLayout>
@@ -143,11 +154,16 @@
                             android:textColor="@color/color_black"
                             android:textSize="18sp" />
 
-                        <EditText
+                        <TextView
                             android:layout_width="match_parent"
                             android:background="@drawable/shape_background_text_box_normal"
                             android:hint="12/02/2020"
+                            android:drawableLeft="@drawable/ic_calendar_24"
+                            android:drawablePadding="3dp"
+                            android:textColor="@color/color_purple"
+                            android:textSize="16sp"
                             android:layout_height="wrap_content"/>
+
                     </LinearLayout>
 
                     <!-- Ghi chú -->
@@ -168,6 +184,7 @@
                             android:layout_width="match_parent"
                             android:background="@drawable/shape_background_text_box_normal"
                             android:hint="Ghi chú"
+                            android:textSize="16sp"
                             android:layout_height="wrap_content"/>
 
                     </LinearLayout>
