@@ -1,5 +1,5 @@
 #
-# generated on 2020/07/04 02:15:23
+# generated on 2020/07/09 01:31:14
 #
 # --table-start--
 dataClass=com.ttn.stationarymanagement.data.local.model.VaiTro
@@ -115,6 +115,42 @@ fieldName=GhiChu
 # --field-end--
 # --field-start--
 fieldName=Anh
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=com.ttn.stationarymanagement.data.local.model.CapPhat
+tableName=CapPhat
+# --table-fields-start--
+# --field-start--
+fieldName=MaPhieu
+columnName=MaPhieu
+generatedId=true
+# --field-end--
+# --field-start--
+fieldName=MaVPP
+# --field-end--
+# --field-start--
+fieldName=MaNV
+# --field-end--
+# --field-start--
+fieldName=NgayCap
+# --field-end--
+# --field-start--
+fieldName=SoLuong
+# --field-end--
+# --field-start--
+fieldName=NgayTD
+# --field-end--
+# --field-start--
+fieldName=TrangThai
+# --field-end--
+# --field-start--
+fieldName=GhiChu
+# --field-end--
+# --field-start--
+fieldName=TongGia
 # --field-end--
 # --table-fields-end--
 # --table-end--

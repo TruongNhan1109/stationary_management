@@ -3,10 +3,12 @@ package com.ttn.stationarymanagement.data.local;
 import android.content.Context;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
+import com.ttn.stationarymanagement.data.local.interactor.AllocationUseCase;
 import com.ttn.stationarymanagement.data.local.interactor.DepartmentUseCase;
 import com.ttn.stationarymanagement.data.local.interactor.ProductUseCase;
 import com.ttn.stationarymanagement.data.local.interactor.RoleUseCase;
 import com.ttn.stationarymanagement.data.local.interactor.StaftUseCase;
+import com.ttn.stationarymanagement.data.local.model.CapPhat;
 import com.ttn.stationarymanagement.data.local.model.NhanVien;
 import com.ttn.stationarymanagement.data.local.model.PhongBan;
 import com.ttn.stationarymanagement.data.local.model.VaiTro;
@@ -258,6 +260,60 @@ public class WorkWithDb {
         return new ArrayList<>();
     }
 
+
+    // Allocation Table --------------------------------------------------------
+
+    public boolean insert(CapPhat phieu) {
+        try {
+            return  AllocationUseCase.create(databaseHelper.getAllocationDao(), phieu) == 1;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return  false;
+    }
+
+    public boolean update(CapPhat phieu) {
+        try {
+            AllocationUseCase.update(databaseHelper.getAllocationDao(), phieu);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean delete(CapPhat phieu) {
+        try {
+            AllocationUseCase.delete(databaseHelper.getAllocationDao(), phieu);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public CapPhat getAllocationById(long id) {
+
+        CapPhat phieu = new CapPhat();
+        try {
+            phieu = AllocationUseCase.getById(databaseHelper.getAllocationDao(), id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return phieu;
+
+    }
+
+    public List<CapPhat> getAllAllocation() {
+        try {
+            List<CapPhat> list = AllocationUseCase.getAll(databaseHelper.getAllocationDao());
+            return list;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
 
 
 

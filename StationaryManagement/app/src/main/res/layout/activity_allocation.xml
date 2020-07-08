@@ -97,6 +97,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/tv_activity_allocation_title_amount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Số lượng cấp"
@@ -104,6 +105,7 @@
                             android:textSize="18sp" />
 
                         <EditText
+                            android:id="@+id/edt_activity_allocation_enter_amount"
                             android:layout_width="match_parent"
                             android:background="@drawable/shape_background_text_box_normal"
                             android:hint="Nhập số lượng"
@@ -130,6 +132,7 @@
                             android:textSize="18sp" />
 
                         <EditText
+                            android:id="@+id/edt_activity_allocation_price"
                             android:layout_width="match_parent"
                             android:background="@drawable/shape_background_text_box_normal"
                             android:textSize="16sp"
@@ -155,6 +158,7 @@
                             android:textSize="18sp" />
 
                         <TextView
+                            android:id="@+id/tv_activity_allocation_date"
                             android:layout_width="match_parent"
                             android:background="@drawable/shape_background_text_box_normal"
                             android:hint="12/02/2020"
@@ -181,6 +185,7 @@
                             android:textSize="18sp" />
 
                         <EditText
+                            android:id="@+id/edt_activity_allocation_note"
                             android:layout_width="match_parent"
                             android:background="@drawable/shape_background_text_box_normal"
                             android:hint="Ghi chú"
@@ -198,6 +203,7 @@
                         android:orientation="horizontal">
 
                         <com.ttn.stationarymanagement.presentation.custom_view.MButtonActionBlue
+                            android:id="@+id/btn_activity_allocation_done"
                             android:layout_width="wrap_content"
                             android:text="Cấp phát"
                             android:layout_height="42dp"/>
