@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/tv_item_group_bill_name_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tên group"
+            android:textSize="18sp"
+            android:textColor="@color/color_blue_mac_os"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_item_group_bill_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </RelativeLayout>
+
+
+
+
+    </LinearLayout>
+
+</RelativeLayout>

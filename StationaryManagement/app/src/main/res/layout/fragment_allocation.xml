@@ -8,8 +8,48 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        style="@style/area_layout_content"
         android:orientation="vertical">
 
+
+        <LinearLayout
+            android:id="@+id/lnl_fragment_allocation_notify_empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <com.github.ybq.android.spinkit.SpinKitView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/spin_kit"
+                style="@style/SpinKitView.Large.CubeGrid"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                app:SpinKit_Color="@color/colorAccent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textSize="18sp"
+                android:textColor="@color/color_blue_mac_os"
+                android:text="Chưa cấp phát phiếu nào"/>
+
+        </LinearLayout>
+
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_fragment_allocation_list_bill"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </RelativeLayout>
 
         
     </LinearLayout>

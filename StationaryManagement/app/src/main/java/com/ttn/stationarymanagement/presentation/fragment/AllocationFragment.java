@@ -5,13 +5,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.ttn.stationarymanagement.R;
 import com.ttn.stationarymanagement.presentation.activity.AllocationActivity;
+import com.ttn.stationarymanagement.presentation.adapter.GroupBillAdapter;
 import com.ttn.stationarymanagement.presentation.baseview.BaseFragment;
 
 import butterknife.BindView;
@@ -21,6 +24,14 @@ public class AllocationFragment extends BaseFragment {
 
     @BindView(R.id.fab)
     FloatingActionButton fbAdd;
+
+    @BindView(R.id.lnl_fragment_allocation_notify_empty)
+    LinearLayout lnlNotifyEmplty;
+
+    @BindView(R.id.rv_fragment_allocation_list_bill)
+    RecyclerView rvListBill;
+
+    private GroupBillAdapter adapterGroupBill;
 
     public static AllocationFragment newInstance() {
         Bundle args = new Bundle();

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="32dp"
+            android:src="@drawable/ic_note_line_24"
+            android:scaleType="centerInside"
+            android:layout_height="32dp"/>
+
+        <LinearLayout
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="5dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="1dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_blue_mac_os"
+                    android:textSize="16sp"
+                    android:layout_marginRight="5dp"
+                    android:textStyle="bold"
+                    android:text="Mã phiếu: "/>
+
+                <TextView
+                    android:layout_width="1dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="123"
+                    android:textSize="16sp"
+                    android:textColor="@color/color_black"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="20/06/2020"
+                    android:textSize="16sp"
+                    android:textColor="@color/color_black"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="1dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="@color/color_purple"
+                    android:text="MaNV: "/>
+
+                <TextView
+                    android:layout_width="1dp"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:text="456"
+                    android:textSize="16sp"
+                    android:textColor="@color/color_black"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="1dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="@color/color_purple"
+                    android:text="Cấp cho: "/>
+
+                <TextView
+                    android:layout_width="1dp"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:text="Nhàn"
+                    android:textSize="16sp"
+                    android:textColor="@color/color_black"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="1dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="@color/color_purple"
+                    android:text="Số lượng: "/>
+
+                <TextView
+                    android:layout_width="1dp"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:text="10"
+                    android:textSize="16sp"
+                    android:textColor="@color/color_black"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="1dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="@color/color_purple"
+                    android:text="Tổng giá: "/>
+
+                <TextView
+                    android:layout_width="1dp"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:text="10000"
+                    android:textSize="16sp"
+                    android:textColor="@color/color_black"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/ibt_item_department_remove"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_remove_color_24"
+            android:background="@color/color_transparent" />
+
+    </LinearLayout>
+
+</RelativeLayout>
