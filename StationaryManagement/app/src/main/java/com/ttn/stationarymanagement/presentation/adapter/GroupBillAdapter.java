@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ttn.stationarymanagement.R;
+import com.ttn.stationarymanagement.data.local.model.CapPhat;
 import com.ttn.stationarymanagement.presentation.model.GroupBillModel;
 
 import java.util.List;
@@ -40,6 +41,14 @@ public class GroupBillAdapter  extends RecyclerView.Adapter<GroupBillAdapter.Gro
 
     @Override
     public void onBindViewHolder(@NonNull GroupBillViewHolder holder, int position) {
+
+        GroupBillModel mItem = listGroups.get(position);
+        holder.tvNameGroup.setText(mItem.getNameGroup());
+
+        BillAdapter adapter = new BillAdapter(mContext, mItem.getListBills());
+        holder.rvListItem.setLayoutManager(holder.linearLayoutManager);
+        holder.rvListItem.setAdapter(adapter);
+        
 
     }
 

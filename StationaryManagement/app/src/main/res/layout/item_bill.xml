@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="5dp"
+        android:background="@color/color_white"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -35,24 +37,35 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/color_blue_mac_os"
                     android:textSize="16sp"
-                    android:layout_marginRight="5dp"
                     android:textStyle="bold"
                     android:text="Mã phiếu: "/>
 
-                <TextView
+                <LinearLayout
                     android:layout_width="1dp"
-                    android:layout_weight="1"
+                    android:layout_weight="2"
                     android:layout_height="wrap_content"
-                    android:text="123"
-                    android:textSize="16sp"
-                    android:textColor="@color/color_black"/>
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="20/06/2020"
-                    android:textSize="16sp"
-                    android:textColor="@color/color_black"/>
+                    <TextView
+                        android:id="@+id/tv_item_bill_id_bill"
+                        android:layout_width="1dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="123"
+                        android:textSize="16sp"
+                        android:textColor="@color/color_black"/>
+
+                    <TextView
+                        android:id="@+id/tv_item_bill_date_create"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="20/06/2020"
+                        android:textSize="16sp"
+                        android:textColor="@color/color_orange_mac_os"/>
+
+
+                </LinearLayout>
+
 
             </LinearLayout>
 
@@ -67,9 +80,10 @@
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
                     android:textColor="@color/color_purple"
-                    android:text="MaNV: "/>
+                    android:text="Sản phẩm: "/>
 
                 <TextView
+                    android:id="@+id/tv_item_bill_name_product"
                     android:layout_width="1dp"
                     android:layout_weight="2"
                     android:layout_height="wrap_content"
@@ -93,6 +107,7 @@
                     android:text="Cấp cho: "/>
 
                 <TextView
+                    android:id="@+id/tv_item_bill_name_staft"
                     android:layout_width="1dp"
                     android:layout_weight="2"
                     android:layout_height="wrap_content"
@@ -116,6 +131,7 @@
                     android:text="Số lượng: "/>
 
                 <TextView
+                    android:id="@+id/tv_item_bill_amount"
                     android:layout_width="1dp"
                     android:layout_weight="2"
                     android:layout_height="wrap_content"
@@ -138,18 +154,19 @@
                     android:text="Tổng giá: "/>
 
                 <TextView
+                    android:id="@+id/tv_item_bill_total_price"
                     android:layout_width="1dp"
                     android:layout_weight="2"
                     android:layout_height="wrap_content"
                     android:text="10000"
                     android:textSize="16sp"
-                    android:textColor="@color/color_black"/>
+                    android:textColor="@color/color_red"/>
             </LinearLayout>
 
         </LinearLayout>
 
         <ImageButton
-            android:id="@+id/ibt_item_department_remove"
+            android:id="@+id/ibt_item_bill_remove"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:src="@drawable/ic_remove_color_24"

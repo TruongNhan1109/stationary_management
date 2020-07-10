@@ -15,6 +15,10 @@ public class GroupBillModel {
         this.listBills = bills;
     }
 
+    public GroupBillModel() {
+    }
+
+
     public String getNameGroup() {
         return nameGroup;
     }
