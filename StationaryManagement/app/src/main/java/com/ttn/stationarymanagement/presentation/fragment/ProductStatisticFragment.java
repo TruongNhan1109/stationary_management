@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -34,6 +35,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class ProductStatisticFragment extends BaseFragment {
@@ -44,8 +46,13 @@ public class ProductStatisticFragment extends BaseFragment {
     @BindView(R.id.progress_bar)
     ProgressBar pvBar;
 
+    @BindView(R.id.tv_fragment_product_statistic_notify)
+    TextView tvNotify;
+
     private List<VanPhongPham> listProductTopUse;
     private List<DataEntry> listDataChart;
+
+    private CompositeDisposable compositeDisposable;
 
 
     public static ProductStatisticFragment newInstance() {
@@ -77,44 +84,52 @@ public class ProductStatisticFragment extends BaseFragment {
             List<VanPhongPham> listTopProducts = WorkWithDb.getInstance().getTopProducts();
             r.onNext(listTopProducts);
             r.onComplete();
-
         });
 
         getTopProduct.subscribeOn(Schedulers.newThread()).flatMap(vanPhongPhams -> Observable.fromIterable(vanPhongPhams)
         ).observeOn(AndroidSchedulers.mainThread()).subscribe(vanPhongPham -> {
-
             listDataChart.add(new ValueDataEntry(vanPhongPham.getTenSP(), vanPhongPham.getDaDung()));
-
         }, throwable -> {
-
             CustomToast.showToastError(getContext(), "Đã xảy ra lỗi", Toast.LENGTH_SHORT);
-
         }, () -> {
 
-            CustomToast.showToastSuccesstion(getContext(), "Đã hoàn tất", Toast.LENGTH_SHORT);
-            setChart();
+            if (listDataChart.size() > 0) {
+                tvNotify.setVisibility(View.GONE);
+                productChart.setVisibility(View.VISIBLE);
+                pvBar.setVisibility(View.VISIBLE);
+
+                setChart();
+            } else {
+                tvNotify.setVisibility(View.VISIBLE);
+                productChart.setVisibility(View.GONE);
+                pvBar.setVisibility(View.GONE);
+            }
+
+
 
         });
 
     }
 
     private void setControls() {
-        productChart.setProgressBar(pvBar);
 
+        compositeDisposable = new CompositeDisposable();
+        productChart.setProgressBar(pvBar);
         listProductTopUse = new ArrayList<>();
         listDataChart = new  ArrayList<>();
+
     }
 
     public void setChart() {
 
         Pie pieProduct = AnyChart.pie();
         pieProduct.data(listDataChart);
-        pieProduct.title("Fruits imported in 2015 (in kg)");
+        pieProduct.title("Sản phẩm sử dụng nhiều nhất");
         pieProduct.labels().position("outside");
 
         pieProduct.legend().title().enabled(true);
         pieProduct.legend().title()
-                .text("Retail channels")
+                .text("Các sản phẩm")
                 .padding(0d, 0d, 10d, 0d);
 
         pieProduct.legend()
@@ -124,5 +139,11 @@ public class ProductStatisticFragment extends BaseFragment {
 
         productChart.setChart(pieProduct);
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        compositeDisposable.dispose();
     }
 }
