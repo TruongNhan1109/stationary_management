@@ -54,14 +54,14 @@
                                 android:layout_alignParentBottom="true"
                                 android:textSize="18sp"
                                 android:textColor="@color/color_purple"
-                                android:text="Tổng cộng"/>
+                                android:text="Số lượng"/>
 
                             <TextView
                                 android:id="@+id/tv_fragment_stationary_manager_total_product"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="0"
-                                android:textSize="22sp"
+                                android:textSize="18sp"
                                 android:layout_alignParentRight="true"
                                 android:layout_marginTop="5dp"
                                 android:layout_marginRight="5dp"
@@ -100,14 +100,14 @@
                                 android:layout_alignParentBottom="true"
                                 android:textSize="18sp"
                                 android:textColor="@color/color_orange"
-                                android:text="Tổng cộng"/>
+                                android:text="Giá trị"/>
 
                             <TextView
                                 android:id="@+id/tv_fragment_stationary_manager_total_price"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="0"
-                                android:textSize="22sp"
+                                android:textSize="18sp"
                                 android:layout_alignParentRight="true"
                                 android:layout_marginTop="5dp"
                                 android:layout_marginRight="5dp"

@@ -104,7 +104,7 @@ public class ProductStatisticFragment extends BaseFragment {
                 productChart.setVisibility(View.GONE);
                 pvBar.setVisibility(View.GONE);
             }
-            
+
         }));
 
     }

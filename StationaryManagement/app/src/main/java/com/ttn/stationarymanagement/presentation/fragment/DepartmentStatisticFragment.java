@@ -105,6 +105,10 @@ public class DepartmentStatisticFragment extends BaseFragment {
                     for(Map.Entry<Long, List<CapPhat>> entry: groupByStaftId.entrySet()) {
                         NhanVien nhanVien = WorkWithDb.getInstance().getStaftById(entry.getKey());
 
+                        if (nhanVien == null) {
+                            continue;
+                        }
+
                         int total = 0;
                         for(CapPhat capPhat: entry.getValue()) {
                             total += capPhat.getSoLuong();

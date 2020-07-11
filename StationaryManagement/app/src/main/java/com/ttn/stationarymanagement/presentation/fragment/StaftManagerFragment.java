@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,6 +23,7 @@ import com.ttn.stationarymanagement.data.local.model.NhanVien;
 import com.ttn.stationarymanagement.presentation.activity.AddStaftActivity;
 import com.ttn.stationarymanagement.presentation.adapter.StaftManagerAdapter;
 import com.ttn.stationarymanagement.presentation.baseview.BaseFragment;
+import com.ttn.stationarymanagement.utils.CustomToast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,6 +92,26 @@ public class StaftManagerFragment extends BaseFragment {
 
             @Override
             public void onRemoveClick(int position) {
+                NhanVien staftRemove = listNhanVien.get(position);
+
+                Observable<Boolean> removeStaft = Observable.just(WorkWithDb.getInstance().delete(staftRemove));
+                removeStaft.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(aBoolean -> {
+
+                    if (aBoolean) {
+                        CustomToast.showToastSuccesstion(getContext(), "Đã xóa nhân viên", Toast.LENGTH_SHORT);
+
+                        listNhanVien.remove(position);
+                        adapter.notifyItemRemoved(position);
+                        adapter.notifyItemRangeChanged(position, listNhanVien.size());
+
+                    } else {
+                        CustomToast.showToastError(getContext(), "Xóa thất bại", Toast.LENGTH_SHORT);
+                    }
+
+                }, throwable -> {
+                    CustomToast.showToastError(getContext(), "Xóa thất bại", Toast.LENGTH_SHORT);
+                });
+
 
             }
         });
