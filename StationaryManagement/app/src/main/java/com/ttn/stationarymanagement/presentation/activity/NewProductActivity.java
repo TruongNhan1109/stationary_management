@@ -115,6 +115,9 @@ public class NewProductActivity extends BaseActivity {
                 this.productEdit = vanPhongPham;
 
                 imageSelect = !TextUtils.isEmpty(productEdit.getAnh()) ? productEdit.getAnh() : "";
+
+                Picasso.get().load(new File(imageSelect)).error(R.mipmap.app_icon).fit().centerInside().into(ivImageProduct);
+
                 tvNamePreview.setText(productEdit.getTenSP());
                 edtNameProduct.setText(productEdit.getTenSP());
                 edtUnit.setText(!TextUtils.isEmpty(productEdit.getDonVi() )? productEdit.getDonVi() : "");
