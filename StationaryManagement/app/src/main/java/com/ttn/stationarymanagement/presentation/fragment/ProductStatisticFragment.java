@@ -86,7 +86,7 @@ public class ProductStatisticFragment extends BaseFragment {
             r.onComplete();
         });
 
-        getTopProduct.subscribeOn(Schedulers.newThread()).flatMap(vanPhongPhams -> Observable.fromIterable(vanPhongPhams)
+        compositeDisposable.add( getTopProduct.subscribeOn(Schedulers.newThread()).flatMap(vanPhongPhams -> Observable.fromIterable(vanPhongPhams)
         ).observeOn(AndroidSchedulers.mainThread()).subscribe(vanPhongPham -> {
             listDataChart.add(new ValueDataEntry(vanPhongPham.getTenSP(), vanPhongPham.getDaDung()));
         }, throwable -> {
@@ -104,10 +104,8 @@ public class ProductStatisticFragment extends BaseFragment {
                 productChart.setVisibility(View.GONE);
                 pvBar.setVisibility(View.GONE);
             }
-
-
-
-        });
+            
+        }));
 
     }
 

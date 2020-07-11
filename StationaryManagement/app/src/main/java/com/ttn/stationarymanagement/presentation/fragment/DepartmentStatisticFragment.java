@@ -35,13 +35,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class DepartmentStatisticFragment extends BaseFragment {
 
+
+    @BindView(R.id.barchart)
+    BarChart chart;
+
+    private CompositeDisposable compositeDisposable;
 
     public static DepartmentStatisticFragment newInstance() {
         Bundle args = new Bundle();
@@ -61,7 +68,14 @@ public class DepartmentStatisticFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        setControls();
         getData();
+
+    }
+
+    private void setControls() {
+
+        compositeDisposable = new CompositeDisposable();
     }
 
     private void getData() {
@@ -69,26 +83,25 @@ public class DepartmentStatisticFragment extends BaseFragment {
         Map<Long, List<CapPhat>> groupByStaftId = new HashMap<>();
         Map<Long, Integer> groupStaftByDepartment = new HashMap<>();
 
-        Observable<List<CapPhat>> getAllBills = Observable.create(r -> {
-            r.onNext(WorkWithDb.getInstance().getAllAllocation());
-            r.onComplete();
-
-        });
-
-        getAllBills.subscribeOn(Schedulers.newThread()).flatMap(capPhats -> Observable.fromIterable(capPhats))
+        Observable<List<CapPhat>> getAllBills = Observable.just(WorkWithDb.getInstance().getAllAllocation());
+        compositeDisposable.add(getAllBills.subscribeOn(Schedulers.newThread()).flatMap(capPhats -> Observable.fromIterable(capPhats))
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(capPhat -> {
 
                     if (groupByStaftId.get(capPhat.getMaNV()) == null) {
+
                         List<CapPhat> listBills = new ArrayList<>();
                         listBills.add(capPhat);
                         groupByStaftId.put(capPhat.getMaNV(), listBills);
+
                     } else {
 
                         List<CapPhat> listBills = groupByStaftId.get(capPhat.getMaNV());
                         listBills.add(capPhat);
+
                     }
         }, throwable -> CustomToast.showToastError(getContext(), "Đã xảy ra lỗi", Toast.LENGTH_SHORT)
         , () -> {
+
                     for(Map.Entry<Long, List<CapPhat>> entry: groupByStaftId.entrySet()) {
                         NhanVien nhanVien = WorkWithDb.getInstance().getStaftById(entry.getKey());
 
@@ -96,7 +109,6 @@ public class DepartmentStatisticFragment extends BaseFragment {
                         for(CapPhat capPhat: entry.getValue()) {
                             total += capPhat.getSoLuong();
                         }
-
 
                         if (groupStaftByDepartment.get(nhanVien.getMaPB()) == null) {
                             groupStaftByDepartment.put(nhanVien.getMaPB(), total);
@@ -110,37 +122,41 @@ public class DepartmentStatisticFragment extends BaseFragment {
 
                     SortMapStaft sortMapStaft = new SortMapStaft(groupStaftByDepartment);
                     Map<Long, Integer> result = new TreeMap<Long, Integer>(sortMapStaft);
-
                     result.putAll(groupStaftByDepartment);
 
-                    BarChart chart = getView().findViewById(R.id.barchart);
-
-                    ArrayList NoOfEmp = new ArrayList();
+                    ArrayList listRooms = new ArrayList();
                     List<String> listNameDepartment = new ArrayList<>();
 
-                    int i = 0;
+                    int index = 0;
                     for(Map.Entry<Long, Integer> entry: result.entrySet()) {
 
                         PhongBan phongBan = WorkWithDb.getInstance().getDepartmentById(entry.getKey());
-                        NoOfEmp.add(new BarEntry(entry.getValue(), i++));
-                        listNameDepartment.add(phongBan.getTenPB());
+                        listRooms.add(new BarEntry(entry.getValue(), index++));
 
+                        if (phongBan != null) {
+                            listNameDepartment.add(phongBan.getTenPB());
+                        }
+
+                        if (index == 7) {
+                            break;
+                        }
                     }
 
+                    BarDataSet bardataset = new BarDataSet(listRooms, "Số lượng cấp phát theo phòng ban");
+                    chart.animateY(3000);
 
-                    BarDataSet bardataset = new BarDataSet(NoOfEmp, "No Of Employee");
-                    chart.animateY(5000);
                     BarData data = new BarData(listNameDepartment, bardataset);
                     bardataset.setColors(ColorTemplate.COLORFUL_COLORS);
                     chart.setBackgroundColor(Color.WHITE);
                     chart.setNoDataText("Chưa có số liệu");
                     chart.setData(data);
 
+                }));
+    }
 
-                });
-
-
-
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        compositeDisposable.dispose();
     }
 }
