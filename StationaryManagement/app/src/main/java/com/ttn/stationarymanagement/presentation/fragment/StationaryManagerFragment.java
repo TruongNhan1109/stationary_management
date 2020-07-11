@@ -106,7 +106,6 @@ public class StationaryManagerFragment extends BaseFragment {
                 intent.putExtra("PRODUCT_ID", item.getMaVPP());
                 startActivityForResult(intent, NewProductActivity.KEY_ADD_PRODUCT);
 
-
             }
 
             @Override
@@ -151,6 +150,7 @@ public class StationaryManagerFragment extends BaseFragment {
             @Override
             public void onItemClick(VanPhongPham item) {
                 ShowDetailProductDialog showDetailProductDialog = ShowDetailProductDialog.newInstance();
+                showDetailProductDialog.setProduct(item);
                 showDetailProductDialog.show(getChildFragmentManager(), "");
             }
         });

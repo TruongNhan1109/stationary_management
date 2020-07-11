@@ -99,13 +99,13 @@ public class StationeryAdapter extends  RecyclerView.Adapter<StationeryAdapter.S
 
             popupMenu.show();
 
-            holder.itemView.setOnClickListener(v1 -> {
-                if (mListener != null) {
-                    mListener.onItemClick(vanPhongPhamList.get(position));
-                }
 
-            });
+        });
 
+        holder.itemView.setOnClickListener(v1 -> {
+            if (mListener != null) {
+                mListener.onItemClick(vanPhongPhamList.get(position));
+            }
 
         });
 
