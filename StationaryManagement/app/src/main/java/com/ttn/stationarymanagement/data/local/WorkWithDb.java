@@ -205,6 +205,16 @@ public class WorkWithDb {
         return new ArrayList<>();
     }
 
+    public List<VanPhongPham> getTopProducts() {
+        try {
+            List<VanPhongPham> list = ProductUseCase.getTopProductView(databaseHelper.getProductDao());
+            return list;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+
 
     // Staft Table ------------------------------------------------------------
 

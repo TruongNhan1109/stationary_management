@@ -1,9 +1,11 @@
 package com.ttn.stationarymanagement.presentation.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,17 +21,32 @@ import com.anychart.charts.Pie;
 import com.anychart.enums.Align;
 import com.anychart.enums.LegendLayout;
 import com.ttn.stationarymanagement.R;
+import com.ttn.stationarymanagement.data.local.WorkWithDb;
 import com.ttn.stationarymanagement.data.local.model.VanPhongPham;
 import com.ttn.stationarymanagement.presentation.baseview.BaseFragment;
+import com.ttn.stationarymanagement.utils.CustomToast;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class ProductStatisticFragment extends BaseFragment {
+
+    @BindView(R.id.chart_product_statistic)
+    AnyChartView productChart;
+
+    @BindView(R.id.progress_bar)
+    ProgressBar pvBar;
+
+    private List<VanPhongPham> listProductTopUse;
+    private List<DataEntry> listDataChart;
+
 
     public static ProductStatisticFragment newInstance() {
         Bundle args = new Bundle();
@@ -53,49 +70,59 @@ public class ProductStatisticFragment extends BaseFragment {
         getTopProducts();
     }
 
+
     private void getTopProducts() {
 
-       // Observable<List<VanPhongPham>> obGetTopProducts
+        Observable<List<VanPhongPham>> getTopProduct = Observable.create(r -> {
+            List<VanPhongPham> listTopProducts = WorkWithDb.getInstance().getTopProducts();
+            r.onNext(listTopProducts);
+            r.onComplete();
 
+        });
+
+        getTopProduct.subscribeOn(Schedulers.newThread()).flatMap(vanPhongPhams -> Observable.fromIterable(vanPhongPhams)
+        ).observeOn(AndroidSchedulers.mainThread()).subscribe(vanPhongPham -> {
+
+            listDataChart.add(new ValueDataEntry(vanPhongPham.getTenSP(), vanPhongPham.getDaDung()));
+
+        }, throwable -> {
+
+            CustomToast.showToastError(getContext(), "Đã xảy ra lỗi", Toast.LENGTH_SHORT);
+
+        }, () -> {
+
+            CustomToast.showToastSuccesstion(getContext(), "Đã hoàn tất", Toast.LENGTH_SHORT);
+            setChart();
+
+        });
 
     }
 
     private void setControls() {
-        AnyChartView anyChartView =  getView().findViewById(R.id.any_chart_view);
-        anyChartView.setProgressBar(getView().findViewById(R.id.progress_bar));
+        productChart.setProgressBar(pvBar);
 
-        Pie pie = AnyChart.pie();
+        listProductTopUse = new ArrayList<>();
+        listDataChart = new  ArrayList<>();
+    }
 
-        pie.setOnClickListener(new ListenersInterface.OnClickListener(new String[]{"x", "value"}) {
-            @Override
-            public void onClick(Event event) {
+    public void setChart() {
 
-        }
-        });
+        Pie pieProduct = AnyChart.pie();
+        pieProduct.data(listDataChart);
+        pieProduct.title("Fruits imported in 2015 (in kg)");
+        pieProduct.labels().position("outside");
 
-        List<DataEntry> data = new ArrayList<>();
-        data.add(new ValueDataEntry("Apples", 6371664));
-        data.add(new ValueDataEntry("Pears", 789622));
-        data.add(new ValueDataEntry("Bananas", 7216301));
-        data.add(new ValueDataEntry("Grapes", 1486621));
-        data.add(new ValueDataEntry("Oranges", 1200000));
-
-        pie.data(data);
-
-        pie.title("Fruits imported in 2015 (in kg)");
-
-        pie.labels().position("outside");
-
-        pie.legend().title().enabled(true);
-        pie.legend().title()
+        pieProduct.legend().title().enabled(true);
+        pieProduct.legend().title()
                 .text("Retail channels")
                 .padding(0d, 0d, 10d, 0d);
 
-        pie.legend()
+        pieProduct.legend()
                 .position("center-bottom")
                 .itemsLayout(LegendLayout.HORIZONTAL)
                 .align(Align.CENTER);
 
-        anyChartView.setChart(pie);
+        productChart.setChart(pieProduct);
+
     }
 }
