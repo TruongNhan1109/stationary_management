@@ -32,11 +32,19 @@ import static com.ttn.stationarymanagement.data.config.Constants.FUNCTION_STATIS
 
 public class HomeScreenFragment extends BaseFragment {
 
+    public static String TAG = HomeScreenFragment.class.getSimpleName();
+
     List<HomeModel> listFunctions;
     AppFunctionAdapter adapterAppFunction;
 
     @BindView(R.id.rv_fragment_home_screen_list_function)
     RecyclerView rvListFuntion;
+
+    public interface HomeScreenFragmentListener {
+        void onFuntionClick(int idFunction);
+    }
+
+    private HomeScreenFragmentListener mListener;
 
     public static HomeScreenFragment newInstance() {
         Bundle args = new Bundle();
@@ -44,6 +52,11 @@ public class HomeScreenFragment extends BaseFragment {
         fragment.setArguments(args);
         return fragment;
     }
+
+    public void setListener(HomeScreenFragmentListener listener) {
+        this.mListener = listener;
+    }
+
 
     @Nullable
     @Override
@@ -60,6 +73,16 @@ public class HomeScreenFragment extends BaseFragment {
 
         setControls();
         initDataHomeScreen();
+        setEvents();
+    }
+
+    private void setEvents() {
+
+        adapterAppFunction.setListener(position -> {
+            if (mListener != null) {
+                mListener.onFuntionClick(listFunctions.get(position).getIdSetting());
+            }
+        });
     }
 
     private void initDataHomeScreen() {

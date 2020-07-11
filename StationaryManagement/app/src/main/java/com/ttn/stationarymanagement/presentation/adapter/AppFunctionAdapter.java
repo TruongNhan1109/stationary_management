@@ -46,6 +46,12 @@ public class AppFunctionAdapter extends RecyclerView.Adapter<AppFunctionAdapter.
         holder.tvName.setText(functionItem.getSettingName());
         holder.ivIcon.setImageResource(functionItem.getIcon());
 
+        holder.itemView.setOnClickListener(v -> {
+            if (mListener != null) {
+                mListener.onItemClick(position);
+            }
+        });
+
     }
 
     @Override
@@ -65,5 +71,15 @@ public class AppFunctionAdapter extends RecyclerView.Adapter<AppFunctionAdapter.
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+    }
+
+    public  interface AddFuntionAdapterListener {
+        public void onItemClick(int position);
+    }
+
+    private AddFuntionAdapterListener mListener;
+
+    public void setListener(AddFuntionAdapterListener listener){
+        this.mListener = listener;
     }
 }

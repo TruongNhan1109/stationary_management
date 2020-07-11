@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
@@ -43,7 +44,7 @@ import static com.ttn.stationarymanagement.data.config.Constants.FUNCTION_STAFT_
 import static com.ttn.stationarymanagement.data.config.Constants.FUNCTION_STATISTIC;
 import static com.ttn.stationarymanagement.data.config.Constants.FUNTION_HOME;
 
-public class HomeActivity extends BaseActivity {
+public class HomeActivity extends BaseActivity implements  HomeScreenFragment.HomeScreenFragmentListener {
 
     private boolean isSetIcon = true;
 
@@ -71,7 +72,10 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void initHomeScreen() {
-        addFragment(R.id.content_view, HomeScreenFragment.newInstance());
+        HomeScreenFragment homeScreenFragment = HomeScreenFragment.newInstance();
+        homeScreenFragment.setListener(this);
+        addFragment(R.id.content_view, homeScreenFragment);
+
         getSupportActionBar().setTitle("");
         toolbar.setBackgroundColor(getResources().getColor(R.color.color_black_30));
         toolbar.setNavigationIcon(R.drawable.ic_app_white_24);
@@ -119,7 +123,7 @@ public class HomeActivity extends BaseActivity {
         switch (item.getItemId()) {
 
             case R.id.mn_home:
-               changeViewById(FUNTION_HOME);
+                changeViewById(FUNTION_HOME);
                 drawerLayout.closeDrawers();
                 return true;
 
@@ -190,7 +194,10 @@ public class HomeActivity extends BaseActivity {
         switch (idFunction) {
 
             case FUNTION_HOME:
-                replaceFragment(R.id.content_view, HomeScreenFragment.newInstance(), "");
+                HomeScreenFragment homeScreenFragment = HomeScreenFragment.newInstance();
+                homeScreenFragment.setListener(this);
+                replaceFragment(R.id.content_view,homeScreenFragment, HomeScreenFragment.TAG);
+
                 getSupportActionBar().setTitle("");
                 toolbar.setBackgroundColor(getResources().getColor(R.color.color_black_30));
                 toolbar.setNavigationIcon(R.drawable.ic_app_white_24);
@@ -289,6 +296,20 @@ public class HomeActivity extends BaseActivity {
         }
 
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @Override
+    public void onFuntionClick(int idFunction) {
+        changeViewById(idFunction);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            changeViewById(FUNTION_HOME);
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
 
