@@ -96,6 +96,7 @@ public class AddDepartmentDialog extends DialogFragment {
         if (!TextUtils.isEmpty(name)) {
             edtNameDepartment.setText(name);
             edtNote.setText(note);
+            btnAdd.setText("Cập nhật");
             isUpload = true;
         }
 

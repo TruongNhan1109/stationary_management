@@ -91,9 +91,6 @@ public class AddRoleDialog extends DialogFragment {
         getData();
         setEvents();
 
-      /*  Circle mWaveDrawable = new Circle();
-      mWaveDrawable.setBounds(0, 0, 100, 100);
-        btnAdd.setCompoundDrawables(mWaveDrawable, null, null, null);*/
     }
 
     private void getData() {
@@ -109,6 +106,7 @@ public class AddRoleDialog extends DialogFragment {
 
     private void setEvents() {
         btnAdd.setOnClickListener(v -> {
+
             if (TextUtils.isEmpty(edtRole.getText().toString())) {
                 edtRole.setError("Không được để trống!");
                 edtRole.requestFocus();
@@ -134,12 +132,14 @@ public class AddRoleDialog extends DialogFragment {
      compositeDisposable.add( obCreateRole(edtRole.getText().toString()).subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(aBoolean -> {
                     if (aBoolean) {
-                      //  CustomToast.showToast(getContext(), "Thêm thành công", Toast.LENGTH_SHORT);
+
                         CustomToast.showToastSuccesstion(getContext(), "Thêm thành công", Toast.LENGTH_SHORT);
+
                         if (mListener != null) {
                             mListener.onAddSuccesstion();
                             dismiss();
                         }
+
                     } else {
                         CustomToast.showToast(getContext(), "Thêm thất bại", Toast.LENGTH_SHORT);
                     }

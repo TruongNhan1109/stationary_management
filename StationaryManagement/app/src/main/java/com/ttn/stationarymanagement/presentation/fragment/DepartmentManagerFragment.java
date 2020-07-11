@@ -82,7 +82,6 @@ public class DepartmentManagerFragment extends BaseFragment {
                 addDepartmentDialog.setListener(new AddDepartmentDialog.AddDepartmentDilaogListener() {
                     @Override
                     public void onAddSuccesstion() {
-
                     }
 
                     @Override
@@ -175,14 +174,17 @@ public class DepartmentManagerFragment extends BaseFragment {
                 adapterDepartment.notifyDataSetChanged();
 
             } else {
+
                 rvListDepartment.setVisibility(View.GONE);
                 tvNotifyEmpty.setVisibility(View.VISIBLE);
+
             }
         }));
 
     }
 
     private void setControls() {
+
         compositeDisposable = new CompositeDisposable();
 
         listDepartment = new ArrayList<>();

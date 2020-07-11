@@ -123,7 +123,6 @@ public class RoleManagerFragment extends BaseFragment {
                         }, throwable -> {
                             CustomToast.showToastError(getContext(), "Cập nhật thất bai", Toast.LENGTH_SHORT);
                         }));
-
                     }
                 });
 
@@ -153,14 +152,12 @@ public class RoleManagerFragment extends BaseFragment {
                         CustomToast.showToastSuccesstion(getContext(), "Đã xóa", Toast.LENGTH_SHORT);
                         adapterRole.notifyItemRemoved(position);
                         adapterRole.notifyItemRangeChanged(position, listRole.size());
-
                     } else {
                         CustomToast.showToastError(getContext(), "Xóa thất bại", Toast.LENGTH_SHORT);
                     }
                 }, throwable -> {
                     CustomToast.showToastError(getContext(), "Xóa thất bại", Toast.LENGTH_SHORT);
                 }));
-
             }
         });
 
@@ -209,7 +206,6 @@ public class RoleManagerFragment extends BaseFragment {
     private void setControls() {
 
         compositeDisposable = new CompositeDisposable();
-
         listRole = new ArrayList<>();
         Context context;
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);

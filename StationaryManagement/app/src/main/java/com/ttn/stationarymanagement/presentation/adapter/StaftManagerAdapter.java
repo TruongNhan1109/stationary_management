@@ -107,6 +107,18 @@ public class StaftManagerAdapter  extends RecyclerView.Adapter<StaftManagerAdapt
             holder.tvDepartment.setVisibility(View.GONE);
         }
 
+        holder.itemView.setOnClickListener(v -> {
+            if (mListener != null) {
+                mListener.onItemClick(position);
+            }
+        });
+
+        holder.ibtRemove.setOnClickListener(v -> {
+            if (mListener != null) {
+                mListener.onRemoveClick(position);
+            }
+        });
+
     }
 
     @Override
@@ -147,6 +159,17 @@ public class StaftManagerAdapter  extends RecyclerView.Adapter<StaftManagerAdapt
             super(itemView);
             ButterKnife.bind(this,itemView);
         }
+    }
+
+    public interface StaftManagerAdapterListener {
+        void onItemClick(int position);
+        void onRemoveClick(int position);
+    }
+
+    private StaftManagerAdapterListener mListener;
+
+    public void setListener(StaftManagerAdapterListener listener) {
+        this.mListener = listener;
     }
 
 }

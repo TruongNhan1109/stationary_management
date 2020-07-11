@@ -50,9 +50,10 @@ public class DepartmentAdapter extends RecyclerView.Adapter<DepartmentAdapter.De
         }
 
         if(!TextUtils.isEmpty(mItem.getGhiChu())) {
+            holder.tvNote.setVisibility(View.VISIBLE);
             holder.tvNote.setText(mItem.getGhiChu());
         } else {
-            holder.tvNote.setText("");
+           holder.tvNote.setVisibility(View.GONE);
         }
 
         holder.itemView.setOnClickListener(v -> {

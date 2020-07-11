@@ -1,5 +1,6 @@
 package com.ttn.stationarymanagement.presentation.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -12,10 +13,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -38,6 +41,7 @@ import com.ttn.stationarymanagement.utils.CustomToast;
 import com.ttn.stationarymanagement.utils.GetDataToCommunicate;
 
 import java.io.File;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -49,11 +53,14 @@ import butterknife.ButterKnife;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class AddStaftActivity extends BaseActivity {
 
     public static int REQUEST_ADD_STAFT = 1;
+    public static int REQUEST_EDIT_STAFT = 2;
+
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -94,8 +101,11 @@ public class AddStaftActivity extends BaseActivity {
     SelectRoleAdapter selectRoleAdapter;
     private List<PhongBan> listPhongBan;
     SelectDepartmentAdapter selectDepartmentAdapter;
-
     private CompositeDisposable compositeDisposable;
+
+    private long idStaftEdit;
+    private boolean isUpload = false;
+    private NhanVien nhanVienEdit;
 
     public static Intent getCallingIntent(Context context) {
         Intent intent = new Intent(context, AddStaftActivity.class);
@@ -107,14 +117,20 @@ public class AddStaftActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_staft);
         ButterKnife.bind(this);
-
         setControls();
         getDataAndSetView();
         setEvents();
 
+
     }
 
     private void getDataAndSetView() {
+
+        if (getIntent().hasExtra("ID_STAFT")) {
+            idStaftEdit = getIntent().getLongExtra("ID_STAFT", 0);
+            isUpload = true;
+        }
+
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Date currentDate = new Date();
@@ -142,18 +158,106 @@ public class AddStaftActivity extends BaseActivity {
             return Observable.just(WorkWithDb.getInstance().getAllDepartment());
 
         }).observeOn(AndroidSchedulers.mainThread()).subscribe(r -> {
-
             listPhongBan.addAll(r);
 
             if (listVaiTro.size() < 1 || listPhongBan.size() < 1) {
-
                 CustomToast.showToastWarning(getApplicationContext(), "Vui lòng thiết lập phòng ban và vai trò trước", Toast.LENGTH_SHORT);
                 finish();
             }
 
             selectRoleAdapter.notifyDataSetChanged();
             selectDepartmentAdapter.notifyDataSetChanged();
+
+        }, throwable -> {
+            CustomToast.showToastError(getApplicationContext(), "Đã xảy ra lỗi", Toast.LENGTH_SHORT);
+        }, () -> {
+
+            if (isUpload) {
+                getInforStaft();
+            }
+
         }));
+
+    }
+
+    private void getInforStaft() {
+
+        Observable<NhanVien> getStaft = Observable.just(WorkWithDb.getInstance().getStaftById(idStaftEdit));
+
+        getStaft.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(nhanVien -> {
+            nhanVienEdit = nhanVien;
+
+            if (!TextUtils.isEmpty(nhanVien.getAnh())) {
+
+                this.imageStaft = nhanVien.getAnh();
+
+                Picasso.get().load(new File(imageStaft)).error(R.mipmap.app_icon).fit().centerInside().into(ivPhoto, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+
+            }
+
+            edtNameStaft.setText(nhanVien.getTenNV());
+            edtDateOfBirth.setText(nhanVien.getNgaySinh());
+
+            if (!TextUtils.isEmpty(nhanVien.getSDT())) {
+                edtPhone.setText(nhanVien.getSDT());
+            }
+
+            if (!TextUtils.isEmpty(nhanVien.getEmail())) {
+                edtEmail.setText(nhanVien.getEmail());
+            }
+
+            if (nhanVien.getGT() == 0) {
+
+                RadioButton rdo =  (RadioButton) findViewById(R.id.rdo_male);
+                rdo.setChecked(true);
+
+
+            } else if (nhanVien.getGT() == 1) {
+
+                RadioButton rdo =  (RadioButton) findViewById(R.id.rdo_female);
+                rdo.setChecked(true);
+
+            } else {
+
+                RadioButton rdo =  (RadioButton) findViewById(R.id.rdo_other);
+                rdo.setChecked(true);
+            }
+
+           for (int i = 0; i < listPhongBan.size(); i++) {
+               if (listPhongBan.get(i).getMaPB() == nhanVien.getMaPB()) {
+                   spDepartment.setSelection(i);
+                   break;
+               }
+           }
+
+           for (int i = 0; i < listVaiTro.size(); i++) {
+
+               if (listVaiTro.get(i).getMaVT() == nhanVien.getMaVT()) {
+                   spnRole.setSelection(i);
+                   break;
+               }
+           }
+
+
+           if (!TextUtils.isEmpty(nhanVien.getGhiChu())) {
+               edtNote.setText(nhanVien.getGhiChu());
+           }
+
+           btnAdd.setText("Cập nhật");
+
+           getSupportActionBar().setTitle("Chỉnh sửa thông tin");
+
+        });
+
 
     }
 
@@ -173,22 +277,51 @@ public class AddStaftActivity extends BaseActivity {
         });
 
         edtDateOfBirth.setOnClickListener(v -> {
+
             Calendar calendarBirthday = Calendar.getInstance();
 
-            int day = calendarBirthday.get(Calendar.DATE);
-            int month = calendarBirthday.get(Calendar.MONTH);
-            int year = calendarBirthday.get(Calendar.YEAR);
+            if (!isUpload) {
+                int day = calendarBirthday.get(Calendar.DATE);
+                int month = calendarBirthday.get(Calendar.MONTH);
+                int year = calendarBirthday.get(Calendar.YEAR);
 
-            DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                    calendarBirthday.set(i, i1, i2);
-                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                    edtDateOfBirth.setText(simpleDateFormat.format(calendarBirthday.getTime()));
+                DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                        calendarBirthday.set(i, i1, i2);
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                        edtDateOfBirth.setText(simpleDateFormat.format(calendarBirthday.getTime()));
+                    }
+                }, year, month, day);
+
+
+                datePickerDialog.show();
+            } else {
+
+                SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+
+                try {
+                    calendarBirthday.setTime(df.parse(edtDateOfBirth.getText().toString()));
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
-            }, year, month, day);
 
-            datePickerDialog.show();
+                int day = calendarBirthday.get(Calendar.DATE);
+                int month = calendarBirthday.get(Calendar.MONTH);
+                int year = calendarBirthday.get(Calendar.YEAR);
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                        calendarBirthday.set(i, i1, i2);
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                        edtDateOfBirth.setText(simpleDateFormat.format(calendarBirthday.getTime()));
+                    }
+                }, year, month, day);
+
+                datePickerDialog.show();
+            }
+
         });
 
 
@@ -216,8 +349,11 @@ public class AddStaftActivity extends BaseActivity {
                 return;
             }
 
-
-            createNewStaft();
+            if (isUpload) {
+                uploadStaft();
+            } else {
+                createNewStaft();
+            }
 
 
         });
@@ -225,9 +361,66 @@ public class AddStaftActivity extends BaseActivity {
 
     }
 
+    private void uploadStaft() {
+
+
+        nhanVienEdit.setAnh(!TextUtils.isEmpty(imageStaft) ? imageStaft : "");
+        nhanVienEdit.setTenNV(edtNameStaft.getText().toString());
+        nhanVienEdit.setNgayTao(edtDateOfBirth.getText().toString());
+        nhanVienEdit.setSDT(GetDataToCommunicate.convertStringToString(edtPhone.getText().toString()));
+        nhanVienEdit.setEmail(GetDataToCommunicate.convertStringToString(edtEmail.getText().toString()));
+
+        switch(rdoGender.getCheckedRadioButtonId()) {
+            case R.id.rdo_male: //Nam
+                nhanVienEdit.setGT(0);
+                break;
+            case R.id.rdo_female: // Nu
+                nhanVienEdit.setGT(1);
+                break;
+            case R.id.rdo_other:    // Khac
+                nhanVienEdit.setGT(2);
+                break;
+
+        }
+
+        if (listVaiTro.size() > 0) {
+            VaiTro vaiTro = listVaiTro.get(spnRole.getSelectedItemPosition());
+            nhanVienEdit.setMaVT(vaiTro.getMaVT());
+        }
+
+        if (listPhongBan.size() > 0) {
+            PhongBan phongBan = listPhongBan.get(spDepartment.getSelectedItemPosition());
+            nhanVienEdit.setMaPB(phongBan.getMaPB());
+        }
+
+        nhanVienEdit.setGhiChu(!TextUtils.isEmpty(edtNote.getText().toString()) ? edtNote.getText().toString() : "");
+
+        Observable<Boolean> updateStaft = Observable.just(WorkWithDb.getInstance().update(nhanVienEdit));
+
+        updateStaft.subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(aBoolean -> {
+                    if(aBoolean) {
+                        CustomToast.showToastSuccesstion(this, "Cập nhật thành công", Toast.LENGTH_SHORT);
+
+                        Intent intent = getIntent();
+                        setResult(RESULT_OK, intent);
+                        finish();
+
+                    } else {
+                        CustomToast.showToastError(this, "Cập nhật thất bại", Toast.LENGTH_SHORT);
+                    }
+                }, throwable -> {
+            CustomToast.showToastError(this, "Cập nhật thất bại", Toast.LENGTH_SHORT);
+        }, () -> {
+
+        });
+
+    }
+
     private void createNewStaft() {
 
         NhanVien nhanVien = new NhanVien();
+
         nhanVien.setAnh(!TextUtils.isEmpty(imageStaft) ? imageStaft : "");
         nhanVien.setTenNV(edtNameStaft.getText().toString());
         nhanVien.setNgaySinh(edtDateOfBirth.getText().toString());
@@ -236,16 +429,17 @@ public class AddStaftActivity extends BaseActivity {
         nhanVien.setNgayTao(GetDataToCommunicate.getCurrentDate());
 
         switch(rdoGender.getCheckedRadioButtonId()) {
-            case R.id.rdo_male:
+            case R.id.rdo_male: //Nam
                 nhanVien.setGT(0);
                 break;
-            case R.id.rdo_female:
+            case R.id.rdo_female: // Nu
                 nhanVien.setGT(1);
                 break;
-            case R.id.rdo_other:
+            case R.id.rdo_other:    // Khac
                 nhanVien.setGT(2);
                 break;
         }
+
 
         if (listVaiTro.size() > 0) {
             VaiTro vaiTro = listVaiTro.get(spnRole.getSelectedItemPosition());
@@ -349,13 +543,22 @@ public class AddStaftActivity extends BaseActivity {
         String[] projection = {MediaStore.Video.Media.DATA};
         Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
         if (cursor != null) {
-            // HERE YOU WILL GET A NULLPOINTER IF CURSOR IS NULL
-            // THIS CAN BE, IF YOU USED OI FILE MANAGER FOR PICKING THE MEDIA
             int column_index = cursor
                     .getColumnIndexOrThrow(MediaStore.Video.Media.DATA);
             cursor.moveToFirst();
             return cursor.getString(column_index);
         } else
             return null;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if(item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

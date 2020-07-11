@@ -70,6 +70,29 @@ public class StaftManagerFragment extends BaseFragment {
         setHasOptionsMenu(true);
         initControl();
         getDataAndShow();
+        setEvents();
+
+
+    }
+
+    private void setEvents() {
+
+        adapter.setListener(new StaftManagerAdapter.StaftManagerAdapterListener() {
+            @Override
+            public void onItemClick(int position) {
+                NhanVien nhanVien = listNhanVien.get(position);
+
+                Intent intent = AddStaftActivity.getCallingIntent(getContext());
+                intent.putExtra("ID_STAFT", nhanVien.getMaNV());
+                startActivityForResult(intent, AddStaftActivity.REQUEST_EDIT_STAFT);
+
+            }
+
+            @Override
+            public void onRemoveClick(int position) {
+
+            }
+        });
 
 
     }
@@ -93,25 +116,17 @@ public class StaftManagerFragment extends BaseFragment {
                         tvNotifyEmpty.setVisibility(View.GONE);
                         tvTotalStaft.setVisibility(View.VISIBLE);
                         tvTotalStaft.setText("Danh sách nhân viên (" + nhanViens.size() + ")");
-
                         listNhanVien.clear();
                         listNhanVien.addAll(nhanViens);
                         adapter.notifyDataSetChanged();
 
                     } else {
-
                         tvTotalStaft.setVisibility(View.GONE);
                         rvListStaft.setVisibility(View.GONE);
                         tvNotifyEmpty.setVisibility(View.VISIBLE);
-
                     }
 
-
-
                 }));
-
-
-
 
     }
 
@@ -163,5 +178,15 @@ public class StaftManagerFragment extends BaseFragment {
         if (requestCode == AddStaftActivity.REQUEST_ADD_STAFT && resultCode == Activity.RESULT_OK) {
             getDataAndShow();
         }
+
+        if (requestCode == AddStaftActivity.REQUEST_EDIT_STAFT && resultCode == Activity.RESULT_OK) {
+            getDataAndShow();
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        compositeDisposable.dispose();
     }
 }
