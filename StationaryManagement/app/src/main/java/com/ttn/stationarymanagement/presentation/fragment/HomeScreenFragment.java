@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ttn.stationarymanagement.R;
 import com.ttn.stationarymanagement.presentation.adapter.AppFunctionAdapter;
 import com.ttn.stationarymanagement.presentation.baseview.BaseFragment;
+import com.ttn.stationarymanagement.presentation.dialog_fragment.SearchDialogFragment;
 import com.ttn.stationarymanagement.presentation.model.HomeModel;
 
 import java.util.ArrayList;
@@ -39,6 +41,9 @@ public class HomeScreenFragment extends BaseFragment {
 
     @BindView(R.id.rv_fragment_home_screen_list_function)
     RecyclerView rvListFuntion;
+
+    @BindView(R.id.lnl_area_seach)
+    LinearLayout lnlSearch;
 
     public interface HomeScreenFragmentListener {
         void onFuntionClick(int idFunction);
@@ -82,6 +87,13 @@ public class HomeScreenFragment extends BaseFragment {
             if (mListener != null) {
                 mListener.onFuntionClick(listFunctions.get(position).getIdSetting());
             }
+        });
+
+        lnlSearch.setOnClickListener(v -> {
+
+            SearchDialogFragment searchDialogFragment = SearchDialogFragment.newInstance();
+            searchDialogFragment.show(getChildFragmentManager(),  "");
+
         });
     }
 

@@ -41,19 +41,22 @@
 
 
                 <LinearLayout
+                    android:id="@+id/lnl_area_seach"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
                     android:paddingHorizontal="10dp"
                     android:layout_marginTop="50dp"
                     android:orientation="vertical">
 
-                    <EditText
+                    <TextView
                         android:paddingHorizontal="8dp"
                         android:paddingVertical="12dp"
                         android:drawableLeft="@drawable/ic_search_blue_24"
                         android:drawablePadding="3dp"
                         android:maxLines="1"
                         android:enabled="false"
+                        android:textSize="14sp"
                         android:layout_width="match_parent"
                         android:background="@drawable/shape_background_search_white"
                         android:layout_height="wrap_content"

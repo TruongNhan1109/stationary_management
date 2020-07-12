@@ -61,36 +61,6 @@ public class GetDataToCommunicate {
         return dateTime;
     }
 
-    public static String calculateTimeUse(Date start, Date end, Context context) {
-
-        String strDay = "Day";
-        String strHours = "Hours";
-        String strMinutes = "Minutes";
-        String strSeconds = "Sencond";
-
-        long minute = Math.abs(start.getTime() / 60000 - end.getTime() / 60000);
-
-        String stringTimeUse;
-        if (minute < 60) {
-
-            stringTimeUse = minute + " " + strMinutes;
-
-        } else if (minute >= 60 && minute < 1440) { //24 hour
-
-            long tempMinute = minute % 60;
-            long hour = minute / 60;
-            stringTimeUse = hour + " " + strHours + " " + tempMinute + " " + strMinutes;
-
-        }  else {
-
-            long hour = (minute / 60) % 24;
-            long day = minute / 1440;
-            stringTimeUse = day + " " + strDay + " " + hour + " " + strHours;
-
-        }
-        return stringTimeUse;
-    }
-
     public static String changeToPrice(double price) {
         String format = "#,### đ";
         DecimalFormat dec;

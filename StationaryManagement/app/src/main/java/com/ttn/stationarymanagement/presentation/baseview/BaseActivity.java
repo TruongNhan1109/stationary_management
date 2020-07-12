@@ -1,6 +1,7 @@
 package com.ttn.stationarymanagement.presentation.baseview;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -15,7 +16,9 @@ public class BaseActivity  extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("MyApp", "onActivityStarted: " + this.getLocalClassName());
     }
+
 
     protected void setupToolbar(Toolbar toolbar, int idSrcString, String... titles) {
 

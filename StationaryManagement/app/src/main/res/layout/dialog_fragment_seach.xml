@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="10dp"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
+
+            <AutoCompleteTextView
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="12dp"
+                android:drawableLeft="@drawable/ic_search_blue_24"
+                android:drawablePadding="3dp"
+                android:maxLines="1"
+                android:layout_width="match_parent"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:background="@drawable/shape_background_search_white"
+                android:layout_height="wrap_content"
+                android:hint="Tìm kiếm"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="10dp"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+
+        <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
+            android:id="@+id/btn_id"
+            android:layout_width="wrap_content"
+            android:layout_height="42dp"
+            android:paddingHorizontal="20dp"
+            android:textColor="@color/color_white"
+            android:text="Tìm kiếm"
+            app:spinning_bar_width="4dp"
+            app:spinning_bar_color="#FFF"
+            app:spinning_bar_padding="6dp"
+            android:background="@drawable/state_background_button_blue"/>
+    </LinearLayout>
+
+
+</RelativeLayout>

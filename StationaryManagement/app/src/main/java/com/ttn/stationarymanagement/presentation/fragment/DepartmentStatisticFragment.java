@@ -133,8 +133,12 @@ public class DepartmentStatisticFragment extends BaseFragment {
 
                     int index = 0;
                     for(Map.Entry<Long, Integer> entry: result.entrySet()) {
-
                         PhongBan phongBan = WorkWithDb.getInstance().getDepartmentById(entry.getKey());
+
+                        if (phongBan == null) {
+                            continue;
+                        }
+
                         listRooms.add(new BarEntry(entry.getValue(), index++));
 
                         if (phongBan != null) {
