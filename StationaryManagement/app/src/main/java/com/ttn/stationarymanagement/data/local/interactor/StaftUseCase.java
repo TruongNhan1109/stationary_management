@@ -28,4 +28,8 @@ public class StaftUseCase {
         return dao.queryForAll();
     }
 
+    public static List<NhanVien> getAllStaftByName(final Dao<NhanVien, Long> dao, String name) throws SQLException{
+        return dao.queryBuilder().where().like("TenNV", "%" + name + "%").query();
+    }
+
 }

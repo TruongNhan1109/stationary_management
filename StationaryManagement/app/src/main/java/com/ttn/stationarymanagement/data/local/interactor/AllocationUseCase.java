@@ -25,8 +25,35 @@ public class AllocationUseCase {
         return dao.queryForId(id);
     }
 
+    public static List<CapPhat> getByIdStaft(final Dao<CapPhat, Long> dao, long id)throws SQLException{
+        return dao.queryBuilder().where().eq("MaNV", id ).query();
+    }
+
+    public static List<CapPhat> getByIdStaft(final Dao<CapPhat, Long> dao, String id)throws SQLException{
+        return dao.queryBuilder().where().eq("MaNV", id ).query();
+    }
+
+    public static List<CapPhat> getByProductId(final Dao<CapPhat, Long> dao, String idProduct)throws SQLException{
+        return dao.queryBuilder().where().eq("MaVPP", idProduct ).query();
+    }
+
     public static List<CapPhat> getAll(final Dao<CapPhat, Long> dao) throws SQLException{
         return dao.queryForAll();
+    }
+
+    public static List<CapPhat> getAllByIdBill(final Dao<CapPhat, Long> dao, String idBill) throws SQLException{
+        return dao.queryBuilder().where()
+                .eq("MaPhieu", idBill).query();
+    }
+
+    public static List<CapPhat> getAllByStaftId(final Dao<CapPhat, Long> dao, String staftId) throws SQLException{
+        return dao.queryBuilder().where()
+                .eq("MaNV", staftId).query();
+    }
+
+    public static List<CapPhat> getAllByIdProduct(final Dao<CapPhat, Long> dao, String idProduct) throws SQLException{
+        return dao.queryBuilder().where()
+                .eq("MaVPP", idProduct).query();
     }
 
 }

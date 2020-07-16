@@ -205,6 +205,16 @@ public class WorkWithDb {
         return new ArrayList<>();
     }
 
+    public List<VanPhongPham> getAllProductByName(String nameProduct) {
+        try {
+            List<VanPhongPham> list = ProductUseCase.getAllProductByProductName(databaseHelper.getProductDao(), nameProduct);
+            return list;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+
     public List<VanPhongPham> getTopProducts() {
         try {
             List<VanPhongPham> list = ProductUseCase.getTopProductView(databaseHelper.getProductDao());
@@ -270,6 +280,16 @@ public class WorkWithDb {
         return new ArrayList<>();
     }
 
+    public List<NhanVien> getAllStaftByName(String name) {
+        try {
+            List<NhanVien> list = StaftUseCase.getAllStaftByName(databaseHelper.getStaftDao(), name);
+            return list;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+
 
     // Allocation Table --------------------------------------------------------
 
@@ -324,6 +344,63 @@ public class WorkWithDb {
         }
         return new ArrayList<>();
     }
+
+    public List<CapPhat> getAllAlocationByIdBill(String idBill) {
+        try {
+
+            List<CapPhat> list = AllocationUseCase.getAllByIdBill(databaseHelper.getAllocationDao(), idBill);
+            return list;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+
+    public List<CapPhat> getAllocationByStaftId(String staftId) {
+        try {
+            List<CapPhat> list = AllocationUseCase.getByIdStaft(databaseHelper.getAllocationDao(), staftId);
+            return list;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+
+    public List<CapPhat> getAllocationByStaftId(long staftId) {
+        try {
+            List<CapPhat> list = AllocationUseCase.getByIdStaft(databaseHelper.getAllocationDao(), staftId);
+            return list;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+
+    public List<CapPhat> getAllocationByProductId(String productId) {
+        try {
+            List<CapPhat> list = AllocationUseCase.getByProductId(databaseHelper.getAllocationDao(), productId);
+            return list;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+
+    public List<CapPhat> getAllocationByIdProduct(String idProduct) {
+        try {
+            List<CapPhat> list = AllocationUseCase.getAllByIdProduct(databaseHelper.getAllocationDao(), idProduct);
+            return list;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+
+
+
 
 
 

@@ -28,6 +28,10 @@ public class ProductUseCase {
         return dao.queryForAll();
     }
 
+    public static List<VanPhongPham> getAllProductByProductName(final Dao<VanPhongPham, Long> dao, String productName) throws SQLException{
+        return dao.queryBuilder().where().like("TenSP", "%" + productName + "%").query();
+    }
+
     public static List<VanPhongPham> getTopProductView(final Dao<VanPhongPham, Long> dao) throws SQLException{
         return dao.queryBuilder().orderByRaw("DaDung DESC").limit(10).query();
     }

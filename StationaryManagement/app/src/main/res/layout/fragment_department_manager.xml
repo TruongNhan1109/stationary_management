@@ -19,7 +19,7 @@
             android:visibility="gone"
             android:textColor="@color/color_light_blue"
             android:gravity="center"
-            android:text="Chưa có phòng ban nào"/>
+            android:text="@string/tv_ChuaCoPhongBanNao"/>
 
 
         <androidx.recyclerview.widget.RecyclerView

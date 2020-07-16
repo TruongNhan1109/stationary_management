@@ -185,11 +185,10 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/tv_GioiTinh"
                             android:layout_marginBottom="5dp"
+                            android:text="@string/tv_GioiTinh"
                             android:textColor="@color/color_black"
-                            android:textSize="20sp"/>
-
+                            android:textSize="20sp" />
 
                         <RadioGroup
                             android:id="@+id/rdg_activity_add_staft_gender"
@@ -230,10 +229,10 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/tv_ChonPB"
                             android:layout_marginBottom="5dp"
+                            android:text="@string/tv_ChonPB"
                             android:textColor="@color/color_black"
-                            android:textSize="20sp"/>
+                            android:textSize="20sp" />
 
                         <Spinner
                             android:id="@+id/spn_activity_add_staft_department"
@@ -290,7 +289,7 @@
                             android:drawableLeft="@drawable/ic_note_line_24"
                             android:drawablePadding="3dp"
                             android:background="@drawable/state_background_text_box_white"
-                            android:hint="Nhập ghi chú"/>
+                            android:hint="@string/edt_NhapGhiChu"/>
 
                     </LinearLayout>
 
@@ -308,15 +307,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="42dp"
                             android:paddingHorizontal="15dp"
-                            android:text="Thêm"/>
+                            android:text="@string/btn_Them" />
 
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
+                        android:orientation="vertical"
                         android:layout_height="60dp"/>
-
-
                 </LinearLayout>
             </LinearLayout>
 

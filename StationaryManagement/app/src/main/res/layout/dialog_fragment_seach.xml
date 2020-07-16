@@ -7,7 +7,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <LinearLayout
@@ -18,19 +18,35 @@
             android:orientation="vertical">
 
             <AutoCompleteTextView
+                android:id="@+id/atv_dialog_fragment_seach_seach_box"
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="12dp"
                 android:drawableLeft="@drawable/ic_search_blue_24"
                 android:drawablePadding="3dp"
                 android:maxLines="1"
                 android:layout_width="match_parent"
-                android:imeOptions="actionSearch"
+                android:imeOptions="actionDone"
                 android:inputType="text"
                 android:background="@drawable/shape_background_search_white"
                 android:layout_height="wrap_content"
                 android:hint="Tìm kiếm"/>
 
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_dialog_fragment_seach_list_result"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </LinearLayout>
+
 
     </LinearLayout>
 
@@ -44,13 +60,13 @@
 
 
         <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
-            android:id="@+id/btn_id"
+            android:id="@+id/btn_dialog_fragment_seach_seach"
             android:layout_width="wrap_content"
             android:layout_height="42dp"
             android:paddingHorizontal="20dp"
             android:textColor="@color/color_white"
             android:text="Tìm kiếm"
-            app:spinning_bar_width="4dp"
+            app:spinning_bar_width="2dp"
             app:spinning_bar_color="#FFF"
             app:spinning_bar_padding="6dp"
             android:background="@drawable/state_background_button_blue"/>
