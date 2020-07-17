@@ -59,17 +59,14 @@
         android:orientation="horizontal">
 
 
-        <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
+        <com.ttn.stationarymanagement.presentation.custom_view.MButtonActionBlue
             android:id="@+id/btn_dialog_fragment_seach_seach"
             android:layout_width="wrap_content"
             android:layout_height="42dp"
             android:paddingHorizontal="20dp"
             android:textColor="@color/color_white"
-            android:text="Tìm kiếm"
-            app:spinning_bar_width="2dp"
-            app:spinning_bar_color="#FFF"
-            app:spinning_bar_padding="6dp"
-            android:background="@drawable/state_background_button_blue"/>
+            android:text="Tìm kiếm" />
+
     </LinearLayout>
 
 

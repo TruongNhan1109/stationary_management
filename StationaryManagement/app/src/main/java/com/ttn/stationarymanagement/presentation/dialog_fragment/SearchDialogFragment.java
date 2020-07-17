@@ -52,7 +52,7 @@ public class SearchDialogFragment extends FullScreenDialog {
     RecyclerView rvListResult;
 
     @BindView(R.id.btn_dialog_fragment_seach_seach)
-    CircularProgressButton btnSeach;
+    Button btnSeach;
 
     private List<GroupBillModel> listResult;
     private GroupBillAdapter adapterGroupBill;
@@ -89,11 +89,9 @@ public class SearchDialogFragment extends FullScreenDialog {
                 builder.setMessage("Vui lòng nhập từ khóa cần tìm!");
                 builder.setPositiveButton("Đồng ý", null);
                 builder.show();
-
                 return;
             }
 
-            btnSeach.startAnimation();
             listResult.clear();
 
             String key = edtSeachBox.getText().toString();
@@ -186,26 +184,19 @@ public class SearchDialogFragment extends FullScreenDialog {
                                 groupBillModel.setListBills(list);
                                 listResult.add(groupBillModel);
                             }
-
                         }
 
                         return Observable.just(true);
 
                     }).observeOn(AndroidSchedulers.mainThread()).subscribe(aBoolean -> {
-                        btnSeach.stopAnimation();
-                        btnSeach.revertAnimation();
                         CustomToast.showToastSuccesstion(getContext(), "Tìm kiếm thành công", Toast.LENGTH_SHORT);
                     }, throwable -> {
-                        btnSeach.stopAnimation();
-                        btnSeach.revertAnimation();
+                        CustomToast.showToastError(getContext(), "Đã xảy ra lỗi trong quá trình tìm kiếm", Toast.LENGTH_SHORT);
                     }, () -> {
-
                         if (listResult.size() > 0) {
                             adapterGroupBill.notifyDataSetChanged();
                         }
                     }));
-
-
         });
 
     }
@@ -232,8 +223,8 @@ public class SearchDialogFragment extends FullScreenDialog {
 
     private void getDataSuggest() {
 
-
         listDataSugestion.clear();
+
         compositeDisposable.add(getAllBill().subscribeOn(Schedulers.newThread())
                 .filter(capPhats -> capPhats != null)
                 .flatMap(capPhats -> {
@@ -267,7 +258,6 @@ public class SearchDialogFragment extends FullScreenDialog {
                 }, () -> {
                     adapterSugestion.notifyDataSetChanged();
                 }));
-
     }
 
     private void setControls() {

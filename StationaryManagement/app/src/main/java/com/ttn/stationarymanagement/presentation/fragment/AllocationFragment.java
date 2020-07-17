@@ -1,6 +1,7 @@
 package com.ttn.stationarymanagement.presentation.fragment;
 
 import android.content.Intent;
+import android.hardware.camera2.CameraCaptureSession.CaptureCallback;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -9,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,12 +23,16 @@ import com.ttn.stationarymanagement.data.local.WorkWithDb;
 import com.ttn.stationarymanagement.data.local.model.CapPhat;
 import com.ttn.stationarymanagement.data.local.model.VanPhongPham;
 import com.ttn.stationarymanagement.presentation.activity.AllocationActivity;
+import com.ttn.stationarymanagement.presentation.activity.DetailBillActivity;
 import com.ttn.stationarymanagement.presentation.adapter.GroupBillAdapter;
 import com.ttn.stationarymanagement.presentation.baseview.BaseFragment;
 import com.ttn.stationarymanagement.presentation.model.GroupBillModel;
 import com.ttn.stationarymanagement.presentation.model.GroupProductModel;
+import com.ttn.stationarymanagement.utils.CustomToast;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -83,14 +89,18 @@ public class AllocationFragment extends BaseFragment {
         getBills().subscribeOn(Schedulers.newThread()).flatMap(capPhats -> {
 
             Map<String, List<CapPhat>> listGroup = new HashMap<>();
+
             for(CapPhat bill: capPhats) {
                 String date = bill.getNgayCap();
+
                 if (listGroup.get(date) == null) {
+
                     List<CapPhat> list = new ArrayList<>();
                     list.add(bill);
                     listGroup.put(date, list);
 
                 } else {
+
                     List<CapPhat> list = listGroup.get(date);
                     list.add(bill);
                     listGroup.put(date, list);
@@ -106,12 +116,15 @@ public class AllocationFragment extends BaseFragment {
                 listGroupResult.add(groupBillModel);
             }
 
+            Collections.reverse(listGroupBill);
+
             return Observable.just(listGroupResult);
 
         }).observeOn(AndroidSchedulers.mainThread()).subscribe(groupBillModels -> {
             listGroupBill.clear();
 
             if (groupBillModels.size()> 0) {
+
                 rvListBill.setVisibility(View.VISIBLE);
                 lnlNotifyEmplty.setVisibility(View.GONE);
 
@@ -122,7 +135,6 @@ public class AllocationFragment extends BaseFragment {
 
                 rvListBill.setVisibility(View.GONE);
                 lnlNotifyEmplty.setVisibility(View.VISIBLE);
-
             }
 
         });
@@ -153,6 +165,74 @@ public class AllocationFragment extends BaseFragment {
             Intent intent = AllocationActivity.getCallingIntent(getContext());
             startActivity(intent);
 
+        });
+
+        adapterGroupBill.setListener(new GroupBillAdapter.OnGroupBillAdapterListener() {
+            @Override
+            public void onItemClick(int positionParent, int positionChild) {
+
+                CapPhat mItem = listGroupBill.get(positionParent).getListBills().get(positionChild);
+
+                Intent intent = DetailBillActivity.getCallingIntent(getContext());
+                intent.putExtra("ID_BILL", mItem.getMaPhieu());
+                startActivity(intent);
+
+            }
+
+            @Override
+            public void onButtonRemoveClick(int positionParent, int positionChild) {
+                CapPhat mItem = listGroupBill.get(positionParent).getListBills().get(positionChild);
+
+                Observable<Boolean> deleteBill = Observable.create(r -> {
+                    r.onNext(WorkWithDb.getInstance().delete(mItem));
+                    r.onComplete();
+                });
+
+                compositeDisposable.add(deleteBill.subscribeOn(Schedulers.newThread())
+                .flatMap(aBoolean -> {
+
+                    if (aBoolean) {
+                        // Cập nhật lại số lượng sản phẩm
+                        VanPhongPham vanPhongPham = WorkWithDb.getInstance().getProductById(mItem.getMaVPP());
+
+                        if (vanPhongPham != null) {
+                            vanPhongPham.setSoLuong(vanPhongPham.getSoLuong() + mItem.getSoLuong());
+
+                            return Observable.just(WorkWithDb.getInstance().update(vanPhongPham));
+
+                        } else {
+                            return  Observable.just(false);
+                        }
+
+                    } else {
+                      return  Observable.just(false);
+                    }
+
+                }).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(aBoolean -> {
+
+                    if (aBoolean) {
+
+                        listGroupBill.get(positionParent).getListBills().remove(positionChild);
+
+                        if (listGroupBill.get(positionParent).getListBills().size() > 0) {
+                            adapterGroupBill.notifyItemChanged(positionParent);
+                        } else {
+                            listGroupBill.remove(positionParent);
+                            adapterGroupBill.notifyItemRemoved(positionParent);
+                            adapterGroupBill.notifyItemRangeChanged(positionParent, listGroupBill.size());
+                        }
+
+                        CustomToast.showToastSuccesstion(getContext(), "Xóa thành công", Toast.LENGTH_SHORT);
+                    } else {
+                        CustomToast.showToastError(getContext(), "Xóa thất bại", Toast.LENGTH_SHORT);
+                    }
+
+                }, throwable -> {
+                    CustomToast.showToastError(getContext(), "Xóa thất bại", Toast.LENGTH_SHORT);
+                }));
+
+            }
         });
     }
 

@@ -48,6 +48,23 @@ public class GroupBillAdapter  extends RecyclerView.Adapter<GroupBillAdapter.Gro
         BillAdapter adapter = new BillAdapter(mContext, mItem.getListBills());
         holder.rvListItem.setLayoutManager(holder.linearLayoutManager);
         holder.rvListItem.setAdapter(adapter);
+
+        adapter.setListener(new BillAdapter.OnBillAdapterListener() {
+            @Override
+            public void onItemClick(int postionChild) {
+                if (mListener != null) {
+                    mListener.onItemClick(position, postionChild);
+                }
+            }
+
+            @Override
+            public void onButtonRemoveClick(int child) {
+                if (mListener !=null) {
+                    mListener.onButtonRemoveClick(position, child);
+                }
+
+            }
+        });
         
 
     }
@@ -72,6 +89,17 @@ public class GroupBillAdapter  extends RecyclerView.Adapter<GroupBillAdapter.Gro
             ButterKnife.bind(this, itemView);
             linearLayoutManager = new LinearLayoutManager(context, RecyclerView.VERTICAL, false);
         }
+    }
+
+    private OnGroupBillAdapterListener mListener;
+
+    public void setListener(OnGroupBillAdapterListener listener) {
+        mListener = listener;
+    }
+
+    public interface OnGroupBillAdapterListener {
+        public void onItemClick(int positionParent, int positionChild);
+        public void onButtonRemoveClick(int positionParent, int positionChild);
     }
 
 }
