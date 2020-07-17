@@ -66,6 +66,18 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.BillHolder> {
         holder.tvAmount.setText(mItem.getSoLuong() + "");
         holder.tvTotalPrice.setText(GetDataToCommunicate.changeToPrice( mItem.getTongGia() )+ "");
 
+        holder.itemView.setOnClickListener(v -> {
+            if (mListener != null) {
+                mListener.onItemClick(position);
+            }
+        });
+
+        holder.ibtRemove.setOnClickListener(v -> {
+            if (mListener != null) {
+                mListener.onButtonRemoveClick(position);
+            }
+        });
+
     }
 
     @Override
@@ -102,6 +114,17 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.BillHolder> {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+    }
+
+    private OnBillAdapterListener mListener;
+
+    public void setListener(OnBillAdapterListener listener) {
+        this.mListener = listener;
+    }
+
+    public interface OnBillAdapterListener {
+        void onItemClick(int child);
+        void onButtonRemoveClick(int child);
     }
 
 }

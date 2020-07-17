@@ -183,16 +183,12 @@ public class WorkWithDb {
     }
 
     public VanPhongPham getProductById(long id) {
-
-        VanPhongPham vanPhongPham = new VanPhongPham();
         try {
-            vanPhongPham = ProductUseCase.getById(databaseHelper.getProductDao(), id);
+            return ProductUseCase.getById(databaseHelper.getProductDao(), id);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        return vanPhongPham;
-
+        return null;
     }
 
     public List<VanPhongPham> getAllProduct() {
