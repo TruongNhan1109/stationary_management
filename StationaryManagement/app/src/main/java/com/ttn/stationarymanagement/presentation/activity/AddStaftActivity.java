@@ -117,6 +117,7 @@ public class AddStaftActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_staft);
         ButterKnife.bind(this);
+
         setControls();
         getDataAndSetView();
         setEvents();
@@ -126,26 +127,29 @@ public class AddStaftActivity extends BaseActivity {
 
     private void getDataAndSetView() {
 
+        // Lấy thông tin nhân viên cần cần nhật nếu chức năng cập nhật
         if (getIntent().hasExtra("ID_STAFT")) {
             idStaftEdit = getIntent().getLongExtra("ID_STAFT", 0);
             isUpload = true;
         }
 
-
+        // Thiết lập ngày sinh ngày hiện tại
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Date currentDate = new Date();
         edtDateOfBirth.setText(simpleDateFormat.format(currentDate));
 
+        // Lấy thông tin nhân viên cần cập nhật
         getAllData();
 
     }
 
+    // Lấy danh sách vai trò và phòng ban cho spiner
     private void getAllData() {
 
+        // Ob lấy danh sách vai trò
         Observable<List<VaiTro>> getDataRole = Observable.create(r -> {
-
             try {
-                r.onNext( WorkWithDb.getInstance().getAllRole());
+                r.onNext(WorkWithDb.getInstance().getAllRole());
                 r.onComplete();
             } catch (Exception e) {
                 r.onError(e);
@@ -153,40 +157,55 @@ public class AddStaftActivity extends BaseActivity {
 
         });
 
-        compositeDisposable.add(getDataRole.subscribeOn(Schedulers.newThread()).flatMap(r -> {
-            listVaiTro.addAll(r);
-            return Observable.just(WorkWithDb.getInstance().getAllDepartment());
+        compositeDisposable.add(getDataRole.subscribeOn(Schedulers.newThread())
+                .flatMap(r -> {
 
-        }).observeOn(AndroidSchedulers.mainThread()).subscribe(r -> {
-            listPhongBan.addAll(r);
+                    listVaiTro.addAll(r);    // Lưu danh sách vai trò dưới cơ sở dữ liệu
 
-            if (listVaiTro.size() < 1 || listPhongBan.size() < 1) {
-                CustomToast.showToastWarning(getApplicationContext(), "Vui lòng thiết lập phòng ban và vai trò trước", Toast.LENGTH_SHORT);
-                finish();
-            }
+                    // Ob lấy danh sách phòng ban
+                    return Observable.just(WorkWithDb.getInstance().getAllDepartment());
 
-            selectRoleAdapter.notifyDataSetChanged();
-            selectDepartmentAdapter.notifyDataSetChanged();
+                }).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(r -> {
 
-        }, throwable -> {
-            CustomToast.showToastError(getApplicationContext(), "Đã xảy ra lỗi", Toast.LENGTH_SHORT);
-        }, () -> {
+                    listPhongBan.addAll(r); //  Lưu danh sách phòng ban
 
-            if (isUpload) {
-                getInforStaft();
-            }
+                    //  Kiểm tra không cho phép thêm hay sửa nếu danh sách phòng ban hoặc vai trò trống
+                    if (listVaiTro.size() < 1 || listPhongBan.size() < 1) {
+                        CustomToast.showToastWarning(getApplicationContext(), "Vui lòng thiết lập phòng ban và vai trò trước", Toast.LENGTH_SHORT);
+                        finish();
+                    }
 
-        }));
+                    selectRoleAdapter.notifyDataSetChanged();
+                    selectDepartmentAdapter.notifyDataSetChanged();
+
+                }, throwable -> {
+                    CustomToast.showToastError(getApplicationContext(), "Đã xảy ra lỗi", Toast.LENGTH_SHORT);
+
+                }, () -> {
+
+                    if (isUpload) {     // Lấy thêm thông tin nhân viên cần upload nếu đây là sửa nhân viên
+                        getInforStaft();
+                    }
+
+                }));
 
     }
 
+
+    // Lấy thông tin nhân viên cần chỉnh sửa
     private void getInforStaft() {
 
+        // Ob lấy nhân viên theo id
         Observable<NhanVien> getStaft = Observable.just(WorkWithDb.getInstance().getStaftById(idStaftEdit));
 
-        getStaft.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(nhanVien -> {
-            nhanVienEdit = nhanVien;
+        getStaft.subscribeOn(Schedulers.newThread())
+                .filter(nhanVien -> nhanVien != null)
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(nhanVien -> {
 
+            nhanVienEdit = nhanVien; // Lưu thông tin nhân viên cần chỉnh sửa
+
+            // Lấy ảnh nhân viên
             if (!TextUtils.isEmpty(nhanVien.getAnh())) {
 
                 this.imageStaft = nhanVien.getAnh();
@@ -204,58 +223,58 @@ public class AddStaftActivity extends BaseActivity {
 
             }
 
-            edtNameStaft.setText(nhanVien.getTenNV());
-            edtDateOfBirth.setText(nhanVien.getNgaySinh());
+            edtNameStaft.setText(nhanVien.getTenNV());      // Tên nhân viên
+            edtDateOfBirth.setText(nhanVien.getNgaySinh());     // Ngày sinh
 
             if (!TextUtils.isEmpty(nhanVien.getSDT())) {
-                edtPhone.setText(nhanVien.getSDT());
+                edtPhone.setText(nhanVien.getSDT());        // Số điện thoại
             }
 
             if (!TextUtils.isEmpty(nhanVien.getEmail())) {
-                edtEmail.setText(nhanVien.getEmail());
+                edtEmail.setText(nhanVien.getEmail());      // Email
             }
 
+            // Set giới tính
             if (nhanVien.getGT() == 0) {
 
-                RadioButton rdo =  (RadioButton) findViewById(R.id.rdo_male);
+                RadioButton rdo = (RadioButton) findViewById(R.id.rdo_male);
                 rdo.setChecked(true);
 
 
             } else if (nhanVien.getGT() == 1) {
 
-                RadioButton rdo =  (RadioButton) findViewById(R.id.rdo_female);
+                RadioButton rdo = (RadioButton) findViewById(R.id.rdo_female);
                 rdo.setChecked(true);
 
             } else {
 
-                RadioButton rdo =  (RadioButton) findViewById(R.id.rdo_other);
+                RadioButton rdo = (RadioButton) findViewById(R.id.rdo_other);
                 rdo.setChecked(true);
             }
 
-           for (int i = 0; i < listPhongBan.size(); i++) {
-               if (listPhongBan.get(i).getMaPB() == nhanVien.getMaPB()) {
-                   spDepartment.setSelection(i);
-                   break;
-               }
-           }
+            // Set vị trí phòng ban
+            for (int i = 0; i < listPhongBan.size(); i++) {
+                if (listPhongBan.get(i).getMaPB() == nhanVien.getMaPB()) {
+                    spDepartment.setSelection(i);
+                    break;
+                }
+            }
 
-           for (int i = 0; i < listVaiTro.size(); i++) {
+            // Set vị trí vai trò
+            for (int i = 0; i < listVaiTro.size(); i++) {
+                if (listVaiTro.get(i).getMaVT() == nhanVien.getMaVT()) {
+                    spnRole.setSelection(i);
+                    break;
+                }
+            }
 
-               if (listVaiTro.get(i).getMaVT() == nhanVien.getMaVT()) {
-                   spnRole.setSelection(i);
-                   break;
-               }
-           }
 
+            if (!TextUtils.isEmpty(nhanVien.getGhiChu())) {
+                edtNote.setText(nhanVien.getGhiChu());      // Ghi chú
+            }
 
-           if (!TextUtils.isEmpty(nhanVien.getGhiChu())) {
-               edtNote.setText(nhanVien.getGhiChu());
-           }
-
-           btnAdd.setText("Cập nhật");
-
-           getSupportActionBar().setTitle("Chỉnh sửa thông tin");
-
+            btnAdd.setText("Cập nhật");
+            getSupportActionBar().setTitle("Chỉnh sửa thông tin");
         });
 
 
@@ -264,6 +283,7 @@ public class AddStaftActivity extends BaseActivity {
 
     private void setEvents() {
 
+        // Khi chọn ảnh
         ivPhoto.setOnClickListener(v -> {
 
             Intent intent = new Intent();
@@ -276,15 +296,18 @@ public class AddStaftActivity extends BaseActivity {
 
         });
 
+        // Khi chọn ngày sinh
         edtDateOfBirth.setOnClickListener(v -> {
 
             Calendar calendarBirthday = Calendar.getInstance();
 
-            if (!isUpload) {
+            if (!isUpload) {    // Nếu là thêm nhân viên thì lấy ngày hiện tại
+
                 int day = calendarBirthday.get(Calendar.DATE);
                 int month = calendarBirthday.get(Calendar.MONTH);
                 int year = calendarBirthday.get(Calendar.YEAR);
 
+                // Khởi tạo dialog chọn ngày
                 DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
@@ -296,7 +319,7 @@ public class AddStaftActivity extends BaseActivity {
 
 
                 datePickerDialog.show();
-            } else {
+            } else {  // Nếu là cập nhật thì lấy ngày sinh nhân viên hiển thị đúng vị trí ngày sinh
 
                 SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -325,8 +348,10 @@ public class AddStaftActivity extends BaseActivity {
         });
 
 
+        // Khi nhấn nút thêm
         btnAdd.setOnClickListener(v -> {
 
+            // Kiểm tra tên nhân viên
             if (TextUtils.isEmpty(edtNameStaft.getText().toString())) {
 
                 new ShakeAnimator().setDuration(700).setRepeatTimes(0).setTarget(edtNameStaft).start();
@@ -335,6 +360,7 @@ public class AddStaftActivity extends BaseActivity {
                 return;
             }
 
+            // Kiểm tra email
             if (TextUtils.isEmpty(edtEmail.getText().toString())) {
                 new ShakeAnimator().setDuration(700).setRepeatTimes(0).setTarget(edtEmail).start();
                 edtEmail.setError("Email không được để trống");
@@ -342,6 +368,7 @@ public class AddStaftActivity extends BaseActivity {
                 return;
             }
 
+            // Kiểm tra cấu trúc email
             if (!AppUtils.checkValidEmail(edtEmail.getText().toString())) {
                 new ShakeAnimator().setDuration(700).setRepeatTimes(0).setTarget(edtEmail).start();
                 edtEmail.setError("Sai cấu trúc email");
@@ -349,9 +376,9 @@ public class AddStaftActivity extends BaseActivity {
                 return;
             }
 
-            if (isUpload) {
+            if (isUpload) {     // Cập nhật thông tin nhân viên
                 uploadStaft();
-            } else {
+            } else {        // Thêm nhân viên
                 createNewStaft();
             }
 
@@ -361,16 +388,17 @@ public class AddStaftActivity extends BaseActivity {
 
     }
 
+    // Cập nhật thông tin nhân viên
     private void uploadStaft() {
 
+        nhanVienEdit.setAnh(!TextUtils.isEmpty(imageStaft) ? imageStaft : "");      // Cập nhật ảnh
+        nhanVienEdit.setTenNV(edtNameStaft.getText().toString());       // Cập nhật tên
+        nhanVienEdit.setNgaySinh(edtDateOfBirth.getText().toString());       //  Cập nhật ngày sinh
+        nhanVienEdit.setSDT(GetDataToCommunicate.convertStringToString(edtPhone.getText().toString()));     // Cập nhật số điện thoại
+        nhanVienEdit.setEmail(GetDataToCommunicate.convertStringToString(edtEmail.getText().toString()));       // Cập nhật email
 
-        nhanVienEdit.setAnh(!TextUtils.isEmpty(imageStaft) ? imageStaft : "");
-        nhanVienEdit.setTenNV(edtNameStaft.getText().toString());
-        nhanVienEdit.setNgayTao(edtDateOfBirth.getText().toString());
-        nhanVienEdit.setSDT(GetDataToCommunicate.convertStringToString(edtPhone.getText().toString()));
-        nhanVienEdit.setEmail(GetDataToCommunicate.convertStringToString(edtEmail.getText().toString()));
-
-        switch(rdoGender.getCheckedRadioButtonId()) {
+        // Cập nhật giới tính
+        switch (rdoGender.getCheckedRadioButtonId()) {
             case R.id.rdo_male: //Nam
                 nhanVienEdit.setGT(0);
                 break;
@@ -383,23 +411,29 @@ public class AddStaftActivity extends BaseActivity {
 
         }
 
+        // Cập nhật vai trò nhân viên
         if (listVaiTro.size() > 0) {
             VaiTro vaiTro = listVaiTro.get(spnRole.getSelectedItemPosition());
             nhanVienEdit.setMaVT(vaiTro.getMaVT());
         }
 
+        // Cập nhật phòng ban
         if (listPhongBan.size() > 0) {
             PhongBan phongBan = listPhongBan.get(spDepartment.getSelectedItemPosition());
             nhanVienEdit.setMaPB(phongBan.getMaPB());
         }
 
+        // Cập nhật ghi chú
         nhanVienEdit.setGhiChu(!TextUtils.isEmpty(edtNote.getText().toString()) ? edtNote.getText().toString() : "");
 
+        // Ob cập nhật thông tin nhân viên
         Observable<Boolean> updateStaft = Observable.just(WorkWithDb.getInstance().update(nhanVienEdit));
 
-        updateStaft.subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread()).subscribe(aBoolean -> {
-                    if(aBoolean) {
+        compositeDisposable.add(updateStaft.subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(aBoolean -> {
+
+                    if (aBoolean) {     // Cập nhật thành công
                         CustomToast.showToastSuccesstion(this, "Cập nhật thành công", Toast.LENGTH_SHORT);
 
                         Intent intent = getIntent();
@@ -410,25 +444,27 @@ public class AddStaftActivity extends BaseActivity {
                         CustomToast.showToastError(this, "Cập nhật thất bại", Toast.LENGTH_SHORT);
                     }
                 }, throwable -> {
-            CustomToast.showToastError(this, "Cập nhật thất bại", Toast.LENGTH_SHORT);
-        }, () -> {
+                    CustomToast.showToastError(this, "Cập nhật thất bại", Toast.LENGTH_SHORT);
+                }, () -> {
 
-        });
+                }));
 
     }
 
+    // Tạo mới nhân viên
     private void createNewStaft() {
 
         NhanVien nhanVien = new NhanVien();
 
-        nhanVien.setAnh(!TextUtils.isEmpty(imageStaft) ? imageStaft : "");
-        nhanVien.setTenNV(edtNameStaft.getText().toString());
-        nhanVien.setNgaySinh(edtDateOfBirth.getText().toString());
-        nhanVien.setSDT(!TextUtils.isEmpty(edtPhone.getText().toString()) ? edtPhone.getText().toString() : "");
-        nhanVien.setEmail(GetDataToCommunicate.convertStringToString(edtEmail.getText().toString()));
-        nhanVien.setNgayTao(GetDataToCommunicate.getCurrentDate());
+        nhanVien.setAnh(!TextUtils.isEmpty(imageStaft) ? imageStaft : ""); // Ảnh nhân viên
+        nhanVien.setTenNV(edtNameStaft.getText().toString());               // Tên nhân viên
+        nhanVien.setNgaySinh(edtDateOfBirth.getText().toString());          // Ngày sinh
+        nhanVien.setSDT(!TextUtils.isEmpty(edtPhone.getText().toString()) ? edtPhone.getText().toString() : "");    // Số điện thoại
+        nhanVien.setEmail(GetDataToCommunicate.convertStringToString(edtEmail.getText().toString()));           // Email
+        nhanVien.setNgayTao(GetDataToCommunicate.getCurrentDate());     // Ngày tạo
 
-        switch(rdoGender.getCheckedRadioButtonId()) {
+        // Giới tính
+        switch (rdoGender.getCheckedRadioButtonId()) {
             case R.id.rdo_male: //Nam
                 nhanVien.setGT(0);
                 break;
@@ -441,58 +477,65 @@ public class AddStaftActivity extends BaseActivity {
         }
 
 
+        // Vai trò
         if (listVaiTro.size() > 0) {
             VaiTro vaiTro = listVaiTro.get(spnRole.getSelectedItemPosition());
             nhanVien.setMaVT(vaiTro.getMaVT());
         }
 
+        // Phòng ban
         if (listPhongBan.size() > 0) {
             PhongBan phongBan = listPhongBan.get(spDepartment.getSelectedItemPosition());
             nhanVien.setMaPB(phongBan.getMaPB());
         }
 
+        // Ghi chú
         nhanVien.setGhiChu(!TextUtils.isEmpty(edtNote.getText().toString()) ? edtNote.getText().toString() : "");
 
+        // Ob tạo nhân viên
         Observable<Boolean> createStaft = Observable.create(r -> {
             try {
                 r.onNext(WorkWithDb.getInstance().insert(nhanVien));
                 r.onComplete();
-
             } catch (Exception e) {
                 r.onError(e);
             }
 
         });
 
-        compositeDisposable.add(createStaft.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(r ->{
-            if (r) {
-                CustomToast.showToastSuccesstion(getApplicationContext(), "Thêm thành công", Toast.LENGTH_SHORT);
-                Intent intent = getIntent();
-                setResult(RESULT_OK, intent);
-                finish();
+        compositeDisposable.add(createStaft.subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(r -> {
+                    if (r) {
+                        CustomToast.showToastSuccesstion(getApplicationContext(), "Thêm thành công", Toast.LENGTH_SHORT);
+                        Intent intent = getIntent();
+                        setResult(RESULT_OK, intent);
+                        finish();
 
-            } else {
-                CustomToast.showToastError(getApplicationContext(), "Thêm thất bại", Toast.LENGTH_SHORT);
-            }
+                    } else {
+                        CustomToast.showToastError(getApplicationContext(), "Thêm thất bại", Toast.LENGTH_SHORT);
+                    }
 
-        }, throwable -> {
-            CustomToast.showToastError(getApplicationContext(), "Thêm thất bại", Toast.LENGTH_SHORT);
-        }));
+                }, throwable -> {
+                    CustomToast.showToastError(getApplicationContext(), "Thêm thất bại", Toast.LENGTH_SHORT);
+                }));
 
     }
 
     private void setControls() {
 
+        compositeDisposable = new CompositeDisposable();
+
+        // Khởi tạo toolbar
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Thêm nhân viên");
 
+        // Khởi tạo danh vai trò và adapter quản lý
         listVaiTro = new ArrayList();
-        compositeDisposable = new CompositeDisposable();
-
         selectRoleAdapter = new SelectRoleAdapter(this, listVaiTro);
         spnRole.setAdapter(selectRoleAdapter);
 
+        // Khởi tạo danh sách phòng ban và adapter quản lý
         listPhongBan = new ArrayList();
         selectDepartmentAdapter = new SelectDepartmentAdapter(this, listPhongBan);
         spDepartment.setAdapter(selectDepartmentAdapter);
@@ -554,11 +597,17 @@ public class AddStaftActivity extends BaseActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        if(item.getItemId() == android.R.id.home) {
+        if (item.getItemId() == android.R.id.home) {
             onBackPressed();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        compositeDisposable.dispose();
     }
 }

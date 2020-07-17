@@ -47,7 +47,7 @@ public class StaftManagerFragment extends BaseFragment {
     TextView tvTotalStaft;
 
     private StaftManagerAdapter adapter;
-    private List<NhanVien>  listNhanVien;
+    private List<NhanVien> listNhanVien;       // Danh sách nhân viên
     private CompositeDisposable compositeDisposable;
 
     public static StaftManagerFragment newInstance() {
@@ -60,20 +60,19 @@ public class StaftManagerFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-       View view = inflater.inflate(R.layout.fragment_staft_manager, container, false);
-       ButterKnife.bind(this, view);
+        View view = inflater.inflate(R.layout.fragment_staft_manager, container, false);
+        ButterKnife.bind(this, view);
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         setHasOptionsMenu(true);
+
         initControl();
         getDataAndShow();
         setEvents();
-
 
     }
 
@@ -81,7 +80,7 @@ public class StaftManagerFragment extends BaseFragment {
 
         adapter.setListener(new StaftManagerAdapter.StaftManagerAdapterListener() {
             @Override
-            public void onItemClick(int position) {
+            public void onItemClick(int position) {     // Sửa nhân viên
                 NhanVien nhanVien = listNhanVien.get(position);
 
                 Intent intent = AddStaftActivity.getCallingIntent(getContext());
@@ -91,58 +90,64 @@ public class StaftManagerFragment extends BaseFragment {
             }
 
             @Override
-            public void onRemoveClick(int position) {
-                NhanVien staftRemove = listNhanVien.get(position);
+            public void onRemoveClick(int position) {       // Xóa nhân viên
 
+                NhanVien staftRemove = listNhanVien.get(position);      // Lấy nhân viên cần xóa
+
+                // Ob xóa nhân viên
                 Observable<Boolean> removeStaft = Observable.just(WorkWithDb.getInstance().delete(staftRemove));
-                removeStaft.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(aBoolean -> {
+                removeStaft.subscribeOn(Schedulers.newThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(aBoolean -> {
 
-                    if (aBoolean) {
-                        CustomToast.showToastSuccesstion(getContext(), "Đã xóa nhân viên", Toast.LENGTH_SHORT);
+                            if (aBoolean) {     // Xóa thanh công
+                                CustomToast.showToastSuccesstion(getContext(), "Đã xóa nhân viên", Toast.LENGTH_SHORT);
 
-                        listNhanVien.remove(position);
-                        adapter.notifyItemRemoved(position);
-                        adapter.notifyItemRangeChanged(position, listNhanVien.size());
+                                listNhanVien.remove(position);
+                                adapter.notifyItemRemoved(position);
+                                adapter.notifyItemRangeChanged(position, listNhanVien.size());
 
-                    } else {
-                        CustomToast.showToastError(getContext(), "Xóa thất bại", Toast.LENGTH_SHORT);
-                    }
+                            } else {
+                                CustomToast.showToastError(getContext(), "Xóa thất bại", Toast.LENGTH_SHORT);
+                            }
 
-                }, throwable -> {
-                    CustomToast.showToastError(getContext(), "Xóa thất bại", Toast.LENGTH_SHORT);
-                });
-
-
+                        }, throwable -> {
+                            CustomToast.showToastError(getContext(), "Xóa thất bại", Toast.LENGTH_SHORT);
+                        });
             }
         });
 
 
     }
 
+    // Lấy danh sách nhân viên được lưu
     private void getDataAndShow() {
 
+        // Ob lấy danh sách nhân viên
         Observable<List<NhanVien>> getDataStaft = Observable.create(r -> {
-
             List<NhanVien> list = WorkWithDb.getInstance().getAllStaft();
             r.onNext(list);
             r.onComplete();
-
         });
 
         compositeDisposable.add(getDataStaft.subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread()).subscribe(nhanViens -> {
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(nhanViens -> {
 
-                    if (nhanViens.size() > 0) {
+                    if (nhanViens.size() > 0) {     // Có nhân viên được lưu
 
                         rvListStaft.setVisibility(View.VISIBLE);
                         tvNotifyEmpty.setVisibility(View.GONE);
                         tvTotalStaft.setVisibility(View.VISIBLE);
-                        tvTotalStaft.setText("Danh sách nhân viên (" + nhanViens.size() + ")");
+
+                        tvTotalStaft.setText("Danh sách nhân viên (" + nhanViens.size() + ")");     // Hiển thị tổng số nhân viên
+
                         listNhanVien.clear();
                         listNhanVien.addAll(nhanViens);
                         adapter.notifyDataSetChanged();
 
-                    } else {
+                    } else {        // Thông báo chưa có nhân viên nào
+
                         tvTotalStaft.setVisibility(View.GONE);
                         rvListStaft.setVisibility(View.GONE);
                         tvNotifyEmpty.setVisibility(View.VISIBLE);
@@ -157,6 +162,7 @@ public class StaftManagerFragment extends BaseFragment {
 
         compositeDisposable = new CompositeDisposable();
 
+        // Khởi tạo danh nhân viên và adapter quản lý
         listNhanVien = new ArrayList<>();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
         adapter = new StaftManagerAdapter(getContext(), listNhanVien);
@@ -166,6 +172,8 @@ public class StaftManagerFragment extends BaseFragment {
 
     }
 
+
+    // Khởi tạo menu item
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
@@ -177,11 +185,10 @@ public class StaftManagerFragment extends BaseFragment {
 
         switch (item.getItemId()) {
 
-            case R.id.mn_staft_manager_add:
+            case R.id.mn_staft_manager_add:     // Thêm nhân viên
 
                 Intent intent = AddStaftActivity.getCallingIntent(getContext());
                 startActivityForResult(intent, AddStaftActivity.REQUEST_ADD_STAFT);
-
                 return true;
 
         }
@@ -197,10 +204,12 @@ public class StaftManagerFragment extends BaseFragment {
             return;
         }
 
+        // Nhận kết quả từ thêm nhân viên
         if (requestCode == AddStaftActivity.REQUEST_ADD_STAFT && resultCode == Activity.RESULT_OK) {
             getDataAndShow();
         }
 
+        // Nhận kết quả từ sửa nhân viên
         if (requestCode == AddStaftActivity.REQUEST_EDIT_STAFT && resultCode == Activity.RESULT_OK) {
             getDataAndShow();
         }

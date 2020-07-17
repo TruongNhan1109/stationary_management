@@ -42,16 +42,15 @@ public class DepartmentManagerFragment extends BaseFragment {
     @BindView(R.id.rv_fragment_role_manager_list_role)
     RecyclerView rvListDepartment;
 
-    private List<PhongBan> listDepartment;
+    private List<PhongBan> listDepartment;      // Danh sách các phòng ban
     private DepartmentAdapter adapterDepartment;
 
     private CompositeDisposable compositeDisposable;
 
     public static DepartmentManagerFragment newInstance() {
-        Bundle args = new Bundle();
         DepartmentManagerFragment fragment = new DepartmentManagerFragment();
-        fragment.setArguments(args);
         return fragment;
+
     }
 
     @Nullable
@@ -85,12 +84,13 @@ public class DepartmentManagerFragment extends BaseFragment {
                     }
 
                     @Override
-                    public void onUpload(String department, String note) {
+                    public void onUpload(String department, String note) {  // Cập nhật phòng ban
 
-                        PhongBan phongBan = listDepartment.get(position);
+                        PhongBan phongBan = listDepartment.get(position);       // Cập nhật các thay đổi
                         phongBan.setTenPB(department);
                         phongBan.setGhiChu(note);
 
+                        // Ob cập nhật phòng ban
                         Observable<Boolean> obUpload = Observable.create(r -> {
                             try {
                                 r.onNext(WorkWithDb.getInstance().update(phongBan));
@@ -98,12 +98,12 @@ public class DepartmentManagerFragment extends BaseFragment {
 
                             } catch (Exception e) {
                                 e.printStackTrace();
-                               r.onError(e);
+                                r.onError(e);
                             }
                         });
 
                         compositeDisposable.add(obUpload.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(aBoolean -> {
-                            if (aBoolean) {
+                            if (aBoolean) {     // Cập nhật thành công
                                 CustomToast.showToastSuccesstion(getContext(), "Cập nhật thành công", Toast.LENGTH_SHORT);
                                 adapterDepartment.notifyItemChanged(position);
                             } else {
@@ -120,7 +120,8 @@ public class DepartmentManagerFragment extends BaseFragment {
             }
 
             @Override
-            public void onItemRemove(int position) {
+            public void onItemRemove(int position) {        // Xóa phòng ban
+
 
                 Observable<Boolean> obUpload = Observable.create(r -> {
                     try {
@@ -152,8 +153,10 @@ public class DepartmentManagerFragment extends BaseFragment {
 
     }
 
+    // Lấy danh sách phòng ban
     private void getDataAndSetView() {
 
+        // Khởi Ob lấy danh sách phòng ban
         Observable<Boolean> obGetData = Observable.create(r -> {
             try {
                 listDepartment.clear();
@@ -167,19 +170,21 @@ public class DepartmentManagerFragment extends BaseFragment {
             }
         });
 
-        compositeDisposable.add(obGetData.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(aBoolean -> {
-            if (listDepartment.size() > 0) {
-                rvListDepartment.setVisibility(View.VISIBLE);
-                tvNotifyEmpty.setVisibility(View.GONE);
-                adapterDepartment.notifyDataSetChanged();
+        compositeDisposable.add(obGetData.subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(aBoolean -> {
 
-            } else {
+                    if (listDepartment.size() > 0) {        // Có phòng ban được lưu
+                        rvListDepartment.setVisibility(View.VISIBLE);
+                        tvNotifyEmpty.setVisibility(View.GONE);
+                        adapterDepartment.notifyDataSetChanged();
 
-                rvListDepartment.setVisibility(View.GONE);
-                tvNotifyEmpty.setVisibility(View.VISIBLE);
+                    } else {        // Chưa có phòng ban
 
-            }
-        }));
+                        rvListDepartment.setVisibility(View.GONE);
+                        tvNotifyEmpty.setVisibility(View.VISIBLE);
+                    }
+                }));
 
     }
 
@@ -187,6 +192,7 @@ public class DepartmentManagerFragment extends BaseFragment {
 
         compositeDisposable = new CompositeDisposable();
 
+        // Khởi tạo danh sách và adapter quản lý phòng ban
         listDepartment = new ArrayList<>();
         adapterDepartment = new DepartmentAdapter(getContext(), listDepartment);
 
@@ -194,24 +200,29 @@ public class DepartmentManagerFragment extends BaseFragment {
         rvListDepartment.setLayoutManager(linearLayoutManager);
         rvListDepartment.setAdapter(adapterDepartment);
 
+
     }
 
+    // Khởi tạo menu item
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_department, menu);
     }
 
+    // Khi click vào menu item
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.mn_department_manager_add:
+
+            case R.id.mn_department_manager_add:        // Thêm phòng ban
+
                 AddDepartmentDialog addDepartmentDialog = AddDepartmentDialog.newInstance("", "");
                 addDepartmentDialog.setListener(new AddDepartmentDialog.AddDepartmentDilaogListener() {
                     @Override
                     public void onAddSuccesstion() {
                         getDataAndSetView();
-                    }
+                    }       // Reload lại dữ liệu sau khi thêm
 
                     @Override
                     public void onUpload(String department, String note) {

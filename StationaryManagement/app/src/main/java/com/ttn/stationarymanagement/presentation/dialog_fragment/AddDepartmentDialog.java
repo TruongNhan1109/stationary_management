@@ -83,45 +83,53 @@ public class AddDepartmentDialog extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         compositeDisposable = new CompositeDisposable();
+
         getData();
         setEvents();
 
     }
 
+    // Lấy dữ liệu phòng ban cần cập nhật
     private void getData() {
 
         String name = getArguments().getString("NAME", "");
         String note = getArguments().getString("NOTE", "");
 
-        if (!TextUtils.isEmpty(name)) {
+        if (!TextUtils.isEmpty(name)) {     // Có thông tin cần cập nhật
+
+            // Đưa dữ liệu cần được lưu lên hiển thị
             edtNameDepartment.setText(name);
             edtNote.setText(note);
             btnAdd.setText("Cập nhật");
             isUpload = true;
+
         }
 
     }
 
     private void setEvents() {
 
+        // Khi click vào nút hủy
         tvClose.setOnClickListener(v -> dismiss());
 
+        // Khi nhấn vào nút thêm
         btnAdd.setOnClickListener(v -> {
 
+            // Kiểm tra tên phòng ban
             if (TextUtils.isEmpty(edtNameDepartment.getText().toString())) {
                 edtNameDepartment.setError("Phòng ban không được để trống");
                 edtNameDepartment.requestFocus();
                 return;
             }
 
-            if (isUpload) {
+            if (isUpload) {     // Cập nhật phòng ban
                 if (mListener != null) {
                     String name = edtNameDepartment.getText().toString();
                     String note = !TextUtils.isEmpty(edtNote.getText().toString()) ? edtNote.getText().toString() : "";
                     mListener.onUpload(edtNameDepartment.getText().toString(), note);
                     dismiss();
                 }
-            } else {
+            } else {        // Tạo mới phòng ban
                 createDepartment();
             }
 
@@ -131,15 +139,18 @@ public class AddDepartmentDialog extends DialogFragment {
 
     private void createDepartment() {
 
+        // Ob tạo phòng ban
         Observable<Boolean> obCreateDepartment = Observable.create(r -> {
 
             try {
+
+                // Set các giá trị phòng ban cần tạo
                 PhongBan phongBan = new PhongBan();
                 phongBan.setTenPB(edtNameDepartment.getText().toString());
                 phongBan.setGhiChu(!TextUtils.isEmpty(edtNameDepartment.getText().toString()) ? edtNote.getText().toString() : "");
-                phongBan.setNgayTao(GetDataToCommunicate.getCurrentDate());
+                phongBan.setNgayTao(GetDataToCommunicate.getCurrentDate()); // Ngày tạo
 
-                r.onNext( WorkWithDb.getInstance().insert(phongBan));
+                r.onNext( WorkWithDb.getInstance().insert(phongBan)); // Lưu xuống Db
                 r.onComplete();
 
             } catch (Exception e) {

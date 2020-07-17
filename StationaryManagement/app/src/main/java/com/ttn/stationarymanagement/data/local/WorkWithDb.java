@@ -100,6 +100,7 @@ public class WorkWithDb {
 
     // Department Table -----------------------------------------------------
 
+    // Thêm phòng ban
     public boolean insert(PhongBan phongBan) {
         try {
             return  DepartmentUseCase.create(databaseHelper.getDepartmentDao(), phongBan) == 1;
@@ -109,6 +110,8 @@ public class WorkWithDb {
         return  false;
     }
 
+
+    // Cập nhật phòng ban
     public boolean update(PhongBan phongBan) {
         try {
             DepartmentUseCase.update(databaseHelper.getDepartmentDao(), phongBan);
@@ -119,6 +122,7 @@ public class WorkWithDb {
         return false;
     }
 
+    // Xóa phòng ban
     public boolean delete(PhongBan phongBan) {
         try {
             DepartmentUseCase.delete(databaseHelper.getDepartmentDao(), phongBan);
@@ -141,6 +145,7 @@ public class WorkWithDb {
 
     }
 
+    // Lấy danh sách phòng ban
     public List<PhongBan> getAllDepartment() {
         try {
             List<PhongBan> list = DepartmentUseCase.getAll(databaseHelper.getDepartmentDao());
@@ -228,6 +233,7 @@ public class WorkWithDb {
 
     // Staft Table ------------------------------------------------------------
 
+    // Thêm nhân viên
     public boolean insert(NhanVien NhanVien) {
         try {
             return  StaftUseCase.create(databaseHelper.getStaftDao(), NhanVien) == 1;
@@ -237,6 +243,7 @@ public class WorkWithDb {
         return  false;
     }
 
+    // Cập nhật nhân viên
     public boolean update(NhanVien NhanVien) {
         try {
             StaftUseCase.update(databaseHelper.getStaftDao(), NhanVien);
@@ -247,6 +254,7 @@ public class WorkWithDb {
         return false;
     }
 
+    // Xóa nhân viên
     public boolean delete(NhanVien NhanVien) {
         try {
             StaftUseCase.delete(databaseHelper.getStaftDao(), NhanVien);
@@ -257,19 +265,19 @@ public class WorkWithDb {
         return false;
     }
 
+    // Lấy nhân viên theo id
     public NhanVien getStaftById(long id) {
-
-        NhanVien nhanVien = new NhanVien();
         try {
-            nhanVien = StaftUseCase.getById(databaseHelper.getStaftDao(), id);
+            return StaftUseCase.getById(databaseHelper.getStaftDao(), id);
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return nhanVien;
+        return null;
 
     }
 
+    // Lấy toàn bộ danh sách nhân viên
     public List<NhanVien> getAllStaft() {
         try {
             List<NhanVien> list = StaftUseCase.getAll(databaseHelper.getStaftDao());
