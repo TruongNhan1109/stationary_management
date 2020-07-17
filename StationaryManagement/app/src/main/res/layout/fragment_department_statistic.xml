@@ -10,13 +10,11 @@
         android:background="@color/color_white"
         android:orientation="vertical">
 
-
         <com.github.mikephil.charting.charts.BarChart
             android:id="@+id/barchart"
             android:layout_width="match_parent"
             android:layout_margin="20dp"
             android:layout_height="match_parent"/>
-
 
     </LinearLayout>
 

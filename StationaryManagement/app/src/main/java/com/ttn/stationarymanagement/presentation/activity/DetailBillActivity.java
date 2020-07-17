@@ -76,14 +76,15 @@ public class DetailBillActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_bill);
         ButterKnife.bind(this);
+
         setControls();
         getDatas();
 
 
     }
 
-    private VanPhongPham product;
-    private NhanVien staft;
+    private VanPhongPham product;   // Sản phẩm cấp phát
+    private NhanVien staft;         // Nhân viên cấp phát
 
 
     private void getDatas() {
@@ -92,7 +93,7 @@ public class DetailBillActivity extends BaseActivity {
 
         if (intent.hasExtra("ID_BILL")) {
 
-            long idBill = intent.getLongExtra("ID_BILL", 0);
+            long idBill = intent.getLongExtra("ID_BILL", 0);        // Lấy id sản phẩm cẩn hiển thị tri tiết
 
             Observable<CapPhat> getInforBill = Observable.just(WorkWithDb.getInstance().getAllocationById(idBill));
 
@@ -111,6 +112,8 @@ public class DetailBillActivity extends BaseActivity {
             }).observeOn(AndroidSchedulers.mainThread())
             .subscribe(capPhat -> {
 
+                // Hiển thị các thông tin
+
                 tvIdBill.setText("Mã phiếu: " + capPhat.getMaPhieu());
                 tvDateCreate.setText(capPhat.getNgayCap());
                 tvIdStaft.setText(capPhat.getMaNV() + "");
@@ -124,12 +127,14 @@ public class DetailBillActivity extends BaseActivity {
                     tvNote.setVisibility(View.GONE);
                 }
 
+                // Tên nhân viên
                 if (staft != null) {
                     tvNameStaft.setText(!TextUtils.isEmpty(staft.getTenNV()) ? staft.getTenNV() : "");
                 } else {
                     tvNameStaft.setText("");
                 }
 
+                // Tên sản phẩm
                 if (product != null) {
                     tvNameProduct.setText(!TextUtils.isEmpty(product.getTenSP()) ? product.getTenSP() : "");
                 } else {

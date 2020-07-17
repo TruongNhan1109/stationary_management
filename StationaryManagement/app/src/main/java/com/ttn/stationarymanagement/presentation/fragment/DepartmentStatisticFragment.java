@@ -83,8 +83,12 @@ public class DepartmentStatisticFragment extends BaseFragment {
         Map<Long, List<CapPhat>> groupByStaftId = new HashMap<>();
         Map<Long, Integer> groupStaftByDepartment = new HashMap<>();
 
+        // Lấy tất cả hóa đơn
         Observable<List<CapPhat>> getAllBills = Observable.just(WorkWithDb.getInstance().getAllAllocation());
-        compositeDisposable.add(getAllBills.subscribeOn(Schedulers.newThread()).flatMap(capPhats -> Observable.fromIterable(capPhats))
+
+        compositeDisposable.add(getAllBills.subscribeOn(Schedulers.newThread())
+                .filter(capPhats -> capPhats != null)
+                .flatMap(capPhats -> Observable.fromIterable(capPhats))
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(capPhat -> {
 
                     if (groupByStaftId.get(capPhat.getMaNV()) == null) {
@@ -133,6 +137,7 @@ public class DepartmentStatisticFragment extends BaseFragment {
 
                     int index = 0;
                     for(Map.Entry<Long, Integer> entry: result.entrySet()) {
+
                         PhongBan phongBan = WorkWithDb.getInstance().getDepartmentById(entry.getKey());
 
                         if (phongBan == null) {

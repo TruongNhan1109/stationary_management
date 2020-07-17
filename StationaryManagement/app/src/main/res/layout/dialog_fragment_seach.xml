@@ -10,12 +10,22 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/tv_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hủy"
+            android:textSize="16sp"
+            android:layout_marginVertical="10dp"
+            android:textColor="@color/color_blue"
+            android:layout_marginHorizontal="10dp"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingHorizontal="10dp"
             android:layout_marginTop="20dp"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
             <AutoCompleteTextView
                 android:id="@+id/atv_dialog_fragment_seach_seach_box"
@@ -30,6 +40,8 @@
                 android:background="@drawable/shape_background_search_white"
                 android:layout_height="wrap_content"
                 android:hint="Tìm kiếm"/>
+
+
 
         </LinearLayout>
 
@@ -68,6 +80,13 @@
             android:text="Tìm kiếm" />
 
     </LinearLayout>
+
+    <com.rey.material.widget.ProgressView
+        android:id="@+id/pv_loading"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@color/color_blue"
+        android:layout_centerInParent="true"/>
 
 
 </RelativeLayout>

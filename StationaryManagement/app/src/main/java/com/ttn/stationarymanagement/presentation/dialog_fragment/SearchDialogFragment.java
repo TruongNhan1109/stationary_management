@@ -1,6 +1,7 @@
 package com.ttn.stationarymanagement.presentation.dialog_fragment;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,11 +19,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.Adapter;
 
+import com.rey.material.widget.ProgressView;
 import com.ttn.stationarymanagement.R;
 import com.ttn.stationarymanagement.data.local.WorkWithDb;
 import com.ttn.stationarymanagement.data.local.model.CapPhat;
 import com.ttn.stationarymanagement.data.local.model.NhanVien;
 import com.ttn.stationarymanagement.data.local.model.VanPhongPham;
+import com.ttn.stationarymanagement.presentation.activity.DetailBillActivity;
 import com.ttn.stationarymanagement.presentation.adapter.GroupBillAdapter;
 import com.ttn.stationarymanagement.presentation.baseview.FullScreenDialog;
 import com.ttn.stationarymanagement.presentation.model.GroupBillModel;
@@ -53,6 +57,12 @@ public class SearchDialogFragment extends FullScreenDialog {
     @BindView(R.id.btn_dialog_fragment_seach_seach)
     Button btnSeach;
 
+    @BindView(R.id.pv_loading)
+    ProgressView pvLoading;
+
+    @BindView(R.id.tv_cancel)
+    TextView tvCancel;
+
     private List<GroupBillModel> listResult;
     private GroupBillAdapter adapterGroupBill;
 
@@ -73,6 +83,7 @@ public class SearchDialogFragment extends FullScreenDialog {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         setControls();
         getDataSuggest();
         setEvents();
@@ -80,8 +91,11 @@ public class SearchDialogFragment extends FullScreenDialog {
 
     private void setEvents() {
 
+        tvCancel.setOnClickListener(v -> dismiss());
+
         btnSeach.setOnClickListener(v -> {
 
+            // Kiểm tra giá trị tìm kiếm
             if (TextUtils.isEmpty(edtSeachBox.getText().toString())) {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -92,15 +106,16 @@ public class SearchDialogFragment extends FullScreenDialog {
             }
 
             listResult.clear();
+            pvLoading.start();
 
-            String key = edtSeachBox.getText().toString();
+            String key = edtSeachBox.getText().toString();      // Từ khóa tìm kiếm
 
             compositeDisposable.add(getAllBillById(key).subscribeOn(Schedulers.newThread())
                     .filter(capPhats -> capPhats != null)
                     .flatMap(capPhats -> {
 
+                        // Tạo kết quả theo mã phiếu
                         if (capPhats.size() > 0) {
-
                             GroupBillModel groupBillModel = new GroupBillModel();
                             groupBillModel.setNameGroup("Mã phiếu: " + key);
                             groupBillModel.setListBills(capPhats);
@@ -113,6 +128,7 @@ public class SearchDialogFragment extends FullScreenDialog {
                     }).filter(capPhats -> capPhats != null)
                     .flatMap(capPhats -> {
 
+                        // Khởi tạo kết quả theo mã nhân viên
                         if (capPhats.size() > 0) {
 
                             GroupBillModel groupBillModel = new GroupBillModel();
@@ -127,10 +143,11 @@ public class SearchDialogFragment extends FullScreenDialog {
                     }).filter(capPhats -> capPhats != null)
                     .flatMap(capPhats -> {
 
+                        // Khởi tạo kết quả theo mã sản phẩm
                         if (capPhats.size() > 0) {
 
                             GroupBillModel groupBillModel = new GroupBillModel();
-                            groupBillModel.setNameGroup("Mã nhân viên: " + key);
+                            groupBillModel.setNameGroup("Mã sản phẩm: " + key);
                             groupBillModel.setListBills(capPhats);
 
                             listResult.add(groupBillModel);
@@ -140,6 +157,7 @@ public class SearchDialogFragment extends FullScreenDialog {
 
                     }).filter(nhanViens -> nhanViens != null).flatMap(nhanViens -> {
 
+                        // Khỏi tạo kết quả theo tên nhân viên
                         if (nhanViens.size() > 0) {
 
                             GroupBillModel groupBillModel = new GroupBillModel();
@@ -147,6 +165,7 @@ public class SearchDialogFragment extends FullScreenDialog {
                             List<CapPhat> list = new ArrayList<>();
 
                             for (NhanVien nv : nhanViens) {
+
                                 List<CapPhat> listBills = WorkWithDb.getInstance().getAllocationByStaftId(nv.getMaNV());
                                 if (listBills != null && listBills.size() > 0) {
                                     list.addAll(listBills);
@@ -165,6 +184,7 @@ public class SearchDialogFragment extends FullScreenDialog {
                     }).filter(vanPhongPhams -> vanPhongPhams != null)
                     .flatMap(vanPhongPhams -> {
 
+                        // Khởi tạo kết quả theo tên sản phẩm
                         if (vanPhongPhams.size() > 0) {
 
                             GroupBillModel groupBillModel = new GroupBillModel();
@@ -190,36 +210,117 @@ public class SearchDialogFragment extends FullScreenDialog {
                     }).observeOn(AndroidSchedulers.mainThread()).subscribe(aBoolean -> {
                         CustomToast.showToastSuccesstion(getContext(), "Tìm kiếm thành công", Toast.LENGTH_SHORT);
                     }, throwable -> {
+                        pvLoading.stop();
                         CustomToast.showToastError(getContext(), "Đã xảy ra lỗi trong quá trình tìm kiếm", Toast.LENGTH_SHORT);
                     }, () -> {
+                        pvLoading.stop();
                         if (listResult.size() > 0) {
                             adapterGroupBill.notifyDataSetChanged();
                         }
                     }));
+
+
+        });
+
+        adapterGroupBill.setListener(new GroupBillAdapter.OnGroupBillAdapterListener() {
+            @Override
+            public void onItemClick(int positionParent, int positionChild) {    // Xem chi tiết một bill
+
+                CapPhat mItem = listResult.get(positionParent).getListBills().get(positionChild);
+
+                Intent intent = DetailBillActivity.getCallingIntent(getContext());
+                intent.putExtra("ID_BILL", mItem.getMaPhieu());
+                startActivity(intent);
+
+
+            }
+
+            @Override
+            public void onButtonRemoveClick(int positionParent, int positionChild) {        // Xóa sản phẩm
+
+                CapPhat mItem = listResult.get(positionParent).getListBills().get(positionChild);
+
+                Observable<Boolean> deleteBill = Observable.create(r -> {
+                    r.onNext(WorkWithDb.getInstance().delete(mItem));
+                    r.onComplete();
+                });
+
+                compositeDisposable.add(deleteBill.subscribeOn(Schedulers.newThread())
+                        .flatMap(aBoolean -> {  // Xóa hóa đơn thành công
+
+                            if (aBoolean) {
+                                // Cập nhật lại số lượng sản phẩm
+                                VanPhongPham vanPhongPham = WorkWithDb.getInstance().getProductById(mItem.getMaVPP());
+
+                                if (vanPhongPham != null) {
+                                    vanPhongPham.setSoLuong(vanPhongPham.getSoLuong() + mItem.getSoLuong());    // Cập nhật lại số lượng
+
+                                    return Observable.just(WorkWithDb.getInstance().update(vanPhongPham));
+
+                                } else {
+                                    return  Observable.just(false);
+                                }
+
+                            } else {
+                                return  Observable.just(false);
+                            }
+
+                        }).observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(aBoolean -> {
+
+                            if (aBoolean) { // Xóa thành công ==> Cập nhật lại hiển thị
+
+                                listResult.get(positionParent).getListBills().remove(positionChild);
+
+                                if (listResult.get(positionParent).getListBills().size() > 0) {
+                                    adapterGroupBill.notifyItemChanged(positionParent);
+                                } else {
+                                    listResult.remove(positionParent);
+                                    adapterGroupBill.notifyItemRemoved(positionParent);
+                                    adapterGroupBill.notifyItemRangeChanged(positionParent, listResult.size());
+                                }
+
+                                CustomToast.showToastSuccesstion(getContext(), "Xóa thành công", Toast.LENGTH_SHORT);
+
+                            } else {
+                                CustomToast.showToastError(getContext(), "Xóa thất bại", Toast.LENGTH_SHORT);
+                            }
+
+                        }, throwable -> {
+                            CustomToast.showToastError(getContext(), "Xóa thất bại", Toast.LENGTH_SHORT);
+                        }));
+
+            }
         });
 
     }
 
+    // Lấy các phiếu theo mã phiếu
     private Observable<List<CapPhat>> getAllBillById(String id) {
         return Observable.just(WorkWithDb.getInstance().getAllAlocationByIdBill(id));
     }
 
+    // Lấy các hóa đơn theo mã nhân viên
     private Observable<List<CapPhat>> getAllBillByStaftId(String key) {
         return Observable.just(WorkWithDb.getInstance().getAllocationByStaftId(key));
     }
 
+    // Lấy các hóa đơn theo mã sản phẩm
     private Observable<List<CapPhat>> getAllBillByProductId(String key) {
         return Observable.just(WorkWithDb.getInstance().getAllocationByIdProduct(key));
     }
 
+    // Lấy danh sách nhân viên theo tên
     private Observable<List<NhanVien>> getAllStaftByName(String key) {
         return Observable.just(WorkWithDb.getInstance().getAllStaftByName(key));
     }
 
+    // Lấy danh sách sản phẩm theo tên sản phẩm
     private Observable<List<VanPhongPham>> getAllProductByNameProduct(String nameProduct) {
         return Observable.just(WorkWithDb.getInstance().getAllProductByName(nameProduct));
     }
 
+    // Lấy dữ liệu gợi ý
     private void getDataSuggest() {
 
         listDataSugestion.clear();
@@ -228,24 +329,30 @@ public class SearchDialogFragment extends FullScreenDialog {
                 .filter(capPhats -> capPhats != null)
                 .flatMap(capPhats -> {
 
+                    // Tạo gợi ý theo mã phiếu
                     for (CapPhat item : capPhats) {
                         listDataSugestion.add(item.getMaPhieu() + "");
                     }
 
+                    // Lấy danh sách nhân viên để tạo gợi ý
                     return getAllStaft();
 
                 }).filter(nhanViens -> nhanViens != null)
                 .flatMap(nhanViens -> {
 
+                    // Tạo gợi ý theo tên nhân viên
                     for (NhanVien item : nhanViens) {
                         listDataSugestion.add(item.getTenNV());
                     }
+
+                    // Lấy danh sản sản phẩm để tạo gợi ý
                     return getAllProduct();
 
                 }).filter(vanPhongPhams -> vanPhongPhams != null)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(vanPhongPhams -> {
 
+                    // Tạo gợi ý theo tên sản phẩm
                     for (VanPhongPham item : vanPhongPhams) {
                         listDataSugestion.add(item.getTenSP());
                     }
@@ -263,12 +370,14 @@ public class SearchDialogFragment extends FullScreenDialog {
 
         compositeDisposable = new CompositeDisposable();
 
+        // Khởi tạo list kết quả và adapter
         listResult = new ArrayList<>();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
         rvListResult.setLayoutManager(linearLayoutManager);
         adapterGroupBill = new GroupBillAdapter(getContext(), listResult);
         rvListResult.setAdapter(adapterGroupBill);
 
+        // Khởi tạo list các giá trị gợi ý và adpater
         listDataSugestion = new ArrayList<>();
         adapterSugestion = new ArrayAdapter<String>(getContext(), android.R.layout.select_dialog_item, listDataSugestion);
         edtSeachBox.setThreshold(1);
@@ -277,10 +386,12 @@ public class SearchDialogFragment extends FullScreenDialog {
 
     }
 
+    // Observable lấy danh sách phiếu
     private Observable<List<CapPhat>> getAllBill() {
         return Observable.just(WorkWithDb.getInstance().getAllAllocation());
     }
 
+    // Observable lấy danh sách nhân viên
     private Observable<List<NhanVien>> getAllStaft() {
         return Observable.just(WorkWithDb.getInstance().getAllStaft());
     }

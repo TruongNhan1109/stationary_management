@@ -12,7 +12,7 @@
 
     <style name="DialogTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/color_white</item>
+        <item name="colorPrimary">@color/color_blue</item>
         <item name="colorPrimaryDark">@color/color_white</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowLightStatusBar">true</item>

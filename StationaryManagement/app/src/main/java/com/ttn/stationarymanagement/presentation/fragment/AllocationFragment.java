@@ -27,6 +27,7 @@ import com.ttn.stationarymanagement.presentation.activity.AllocationActivity;
 import com.ttn.stationarymanagement.presentation.activity.DetailBillActivity;
 import com.ttn.stationarymanagement.presentation.adapter.GroupBillAdapter;
 import com.ttn.stationarymanagement.presentation.baseview.BaseFragment;
+import com.ttn.stationarymanagement.presentation.dialog_fragment.SearchDialogFragment;
 import com.ttn.stationarymanagement.presentation.model.GroupBillModel;
 import com.ttn.stationarymanagement.presentation.model.GroupProductModel;
 import com.ttn.stationarymanagement.utils.CustomToast;
@@ -57,13 +58,11 @@ public class AllocationFragment extends BaseFragment {
     RecyclerView rvListBill;
 
     private GroupBillAdapter adapterGroupBill;
-    private List<GroupBillModel> listGroupBill;
+    private List<GroupBillModel> listGroupBill;     // Danh sách phiếu theo nhóm
     private CompositeDisposable compositeDisposable;
 
     public static AllocationFragment newInstance() {
-        Bundle args = new Bundle();
         AllocationFragment fragment = new AllocationFragment();
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -85,22 +84,25 @@ public class AllocationFragment extends BaseFragment {
         setEvents();
     }
 
+    // Lấy danh sách các phiếu
     private void getAllBills() {
 
-        getBills().subscribeOn(Schedulers.newThread()).flatMap(capPhats -> {
+      compositeDisposable.add(getBills().subscribeOn(Schedulers.newThread()).flatMap(capPhats -> {
 
             Map<String, List<CapPhat>> listGroup = new HashMap<>();
 
+            // Gom nhóm các phiếu theo ngày cấp
             for(CapPhat bill: capPhats) {
-                String date = bill.getNgayCap();
 
-                if (listGroup.get(date) == null) {
+                String date = bill.getNgayCap();        // Tên nhóm
+
+                if (listGroup.get(date) == null) {  // Nhóm chưa có phiếu
 
                     List<CapPhat> list = new ArrayList<>();
                     list.add(bill);
                     listGroup.put(date, list);
 
-                } else {
+                } else {        // Nhóm đã có phiếu rồi
 
                     List<CapPhat> list = listGroup.get(date);
                     list.add(bill);
@@ -108,23 +110,25 @@ public class AllocationFragment extends BaseFragment {
                 }
             }
 
+            // Khởi tạo danh sách quản lý các bill theo ngày
             List<GroupBillModel> listGroupResult = new ArrayList<>();
 
             for(Map.Entry<String, List<CapPhat>> entry: listGroup.entrySet()) {
+
                 GroupBillModel groupBillModel = new GroupBillModel();
-                groupBillModel.setNameGroup(entry.getKey());
-                groupBillModel.setListBills(entry.getValue());
+                groupBillModel.setNameGroup(entry.getKey());     // Ngày
+                groupBillModel.setListBills(entry.getValue());  // Danh sách bill
+
                 listGroupResult.add(groupBillModel);
             }
-
-            Collections.reverse(listGroupBill);
 
             return Observable.just(listGroupResult);
 
         }).observeOn(AndroidSchedulers.mainThread()).subscribe(groupBillModels -> {
+
             listGroupBill.clear();
 
-            if (groupBillModels.size()> 0) {
+            if (groupBillModels.size()> 0) {    // Đã có phiếu được cấp
 
                 rvListBill.setVisibility(View.VISIBLE);
                 lnlNotifyEmplty.setVisibility(View.GONE);
@@ -132,15 +136,16 @@ public class AllocationFragment extends BaseFragment {
                 listGroupBill.addAll(groupBillModels);
                 adapterGroupBill.notifyDataSetChanged();
 
-            } else {
+            } else {    // Thông báo rỗng
 
                 rvListBill.setVisibility(View.GONE);
                 lnlNotifyEmplty.setVisibility(View.VISIBLE);
             }
 
-        });
+        }));
     }
 
+    // Observable lấy danh sách phiếu
     private Observable<List<CapPhat>> getBills() {
         return Observable.create(r -> {
             List<CapPhat> list = WorkWithDb.getInstance().getAllAllocation();
@@ -152,6 +157,7 @@ public class AllocationFragment extends BaseFragment {
     private void setControls() {
         compositeDisposable = new CompositeDisposable();
 
+        // Khởi tạo list và adpater
         listGroupBill = new ArrayList<>();
         adapterGroupBill = new GroupBillAdapter(getContext(), listGroupBill);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
@@ -162,6 +168,7 @@ public class AllocationFragment extends BaseFragment {
 
     private void setEvents() {
 
+        // Thêm cấp phát
         fbAdd.setOnClickListener(v -> {
             Intent intent = AllocationActivity.getCallingIntent(getContext());
             startActivityForResult(intent, AllocationActivity.REQUEST_ADD_BILL);
@@ -170,7 +177,7 @@ public class AllocationFragment extends BaseFragment {
 
         adapterGroupBill.setListener(new GroupBillAdapter.OnGroupBillAdapterListener() {
             @Override
-            public void onItemClick(int positionParent, int positionChild) {
+            public void onItemClick(int positionParent, int positionChild) {    // Hiển thị tri tiết bill
 
                 CapPhat mItem = listGroupBill.get(positionParent).getListBills().get(positionChild);
 
@@ -181,7 +188,7 @@ public class AllocationFragment extends BaseFragment {
             }
 
             @Override
-            public void onButtonRemoveClick(int positionParent, int positionChild) {
+            public void onButtonRemoveClick(int positionParent, int positionChild) {    // Khi xóa hóa đơn
                 CapPhat mItem = listGroupBill.get(positionParent).getListBills().get(positionChild);
 
                 Observable<Boolean> deleteBill = Observable.create(r -> {
@@ -190,14 +197,14 @@ public class AllocationFragment extends BaseFragment {
                 });
 
                 compositeDisposable.add(deleteBill.subscribeOn(Schedulers.newThread())
-                .flatMap(aBoolean -> {
+                .flatMap(aBoolean -> {  // Xóa hóa đơn thành công
 
                     if (aBoolean) {
                         // Cập nhật lại số lượng sản phẩm
                         VanPhongPham vanPhongPham = WorkWithDb.getInstance().getProductById(mItem.getMaVPP());
 
                         if (vanPhongPham != null) {
-                            vanPhongPham.setSoLuong(vanPhongPham.getSoLuong() + mItem.getSoLuong());
+                            vanPhongPham.setSoLuong(vanPhongPham.getSoLuong() + mItem.getSoLuong());    // Cập nhật lại số lượng
 
                             return Observable.just(WorkWithDb.getInstance().update(vanPhongPham));
 
@@ -212,7 +219,7 @@ public class AllocationFragment extends BaseFragment {
                 }).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(aBoolean -> {
 
-                    if (aBoolean) {
+                    if (aBoolean) { // Xóa thành công ==> Cập nhật lại hiển thị
 
                         listGroupBill.get(positionParent).getListBills().remove(positionChild);
 
@@ -225,6 +232,7 @@ public class AllocationFragment extends BaseFragment {
                         }
 
                         CustomToast.showToastSuccesstion(getContext(), "Xóa thành công", Toast.LENGTH_SHORT);
+
                     } else {
                         CustomToast.showToastError(getContext(), "Xóa thất bại", Toast.LENGTH_SHORT);
                     }
@@ -237,6 +245,7 @@ public class AllocationFragment extends BaseFragment {
         });
     }
 
+    // Khởi tạo menu item
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
@@ -245,6 +254,13 @@ public class AllocationFragment extends BaseFragment {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if (item.getItemId() == R.id.action_seach) { // Tìm kiếm
+            SearchDialogFragment searchDialogFragment = SearchDialogFragment.newInstance();
+            searchDialogFragment.show(getChildFragmentManager(),  "");
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 

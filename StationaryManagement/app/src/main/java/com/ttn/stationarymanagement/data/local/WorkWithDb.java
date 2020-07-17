@@ -216,6 +216,7 @@ public class WorkWithDb {
         return new ArrayList<>();
     }
 
+    // Lấy danh sách sản phẩm theo tên sản phẩm
     public List<VanPhongPham> getAllProductByName(String nameProduct) {
         try {
             List<VanPhongPham> list = ProductUseCase.getAllProductByProductName(databaseHelper.getProductDao(), nameProduct);
@@ -294,6 +295,7 @@ public class WorkWithDb {
         return new ArrayList<>();
     }
 
+    // Lấy danh sách nhân viên theo tên
     public List<NhanVien> getAllStaftByName(String name) {
         try {
             List<NhanVien> list = StaftUseCase.getAllStaftByName(databaseHelper.getStaftDao(), name);
@@ -326,6 +328,7 @@ public class WorkWithDb {
         return false;
     }
 
+    // Xóa hóa đơn
     public boolean delete(CapPhat phieu) {
         try {
             AllocationUseCase.delete(databaseHelper.getAllocationDao(), phieu);
@@ -336,19 +339,20 @@ public class WorkWithDb {
         return false;
     }
 
+    // Lấy hóa đơn thoe id
     public CapPhat getAllocationById(long id) {
 
-        CapPhat phieu = new CapPhat();
         try {
-            phieu = AllocationUseCase.getById(databaseHelper.getAllocationDao(), id);
+            return AllocationUseCase.getById(databaseHelper.getAllocationDao(), id);
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return phieu;
+        return null;
 
     }
 
+    // Lấy tất cả các phiếu
     public List<CapPhat> getAllAllocation() {
         try {
             List<CapPhat> list = AllocationUseCase.getAll(databaseHelper.getAllocationDao());
@@ -359,6 +363,7 @@ public class WorkWithDb {
         return new ArrayList<>();
     }
 
+    // Lấy các phiếu theo mã phiếu
     public List<CapPhat> getAllAlocationByIdBill(String idBill) {
         try {
 
@@ -370,6 +375,7 @@ public class WorkWithDb {
         return new ArrayList<>();
     }
 
+    // Lấy tất cả hóa đơn thoe mã nhân viên
     public List<CapPhat> getAllocationByStaftId(String staftId) {
         try {
             List<CapPhat> list = AllocationUseCase.getByIdStaft(databaseHelper.getAllocationDao(), staftId);
@@ -381,6 +387,7 @@ public class WorkWithDb {
         return new ArrayList<>();
     }
 
+    // Lấy danh sách bill theo mã nhân viên
     public List<CapPhat> getAllocationByStaftId(long staftId) {
         try {
             List<CapPhat> list = AllocationUseCase.getByIdStaft(databaseHelper.getAllocationDao(), staftId);
@@ -392,6 +399,7 @@ public class WorkWithDb {
         return new ArrayList<>();
     }
 
+    // Lấy các hóa đơn theo mã sản phẩm
     public List<CapPhat> getAllocationByProductId(String productId) {
         try {
             List<CapPhat> list = AllocationUseCase.getByProductId(databaseHelper.getAllocationDao(), productId);

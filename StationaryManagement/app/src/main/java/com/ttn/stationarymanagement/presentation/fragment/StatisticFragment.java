@@ -50,8 +50,9 @@ public class StatisticFragment extends BaseFragment {
 
     private PaperStatisticAdapter paperStatisticAdapter;
 
-
     private void setControls() {
+
+        // Khởi tạo các view
 
         FragmentManager fm = getChildFragmentManager();
         paperStatisticAdapter = new PaperStatisticAdapter(fm, getContext());
