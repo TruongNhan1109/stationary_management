@@ -1,5 +1,6 @@
 package com.ttn.stationarymanagement.presentation.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.hardware.camera2.CameraCaptureSession.CaptureCallback;
 import android.os.Bundle;
@@ -163,7 +164,7 @@ public class AllocationFragment extends BaseFragment {
 
         fbAdd.setOnClickListener(v -> {
             Intent intent = AllocationActivity.getCallingIntent(getContext());
-            startActivity(intent);
+            startActivityForResult(intent, AllocationActivity.REQUEST_ADD_BILL);
 
         });
 
@@ -245,5 +246,25 @@ public class AllocationFragment extends BaseFragment {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        compositeDisposable.dispose();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (data == null) {
+            return;
+        }
+
+        if (requestCode == AllocationActivity.REQUEST_ADD_BILL && resultCode == Activity.RESULT_OK) {
+            getAllBills();
+        }
+
     }
 }

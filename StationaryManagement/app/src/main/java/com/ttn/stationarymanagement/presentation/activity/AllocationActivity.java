@@ -51,6 +51,8 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class AllocationActivity extends BaseActivity {
 
+    public static final int REQUEST_ADD_BILL = 1;
+
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
@@ -229,6 +231,10 @@ public class AllocationActivity extends BaseActivity {
         }).observeOn(AndroidSchedulers.mainThread()).subscribe(aBoolean -> {
             if (aBoolean) {
                 CustomToast.showToastSuccesstion(getApplicationContext(), "Tạo phiếu thành công!", Toast.LENGTH_SHORT);
+
+                Intent intent = getIntent();
+                setResult(RESULT_OK, intent);
+
                 finish();
             } else {
                 CustomToast.showToastError(getApplicationContext(), "Tạo phiếu thất bại!", Toast.LENGTH_SHORT);
