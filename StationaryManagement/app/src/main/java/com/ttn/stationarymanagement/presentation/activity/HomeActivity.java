@@ -1,4 +1,4 @@
-package com.ttn.stationarymanagement.presentation.activity.home;
+package com.ttn.stationarymanagement.presentation.activity;
 
 import android.Manifest;
 import android.content.Context;
@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -61,6 +60,7 @@ public class HomeActivity extends BaseActivity implements  HomeScreenFragment.Ho
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
+
         setControls();
         askPermission();
         initHomeScreen();
@@ -71,7 +71,9 @@ public class HomeActivity extends BaseActivity implements  HomeScreenFragment.Ho
         askPermisionWriteExternalStorage();
     }
 
+    // Thiết lập màn hình hiển thị mặc định (Home Screen)
     private void initHomeScreen() {
+
         HomeScreenFragment homeScreenFragment = HomeScreenFragment.newInstance();
         homeScreenFragment.setListener(this);
         addFragment(R.id.content_view, homeScreenFragment);
@@ -83,11 +85,14 @@ public class HomeActivity extends BaseActivity implements  HomeScreenFragment.Ho
     }
 
     private void setControls() {
+
+        // Thiết lập hiển thị full màn hình
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setSupportActionBar(toolbar);
 
+        // Thiết lập menu navigation drawer
         setupNavigationDrawer();
     }
 
@@ -101,6 +106,7 @@ public class HomeActivity extends BaseActivity implements  HomeScreenFragment.Ho
     private ActionBarDrawerToggle drawerToggle;
 
     private void setupNavigationDrawer() {
+
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(drawerToggle);
 
@@ -114,6 +120,7 @@ public class HomeActivity extends BaseActivity implements  HomeScreenFragment.Ho
 
     }
 
+    // Các sự kiện khi click vào các item trong navigation drawer
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(drawerToggle.onOptionsItemSelected(item)) {
@@ -122,45 +129,46 @@ public class HomeActivity extends BaseActivity implements  HomeScreenFragment.Ho
 
         switch (item.getItemId()) {
 
-            case R.id.mn_home:
+            case R.id.mn_home:  // Home
                 changeViewById(FUNTION_HOME);
                 drawerLayout.closeDrawers();
                 return true;
 
-            case R.id.mn_allocation:
+            case R.id.mn_allocation:    // Cấp phát
                 changeViewById(FUNCTION_ALLOCATION);
                 drawerLayout.closeDrawers();
                 return true;
 
-            case R.id.mn_statistic:
+            case R.id.mn_statistic:     // Thống kê
                 changeViewById(FUNCTION_STATISTIC);
                 drawerLayout.closeDrawers();
                 return true;
 
-            case R.id.mn_staft_manager:
+            case R.id.mn_staft_manager:     // Quản lý nhân viên
                 changeViewById(FUNCTION_STAFT_MANAGER);
                 drawerLayout.closeDrawers();
                 return true;
 
-            case R.id.mn_department_manager:
+            case R.id.mn_department_manager:        // Phòng ban
                 changeViewById(FUNCTION_DEPARTMENT_MANAGER);
                 drawerLayout.closeDrawers();
                 return true;
 
-            case R.id.mn_stationary_management:
+            case R.id.mn_stationary_management:     // Văn phòng phẩm
                 changeViewById(FUNCTION_PRODUCT_MANAGER);
                 drawerLayout.closeDrawers();
                 return true;
 
-            case R.id.mn_role_manager:
+            case R.id.mn_role_manager:          // Vai trò
                 changeViewById(FUNCTION_ROLE_MANAGER);
                 drawerLayout.closeDrawers();
                 return true;
 
-            case R.id.mn_contact:
+            case R.id.mn_contact:       // Liên hệ
                 drawerLayout.closeDrawers();
                 return true;
-            case R.id.mn_infor:
+
+            case R.id.mn_infor:     // Thông tin ứng dụng
                 drawerLayout.closeDrawers();
                 return true;
         }
@@ -190,10 +198,11 @@ public class HomeActivity extends BaseActivity implements  HomeScreenFragment.Ho
         return super.onCreateOptionsMenu(menu);
     }
 
+    // Xử lý view theo từng màn hình được chọn
     private  void changeViewById(int idFunction) {
         switch (idFunction) {
 
-            case FUNTION_HOME:
+            case FUNTION_HOME:      // Màn hình chính
                 HomeScreenFragment homeScreenFragment = HomeScreenFragment.newInstance();
                 homeScreenFragment.setListener(this);
                 replaceFragment(R.id.content_view,homeScreenFragment, HomeScreenFragment.TAG);
@@ -203,42 +212,42 @@ public class HomeActivity extends BaseActivity implements  HomeScreenFragment.Ho
                 toolbar.setNavigationIcon(R.drawable.ic_app_white_24);
                 break;
 
-            case FUNCTION_ALLOCATION:
+            case FUNCTION_ALLOCATION:       // Màn hình cấp phát
                 replaceFragment(R.id.content_view, AllocationFragment.newInstance(), "");
                 getSupportActionBar().setTitle("Cấp phát");
                 toolbar.setBackgroundColor(getResources().getColor(R.color.color_white));
                 toolbar.setNavigationIcon(R.drawable.ic_app_blue_24);
                 break;
 
-            case FUNCTION_STAFT_MANAGER:
+            case FUNCTION_STAFT_MANAGER:        // Màn hình quản lý nhân viên
                 replaceFragment(R.id.content_view, StaftManagerFragment.newInstance(), "");
                 getSupportActionBar().setTitle("Nhân viên");
                 toolbar.setBackgroundColor(getResources().getColor(R.color.color_white));
                 toolbar.setNavigationIcon(R.drawable.ic_app_blue_24);
                 break;
 
-            case FUNCTION_DEPARTMENT_MANAGER:
+            case FUNCTION_DEPARTMENT_MANAGER:       // Màn hình quản lý phòng ban
                 replaceFragment(R.id.content_view, DepartmentManagerFragment.newInstance(), "");
                 getSupportActionBar().setTitle("Phòng ban");
                 toolbar.setBackgroundColor(getResources().getColor(R.color.color_white));
                 toolbar.setNavigationIcon(R.drawable.ic_app_blue_24);
                 break;
 
-            case FUNCTION_PRODUCT_MANAGER:
+            case FUNCTION_PRODUCT_MANAGER:      // Màn hình quản lý văn phòng phẩm
                 replaceFragment(R.id.content_view, StationaryManagerFragment.newInstance(), "");
                 getSupportActionBar().setTitle("Sản phẩm");
                 toolbar.setBackgroundColor(getResources().getColor(R.color.color_white));
                 toolbar.setNavigationIcon(R.drawable.ic_app_blue_24);
                 break;
 
-            case FUNCTION_ROLE_MANAGER:
+            case FUNCTION_ROLE_MANAGER:     // Màn hình quản lý vai trò
                 replaceFragment(R.id.content_view, RoleManagerFragment.newInstance(), "");
                 getSupportActionBar().setTitle("Vai trò");
                 toolbar.setBackgroundColor(getResources().getColor(R.color.color_white));
                 toolbar.setNavigationIcon(R.drawable.ic_app_blue_24);
                 break;
 
-            case FUNCTION_STATISTIC:
+            case FUNCTION_STATISTIC:        // Màn hình thống kê
                 replaceFragment(R.id.content_view, StatisticFragment.newInstance(), "");
                 getSupportActionBar().setTitle("Thống kê");
                 toolbar.setBackgroundColor(getResources().getColor(R.color.color_white));
@@ -248,6 +257,7 @@ public class HomeActivity extends BaseActivity implements  HomeScreenFragment.Ho
 
     }
 
+    // Xin người dùng cấp quyền truy cập bộ nhớ trong
     private void askPermisionWriteExternalStorage() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) { // Sẽ hiện nếu bị từ chối lần
 
@@ -303,9 +313,10 @@ public class HomeActivity extends BaseActivity implements  HomeScreenFragment.Ho
         changeViewById(idFunction);
     }
 
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {  // Xử lỹ khi nhấn nút back
             changeViewById(FUNTION_HOME);
             return false;
         }

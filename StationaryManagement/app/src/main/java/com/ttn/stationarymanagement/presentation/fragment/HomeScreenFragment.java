@@ -36,7 +36,7 @@ public class HomeScreenFragment extends BaseFragment {
 
     public static String TAG = HomeScreenFragment.class.getSimpleName();
 
-    List<HomeModel> listFunctions;
+    List<HomeModel> listFunctions;      // Danh sách chức năng
     AppFunctionAdapter adapterAppFunction;
 
     @BindView(R.id.rv_fragment_home_screen_list_function)
@@ -83,12 +83,14 @@ public class HomeScreenFragment extends BaseFragment {
 
     private void setEvents() {
 
+        // Khi click vào một chức năng
         adapterAppFunction.setListener(position -> {
             if (mListener != null) {
                 mListener.onFuntionClick(listFunctions.get(position).getIdSetting());
             }
         });
 
+        // Khi click vào seach
         lnlSearch.setOnClickListener(v -> {
 
             SearchDialogFragment searchDialogFragment = SearchDialogFragment.newInstance();
@@ -97,6 +99,7 @@ public class HomeScreenFragment extends BaseFragment {
         });
     }
 
+    // Khởi tạo các chức năng của chương trình
     private void initDataHomeScreen() {
 
         // Cấp phát
@@ -129,14 +132,17 @@ public class HomeScreenFragment extends BaseFragment {
 
     private void setControls() {
 
+        // Khởi tạo adapter và danh sách chức năng
         listFunctions = new ArrayList<>();
 
         GridLayoutManager gridLayoutManager = new androidx.recyclerview.widget.GridLayoutManager(getContext(), 2);
         gridLayoutManager.setOrientation(RecyclerView.VERTICAL);
+
         rvListFuntion.setLayoutManager(gridLayoutManager);
 
         adapterAppFunction = new AppFunctionAdapter(getContext(), listFunctions);
         rvListFuntion.setHasFixedSize(true);
+
         rvListFuntion.setAdapter( new ScaleInAnimationAdapter(adapterAppFunction));
 
 

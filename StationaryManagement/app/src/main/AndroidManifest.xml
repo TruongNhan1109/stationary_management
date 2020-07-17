@@ -51,7 +51,7 @@
         </activity>
         <activity android:name=".presentation.activity.NewProductActivity" />
         <activity
-            android:name=".presentation.activity.home.HomeActivity"
+            android:name=".presentation.activity.HomeActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/FullTransparentTheme" />
         <activity android:name=".MainActivity">

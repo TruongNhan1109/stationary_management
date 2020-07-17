@@ -50,21 +50,20 @@ public class RoleManagerFragment extends BaseFragment {
     SpinKitView spinKitView;
 
 
-   private List<VaiTro> listRole;
-   private RoleAdapter adapterRole;
+    private List<VaiTro> listRole;       // Danh sách vai trò
+    private RoleAdapter adapterRole;
+
     private CompositeDisposable compositeDisposable;
 
     public static RoleManagerFragment newInstance() {
-        Bundle args = new Bundle();
         RoleManagerFragment fragment = new RoleManagerFragment();
-        fragment.setArguments(args);
         return fragment;
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-       View view = inflater.inflate(R.layout.fragment_role_manager, container, false);
+        View view = inflater.inflate(R.layout.fragment_role_manager, container, false);
         ButterKnife.bind(this, view);
         return view;
     }
@@ -81,10 +80,12 @@ public class RoleManagerFragment extends BaseFragment {
 
     private void setEvents() {
 
+
         adapterRole.setListener(new RoleAdapter.RoleAdapterListener() {
             @Override
-            public void onItemClick(int position) {
-                String role = listRole.get(position).getTenVaiTro();
+            public void onItemClick(int position) {     // Chỉnh sửa vai trò
+
+                String role = listRole.get(position).getTenVaiTro();        // Lấy vai trò cần sửa
 
                 AddRoleDialog addRoleDialog = AddRoleDialog.newInstance(role);
                 addRoleDialog.setListener(new AddRoleDialog.AddRoleDialogListener() {
@@ -96,13 +97,16 @@ public class RoleManagerFragment extends BaseFragment {
                     @Override
                     public void onUploadSuccesstionn(String change) {
 
+
+                        // Cập nhật thay đổi
                         VaiTro vaitro = listRole.get(position);
                         vaitro.setTenVaiTro(change);
 
+                        // Khởi tạo đối tượng Observable cập nhật vai trò
                         Observable<Boolean> obUpload = Observable.create(r -> {
                             try {
 
-                                r.onNext( WorkWithDb.getInstance().update(vaitro));
+                                r.onNext(WorkWithDb.getInstance().update(vaitro));
                                 r.onComplete();
 
                             } catch (Exception e) {
@@ -112,17 +116,19 @@ public class RoleManagerFragment extends BaseFragment {
 
                         });
 
-                        compositeDisposable.add(obUpload.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(aBoolean -> {
-                            if (aBoolean) {
-                                CustomToast.showToastSuccesstion(getContext(), "Cập nhật thành công", Toast.LENGTH_SHORT);
-                                adapterRole.notifyItemChanged(position);
-                            } else {
-                                CustomToast.showToastError(getContext(), "Cập nhật thất bai", Toast.LENGTH_SHORT);
-                            }
+                        compositeDisposable.add(obUpload.subscribeOn(Schedulers.newThread())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(aBoolean -> {
+                                    if (aBoolean) { // Thành công
+                                        CustomToast.showToastSuccesstion(getContext(), "Cập nhật thành công", Toast.LENGTH_SHORT);
+                                        adapterRole.notifyItemChanged(position);
+                                    } else {        // Thất bại
+                                        CustomToast.showToastError(getContext(), "Cập nhật thất bai", Toast.LENGTH_SHORT);
+                                    }
 
-                        }, throwable -> {
-                            CustomToast.showToastError(getContext(), "Cập nhật thất bai", Toast.LENGTH_SHORT);
-                        }));
+                                }, throwable -> {
+                                    CustomToast.showToastError(getContext(), "Cập nhật thất bai", Toast.LENGTH_SHORT);
+                                }));
                     }
                 });
 
@@ -131,53 +137,59 @@ public class RoleManagerFragment extends BaseFragment {
             }
 
             @Override
-            public void onRemoveButtonClick(int position) {
+            public void onRemoveButtonClick(int position) {     // Xóa vai trò
 
                 Observable<Boolean> obRemove = Observable.create(r -> {
-                  try {
-                    r.onNext( WorkWithDb.getInstance().delete(listRole.get(position)));
-                    r.onComplete();
+                    try {
+                        r.onNext(WorkWithDb.getInstance().delete(listRole.get(position)));
+                        r.onComplete();
 
-                  } catch (Exception e) {
-                      e.printStackTrace();
-                      r.onError(e);
-                  }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        r.onError(e);
+                    }
 
                 });
 
-                compositeDisposable.add(obRemove.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(aBoolean -> {
+                compositeDisposable.add(obRemove.subscribeOn(Schedulers.newThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(aBoolean -> {
+                            if (aBoolean) {     // Xóa thành công
 
-                    if (aBoolean) {
-                        listRole.remove(position);
-                        CustomToast.showToastSuccesstion(getContext(), "Đã xóa", Toast.LENGTH_SHORT);
-                        adapterRole.notifyItemRemoved(position);
-                        adapterRole.notifyItemRangeChanged(position, listRole.size());
-                    } else {
-                        CustomToast.showToastError(getContext(), "Xóa thất bại", Toast.LENGTH_SHORT);
-                    }
-                }, throwable -> {
-                    CustomToast.showToastError(getContext(), "Xóa thất bại", Toast.LENGTH_SHORT);
-                }));
+                                listRole.remove(position);
+                                CustomToast.showToastSuccesstion(getContext(), "Đã xóa", Toast.LENGTH_SHORT);
+                                adapterRole.notifyItemRemoved(position);
+                                adapterRole.notifyItemRangeChanged(position, listRole.size());
+
+                            } else {
+                                CustomToast.showToastError(getContext(), "Xóa thất bại", Toast.LENGTH_SHORT);
+                            }
+                        }, throwable -> {
+                            CustomToast.showToastError(getContext(), "Xóa thất bại", Toast.LENGTH_SHORT);
+                        }));
             }
         });
 
     }
 
+    // Lây danh sách vai trò được lưu
     private void getDataAndShowView() {
 
         spinKitView.setVisibility(View.VISIBLE);
+
         compositeDisposable.add(obGetAllRole().subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread()).subscribe(aBoolean -> {
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(aBoolean -> {
                     spinKitView.setVisibility(View.GONE);
 
-                    if (listRole.size() > 0) {
+                    if (listRole.size() > 0) {      // Khi có dữ liệu
 
                         tvNotifyEmpty.setVisibility(View.GONE);
                         rvListRole.setVisibility(View.VISIBLE);
 
                         adapterRole.notifyDataSetChanged();
 
-                    } else {
+                    } else {    // Hiển thị thông báo không có vai trò
 
                         tvNotifyEmpty.setVisibility(View.VISIBLE);
                         rvListRole.setVisibility(View.GONE);
@@ -190,11 +202,13 @@ public class RoleManagerFragment extends BaseFragment {
 
     }
 
+    // Khởi tạo Observable lấy vai trò
     private Observable<Boolean> obGetAllRole() {
         return Observable.create(r -> {
             try {
                 listRole.clear();
                 listRole.addAll(WorkWithDb.getInstance().getAllRole());
+
                 r.onNext(true);
                 r.onComplete();
             } catch (Exception e) {
@@ -204,10 +218,10 @@ public class RoleManagerFragment extends BaseFragment {
     }
 
     private void setControls() {
-
         compositeDisposable = new CompositeDisposable();
+
+        // Khởi tạo adpater và list vai trò
         listRole = new ArrayList<>();
-        Context context;
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
         adapterRole = new RoleAdapter(getContext(), listRole);
         rvListRole.setLayoutManager(linearLayoutManager);
@@ -215,16 +229,20 @@ public class RoleManagerFragment extends BaseFragment {
 
     }
 
+    // Khởi tạo menu item
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_role, menu);
     }
 
+
+    // Sự kiện khi click menu item
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.mn_role_add:
+
+            case R.id.mn_role_add: // Thêm vai trò
 
                 AddRoleDialog addRoleDialog = AddRoleDialog.newInstance("");
                 addRoleDialog.setListener(new AddRoleDialog.AddRoleDialogListener() {

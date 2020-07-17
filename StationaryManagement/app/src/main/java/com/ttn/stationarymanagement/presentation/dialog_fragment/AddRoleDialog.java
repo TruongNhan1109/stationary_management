@@ -25,7 +25,6 @@ import com.ttn.stationarymanagement.data.local.model.VaiTro;
 import com.ttn.stationarymanagement.utils.CustomToast;
 import com.ttn.stationarymanagement.utils.GetDataToCommunicate;
 
-import br.com.simplepass.loadingbutton.customViews.CircularProgressButton;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import es.dmoral.toasty.Toasty;
@@ -54,12 +53,13 @@ public class AddRoleDialog extends DialogFragment {
 
     public interface AddRoleDialogListener {
         public void onAddSuccesstion();
+
         public void onUploadSuccesstionn(String change);
     }
 
     private AddRoleDialogListener mListener;
 
-    private  String role = "";
+    private String role = "";
 
     public static AddRoleDialog newInstance(String role) {
         Bundle args = new Bundle();
@@ -78,7 +78,7 @@ public class AddRoleDialog extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_add_role, container, false);
-        ButterKnife.bind(this,view);
+        ButterKnife.bind(this, view);
         return view;
 
     }
@@ -88,15 +88,18 @@ public class AddRoleDialog extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         compositeDisposable = new CompositeDisposable();
+
         getData();
         setEvents();
 
     }
 
     private void getData() {
+
+        // Lấy tên vai trò cần sửa
         String nameRole = getArguments().getString("ROLE", "");
 
-        if (!TextUtils.isEmpty(nameRole)) {
+        if (!TextUtils.isEmpty(nameRole)) { // Có vai trò cần sửa
             edtRole.setText(nameRole);
             isUpload = true;
             btnAdd.setText("Cập nhật");
@@ -105,20 +108,23 @@ public class AddRoleDialog extends DialogFragment {
     }
 
     private void setEvents() {
+
+        // Khi nhấn nút thêm
         btnAdd.setOnClickListener(v -> {
 
+            // Kiểm tra vai trò
             if (TextUtils.isEmpty(edtRole.getText().toString())) {
                 edtRole.setError("Không được để trống!");
                 edtRole.requestFocus();
                 return;
             }
 
-            if (isUpload) {
+            if (isUpload) {     // Cập nhật vai trò
                 if (mListener != null) {
                     mListener.onUploadSuccesstionn(edtRole.getText().toString());
                     dismiss();
                 }
-            } else {
+            } else {    // Thêm vai trò
                 createRole();
             }
 
@@ -129,8 +135,10 @@ public class AddRoleDialog extends DialogFragment {
 
     private void createRole() {
 
-     compositeDisposable.add( obCreateRole(edtRole.getText().toString()).subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread()).subscribe(aBoolean -> {
+        compositeDisposable.add(obCreateRole(edtRole.getText().toString()).subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(aBoolean -> {
+
                     if (aBoolean) {
 
                         CustomToast.showToastSuccesstion(getContext(), "Thêm thành công", Toast.LENGTH_SHORT);
@@ -143,19 +151,21 @@ public class AddRoleDialog extends DialogFragment {
                     } else {
                         CustomToast.showToast(getContext(), "Thêm thất bại", Toast.LENGTH_SHORT);
                     }
-        }, throwable -> {
-            CustomToast.showToastError(getContext(), "Thêm thất bại", Toast.LENGTH_SHORT);
-        }));
-
+                }, throwable -> {
+                    CustomToast.showToastError(getContext(), "Thêm thất bại", Toast.LENGTH_SHORT);
+                }));
     }
 
+    // Observable thêm vai trò
     private Observable<Boolean> obCreateRole(String role) {
-        return  Observable.create(r -> {
+        return Observable.create(r -> {
             try {
+
                 VaiTro newRole = new VaiTro(edtRole.getText().toString());
-                newRole.setNgayTao(GetDataToCommunicate.getCurrentDate());
-                  r.onNext( WorkWithDb.getInstance().insert(newRole));
-                  r.onComplete();
+                newRole.setNgayTao(GetDataToCommunicate.getCurrentDate());      // Thiết lập ngày tạo
+
+                r.onNext(WorkWithDb.getInstance().insert(newRole));     // Thêm vai trò vào cơ sở dữ liệu
+                r.onComplete();
 
             } catch (Exception e) {
                 e.printStackTrace();

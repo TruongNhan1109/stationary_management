@@ -40,6 +40,7 @@ public class WorkWithDb {
 
     // VaiTro Table --------------------------------------------------------------------------------
 
+    // Thêm vai trò
     public boolean insert(VaiTro role) {
         try {
            return  RoleUseCase.create(databaseHelper.getRoleDao(), role) == 1;
@@ -49,6 +50,7 @@ public class WorkWithDb {
         return  false;
     }
 
+    // Cập nhật vai trò
     public boolean update(VaiTro role) {
         try {
             RoleUseCase.update(databaseHelper.getRoleDao(), role);
@@ -59,6 +61,7 @@ public class WorkWithDb {
         return false;
     }
 
+    // Xóa vai trò
     public boolean delete(VaiTro role) {
         try {
             RoleUseCase.delete(databaseHelper.getRoleDao(), role);
@@ -80,6 +83,7 @@ public class WorkWithDb {
 
     }
 
+    // Lấy toàn bộ các vai trò
     public List<VaiTro> getAllRole() {
         try {
             List<VaiTro> list = RoleUseCase.getAll(databaseHelper.getRoleDao());

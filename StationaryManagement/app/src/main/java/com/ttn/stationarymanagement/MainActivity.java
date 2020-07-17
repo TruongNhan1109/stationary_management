@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ttn.stationarymanagement.presentation.activity.home.HomeActivity;
+import com.ttn.stationarymanagement.presentation.activity.HomeActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
