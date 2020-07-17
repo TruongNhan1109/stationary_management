@@ -86,7 +86,9 @@ public class StationeryAdapter extends  RecyclerView.Adapter<StationeryAdapter.S
                         break;
 
                     case R.id.mn_import_product:
-
+                        if (mListener != null) {
+                            mListener.onImportProduct(0, position);
+                        }
                         break;
 
                     case R.id.mn_delete_product:

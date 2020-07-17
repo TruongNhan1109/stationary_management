@@ -63,8 +63,10 @@ public class GroupProductAdapter extends RecyclerView.Adapter<GroupProductAdapte
             }
 
             @Override
-            public void onImportProduct(VanPhongPham item) {
-
+            public void onImportProduct(int positionGroup, int positionChild) {
+                if (mListener != null) {
+                    mListener.onImportProduct(position, positionChild);
+                }
             }
 
             @Override
@@ -114,7 +116,7 @@ public class GroupProductAdapter extends RecyclerView.Adapter<GroupProductAdapte
 
         void onProductClick(VanPhongPham item);
         void onDeleteProduct(int positionGroup, VanPhongPham itemDelete);
-        void onImportProduct(VanPhongPham item);
+        void onImportProduct(int positionGroup, int positionChild);
         void onItemClick(VanPhongPham item);
 
     }

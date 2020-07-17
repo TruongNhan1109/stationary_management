@@ -23,6 +23,7 @@ import com.ttn.stationarymanagement.data.local.model.VanPhongPham;
 import com.ttn.stationarymanagement.presentation.activity.NewProductActivity;
 import com.ttn.stationarymanagement.presentation.adapter.GroupProductAdapter;
 import com.ttn.stationarymanagement.presentation.baseview.BaseFragment;
+import com.ttn.stationarymanagement.presentation.dialog_fragment.ImportProductDialog;
 import com.ttn.stationarymanagement.presentation.dialog_fragment.ShowDetailProductDialog;
 import com.ttn.stationarymanagement.presentation.model.GroupProductModel;
 import com.ttn.stationarymanagement.utils.CustomToast;
@@ -143,8 +144,18 @@ public class StationaryManagerFragment extends BaseFragment {
             }
 
             @Override
-            public void onImportProduct(VanPhongPham item) {
+            public void onImportProduct(int positionGroup, int positionChild) {
+                ImportProductDialog importProductDialog =  ImportProductDialog.newInstance();
 
+                importProductDialog.setListener(amount -> {
+                    VanPhongPham vanPhongPham = groupProductModels.get(positionGroup).getVanPhongPhamList().get(positionChild);
+                    vanPhongPham.setSoLuong(vanPhongPham.getSoLuong() + amount);
+                    WorkWithDb.getInstance().update(vanPhongPham);
+                    groupProductAdapter.notifyItemChanged(positionGroup);
+                    CustomToast.showToastSuccesstion(getContext(), "Cập nhật thành công!", Toast.LENGTH_SHORT);
+                });
+
+                importProductDialog.show(getChildFragmentManager(), "");
             }
 
             @Override
