@@ -18,9 +18,9 @@ import com.ttn.stationarymanagement.presentation.baseview.BaseActivity;
 import com.ttn.stationarymanagement.presentation.fragment.AllocationFragment;
 import com.ttn.stationarymanagement.presentation.fragment.DepartmentManagerFragment;
 import com.ttn.stationarymanagement.presentation.fragment.HomeScreenFragment;
+import com.ttn.stationarymanagement.presentation.fragment.ProductManagerFragment;
 import com.ttn.stationarymanagement.presentation.fragment.RoleManagerFragment;
 import com.ttn.stationarymanagement.presentation.fragment.StaftManagerFragment;
-import com.ttn.stationarymanagement.presentation.fragment.StationaryManagerFragment;
 import com.ttn.stationarymanagement.presentation.fragment.StatisticFragment;
 
 import androidx.annotation.NonNull;
@@ -234,7 +234,7 @@ public class HomeActivity extends BaseActivity implements  HomeScreenFragment.Ho
                 break;
 
             case FUNCTION_PRODUCT_MANAGER:      // Màn hình quản lý văn phòng phẩm
-                replaceFragment(R.id.content_view, StationaryManagerFragment.newInstance(), "");
+                replaceFragment(R.id.content_view, ProductManagerFragment.newInstance(), "");
                 getSupportActionBar().setTitle("Sản phẩm");
                 toolbar.setBackgroundColor(getResources().getColor(R.color.color_white));
                 toolbar.setNavigationIcon(R.drawable.ic_app_blue_24);

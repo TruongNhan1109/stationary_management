@@ -64,10 +64,12 @@ public class ImportProductDialog  extends DialogFragment {
 
     private void setEvents() {
 
+        // Đóng
         tvClose.setOnClickListener(v -> {
             dismiss();
         });
 
+        // Nhập hàng
         btnImport.setOnClickListener(v -> {
 
             if (TextUtils.isEmpty(edtAmount.getText().toString())) {

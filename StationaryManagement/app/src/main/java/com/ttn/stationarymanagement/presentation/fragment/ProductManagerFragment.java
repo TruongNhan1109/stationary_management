@@ -41,7 +41,7 @@ import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class StationaryManagerFragment extends BaseFragment {
+public class ProductManagerFragment extends BaseFragment {
 
     @BindView(R.id.rv_fragment_stationary_manager_list_product)
     RecyclerView rvListProducts;
@@ -58,18 +58,16 @@ public class StationaryManagerFragment extends BaseFragment {
     @BindView(R.id.tv_fragment_stationary_manager_total_price)
     TextView tvTotalPrice;
 
-    private  GroupProductAdapter groupProductAdapter;
-    private List<GroupProductModel> groupProductModels;
+    private GroupProductAdapter groupProductAdapter;
+    private List<GroupProductModel> groupProductModels;     // Danh sách nhóm sản phẩm theo Aplha
     private CompositeDisposable compositeDisposable;
-    private  int totalProduct = 0;
-    private double totalPrice = 0;
 
-    public static StationaryManagerFragment newInstance() {
-        Bundle args = new Bundle();
-        StationaryManagerFragment fragment = new StationaryManagerFragment();
-        fragment.setArguments(args);
+    private int totalProduct = 0;      //  Tổng số sản phẩm
+    private double totalPrice = 0;      // Tổng giá trị
+
+    public static ProductManagerFragment newInstance() {
+        ProductManagerFragment fragment = new ProductManagerFragment();
         return fragment;
-
     }
 
     @Nullable
@@ -84,6 +82,7 @@ public class StationaryManagerFragment extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setHasOptionsMenu(true);
+
         setControls();
         getDatas();
         setEvents();
@@ -93,6 +92,7 @@ public class StationaryManagerFragment extends BaseFragment {
     private void setEvents() {
 
 
+        // Thêm sản phẩm
         fbAdd.setOnClickListener(v -> {
             Intent intent = NewProductActivity.getCallingIntent(getContext());
             startActivityForResult(intent, NewProductActivity.KEY_ADD_PRODUCT);
@@ -101,7 +101,7 @@ public class StationaryManagerFragment extends BaseFragment {
 
         groupProductAdapter.setListener(new GroupProductAdapter.GroupProductApapterListener() {
             @Override
-            public void onProductClick(VanPhongPham item) {     // Edit Product
+            public void onProductClick(VanPhongPham item) {     // Chỉnh sửa sản phẩm
 
                 Intent intent = NewProductActivity.getCallingIntent(getContext());
                 intent.putExtra("PRODUCT_ID", item.getMaVPP());
@@ -110,7 +110,7 @@ public class StationaryManagerFragment extends BaseFragment {
             }
 
             @Override
-            public void onDeleteProduct(int positionGroup, VanPhongPham itemDelete) {
+            public void onDeleteProduct(int positionGroup, VanPhongPham itemDelete) {       // Xóa sản phẩm
 
                 Observable<Boolean> obRemoveProduct = Observable.create(r -> {
                     try {
@@ -120,48 +120,55 @@ public class StationaryManagerFragment extends BaseFragment {
                     }
                 });
 
-                compositeDisposable.add(obRemoveProduct.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(aBoolean -> {
-                    if (aBoolean) {
-                        CustomToast.showToastSuccesstion(getContext(), "Đã xóa sản phẩm", Toast.LENGTH_SHORT);
+                compositeDisposable.add(obRemoveProduct.subscribeOn(Schedulers.newThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(aBoolean -> {
+                            if (aBoolean) {     // Xóa thành công
+                                CustomToast.showToastSuccesstion(getContext(), "Đã xóa sản phẩm", Toast.LENGTH_SHORT);
 
-                        groupProductModels.get(positionGroup).getVanPhongPhamList().remove(itemDelete);
+                                groupProductModels.get(positionGroup).getVanPhongPhamList().remove(itemDelete);
 
-                        if (groupProductModels.get(positionGroup).getVanPhongPhamList().size() > 0) {
-                            groupProductAdapter.notifyItemChanged(positionGroup);
-                        } else {
-                            groupProductModels.remove(positionGroup);
-                            groupProductAdapter.notifyItemRemoved(positionGroup);
-                            groupProductAdapter.notifyItemRangeChanged(positionGroup, groupProductModels.size());
-                        }
+                                if (groupProductModels.get(positionGroup).getVanPhongPhamList().size() > 0) {   // Chỉ xóa sản phẩm
+                                    groupProductAdapter.notifyItemChanged(positionGroup);
 
-                    } else {
-                        CustomToast.showToastError(getContext(), "Xóa thất bại", Toast.LENGTH_SHORT);
-                    }
+                                } else {        // Xóa luôn cả nhóm vì hết sản phẩm
+                                    groupProductModels.remove(positionGroup);
+                                    groupProductAdapter.notifyItemRemoved(positionGroup);
+                                    groupProductAdapter.notifyItemRangeChanged(positionGroup, groupProductModels.size());
+                                }
 
-                }, throwable -> {
-                    CustomToast.showToastError(getContext(), "Xóa thất bại", Toast.LENGTH_SHORT);
-                }));
+                            } else {
+                                CustomToast.showToastError(getContext(), "Xóa thất bại", Toast.LENGTH_SHORT);
+                            }
+
+                        }, throwable -> {
+                            CustomToast.showToastError(getContext(), "Xóa thất bại", Toast.LENGTH_SHORT);
+                        }));
             }
 
             @Override
-            public void onImportProduct(int positionGroup, int positionChild) {
-                ImportProductDialog importProductDialog =  ImportProductDialog.newInstance();
+            public void onImportProduct(int positionGroup, int positionChild) {     // Nhập hàng
+
+                ImportProductDialog importProductDialog = ImportProductDialog.newInstance();
 
                 importProductDialog.setListener(amount -> {
+
                     VanPhongPham vanPhongPham = groupProductModels.get(positionGroup).getVanPhongPhamList().get(positionChild);
                     vanPhongPham.setSoLuong(vanPhongPham.getSoLuong() + amount);
                     WorkWithDb.getInstance().update(vanPhongPham);
                     groupProductAdapter.notifyItemChanged(positionGroup);
                     CustomToast.showToastSuccesstion(getContext(), "Cập nhật thành công!", Toast.LENGTH_SHORT);
+
                 });
 
                 importProductDialog.show(getChildFragmentManager(), "");
             }
 
             @Override
-            public void onItemClick(VanPhongPham item) {
+            public void onItemClick(VanPhongPham item) {        // Hiển thị chi tiết sản phẩm
+
                 ShowDetailProductDialog showDetailProductDialog = ShowDetailProductDialog.newInstance();
-                showDetailProductDialog.setProduct(item);
+                showDetailProductDialog.setProduct(item);   // Truyền dữ liệu sản phẩm
                 showDetailProductDialog.show(getChildFragmentManager(), "");
             }
         });
@@ -172,70 +179,85 @@ public class StationaryManagerFragment extends BaseFragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        //inflater.inflate(R.menu.menu_pricegroup_master, menu);
     }
 
+    // Lấy danh sách sản phẩm
     private void getDatas() {
 
         totalProduct = 0;
         totalPrice = 0;
 
         compositeDisposable.add(
-             getAllProduct().subscribeOn(Schedulers.newThread()).flatMap(list -> {
-                 Map<String, List<VanPhongPham>> listGroup = new HashMap<>();
+                getAllProduct().subscribeOn(Schedulers.newThread())
+                        .flatMap(list -> {
 
-                 for(VanPhongPham item: list) {
-                     String amlpha = item.getTenSP().substring(0, 1);
+                            Map<String, List<VanPhongPham>> listGroup = new HashMap<>();
 
-                     if (listGroup.get(amlpha) == null) {
-                         List<VanPhongPham> listItem = new ArrayList<>();
-                         listItem.add(item);
-                         listGroup.put(amlpha, listItem);
-                         totalProduct += item.getSoLuong();
-                         totalPrice += item.getDonGia() * item.getSoLuong();
+                            // Thực hiện gom nhóm thêm Alpha
+                            for (VanPhongPham item : list) {
 
-                     } else {
-                         List<VanPhongPham> listItem = listGroup.get(amlpha);
-                         listItem.add(item);
-                         listGroup.put(amlpha, listItem);
+                                String amlpha = item.getTenSP().substring(0, 1);        // Lấy ký tự đầu
 
-                         totalProduct += item.getSoLuong();
-                         totalPrice += item.getDonGia() * item.getSoLuong();
-                     }
-                 }
+                                if (listGroup.get(amlpha) == null) {        // Ký tự chưa khởi tạo dữ liệu
 
-                 List<GroupProductModel> listGroupProduct = new ArrayList<>();
+                                    List<VanPhongPham> listItem = new ArrayList<>();
+                                    listItem.add(item);
+                                    listGroup.put(amlpha, listItem);
 
-                 for(Map.Entry<String, List<VanPhongPham>> entry: listGroup.entrySet()) {
-                     GroupProductModel groupProductModel = new GroupProductModel();
-                     groupProductModel.setTextAlpha(entry.getKey());
-                     groupProductModel.setVanPhongPhamList(entry.getValue());
-                     listGroupProduct.add(groupProductModel);
-                 }
+                                    // Tính tấn số lượng và đơn giá
+                                    totalProduct += item.getSoLuong();
+                                    totalPrice += item.getDonGia() * item.getSoLuong();
 
-                 return Observable.just(listGroupProduct);
 
-             }).observeOn(AndroidSchedulers.mainThread()).subscribe(list -> {
+                                } else {        // Ký tự đã có sản phẩm rồi
 
-                 if (list.size() > 0) {
+                                    List<VanPhongPham> listItem = listGroup.get(amlpha);
+                                    listItem.add(item);
+                                    listGroup.put(amlpha, listItem);
 
-                     tvTotalProduct.setText(totalProduct + "");
-                     tvTotalPrice.setText(GetDataToCommunicate.changeToPrice(totalPrice) + "");
+                                    // Tính tấn số lượng và đơn giá
+                                    totalProduct += item.getSoLuong();
+                                    totalPrice += item.getDonGia() * item.getSoLuong();
+                                }
+                            }
 
-                     lnlNotifyEmplty.setVisibility(View.GONE);
-                     rvListProducts.setVisibility(View.VISIBLE);
-                     groupProductModels.clear();
-                     groupProductModels.addAll(list);
-                     groupProductAdapter.notifyDataSetChanged();
+                            // Tạo đối tượng gom nhóm các sản phẩm
+                            List<GroupProductModel> listGroupProduct = new ArrayList<>();
 
-                 } else {
-                     lnlNotifyEmplty.setVisibility(View.VISIBLE);
-                     rvListProducts.setVisibility(View.GONE);
-                 }
+                            for (Map.Entry<String, List<VanPhongPham>> entry : listGroup.entrySet()) {
 
-             }, throwable -> {
-                 CustomToast.showToastError(getContext(), "Đã xảy ra lỗi", Toast.LENGTH_SHORT);
-             })
+                                GroupProductModel groupProductModel = new GroupProductModel();
+                                groupProductModel.setTextAlpha(entry.getKey());         // Alpha
+                                groupProductModel.setVanPhongPhamList(entry.getValue());    // Danh sách sản phẩm
+                                listGroupProduct.add(groupProductModel);
+                            }
+
+                            return Observable.just(listGroupProduct);
+
+                        }).observeOn(AndroidSchedulers.mainThread()).subscribe(list -> {
+
+                    if (list.size() > 0) {  // Đã có sản phẩm
+
+                        tvTotalProduct.setText(totalProduct + "");
+                        tvTotalPrice.setText(GetDataToCommunicate.changeToPrice(totalPrice) + "");
+
+                        lnlNotifyEmplty.setVisibility(View.GONE);
+                        rvListProducts.setVisibility(View.VISIBLE);
+
+                        groupProductModels.clear();
+                        groupProductModels.addAll(list);
+                        groupProductAdapter.notifyDataSetChanged();
+
+                    } else {        // Thông báo chưa có sản phẩm
+
+                        lnlNotifyEmplty.setVisibility(View.VISIBLE);
+                        rvListProducts.setVisibility(View.GONE);
+
+                    }
+
+                }, throwable -> {
+                    CustomToast.showToastError(getContext(), "Đã xảy ra lỗi", Toast.LENGTH_SHORT);
+                })
         );
 
     }
@@ -243,6 +265,8 @@ public class StationaryManagerFragment extends BaseFragment {
     private void setControls() {
 
         compositeDisposable = new CompositeDisposable();
+
+        // Khởi tạo danh sách và adapter
         groupProductModels = new ArrayList<>();
         groupProductAdapter = new GroupProductAdapter(getContext(), groupProductModels);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
@@ -250,12 +274,13 @@ public class StationaryManagerFragment extends BaseFragment {
         rvListProducts.setAdapter(groupProductAdapter);
     }
 
+    // Ob lấy danh sách sản phẩm
     private Observable<List<VanPhongPham>> getAllProduct() {
 
         return Observable.create(r -> {
             try {
-                List<VanPhongPham> list = WorkWithDb.getInstance().getAllProduct();
 
+                List<VanPhongPham> list = WorkWithDb.getInstance().getAllProduct();
                 r.onNext(list);
                 r.onComplete();
 
@@ -275,10 +300,12 @@ public class StationaryManagerFragment extends BaseFragment {
             return;
         }
 
+        // Nhận kết quả thêm sản phẩm
         if (requestCode == NewProductActivity.KEY_ADD_PRODUCT && requestCode == NewProductActivity.KEY_ADD_PRODUCT) {
             getDatas();
         }
 
+        // Nhận kết quả chỉnh sửa sản phẩm
         if (requestCode == NewProductActivity.KEY_EDIT_PRODUCT && resultCode == NewProductActivity.KEY_EDIT_PRODUCT) {
             getDatas();
         }

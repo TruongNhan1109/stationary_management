@@ -162,6 +162,8 @@ public class WorkWithDb {
 
     // Van phòng phẩm table ---------------------------------------
 
+
+    // Thêm sản phẩm
     public boolean insert(VanPhongPham vanPhongPham) {
         try {
             return  ProductUseCase.create(databaseHelper.getProductDao(), vanPhongPham) == 1;
@@ -171,6 +173,7 @@ public class WorkWithDb {
         return  false;
     }
 
+    // Cập nhật sản phẩm
     public boolean update(VanPhongPham vanPhongPham) {
         try {
             ProductUseCase.update(databaseHelper.getProductDao(), vanPhongPham);
@@ -181,6 +184,7 @@ public class WorkWithDb {
         return false;
     }
 
+    // Xóa sản phẩm
     public boolean delete(VanPhongPham vanPhongPham) {
         try {
             ProductUseCase.delete(databaseHelper.getProductDao(), vanPhongPham);
@@ -191,6 +195,7 @@ public class WorkWithDb {
         return false;
     }
 
+    // Lấy san phẩm theo id
     public VanPhongPham getProductById(long id) {
         try {
             return ProductUseCase.getById(databaseHelper.getProductDao(), id);
@@ -200,6 +205,7 @@ public class WorkWithDb {
         return null;
     }
 
+    // Lấy danh sách sản phẩm
     public List<VanPhongPham> getAllProduct() {
         try {
             List<VanPhongPham> list = ProductUseCase.getAll(databaseHelper.getProductDao());
