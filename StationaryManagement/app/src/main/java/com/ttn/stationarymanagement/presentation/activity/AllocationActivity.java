@@ -106,12 +106,13 @@ public class AllocationActivity extends BaseActivity {
 
     private void setEvents() {
 
+        // Chọn sản phẩm
         spnSelectProduct.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 VanPhongPham vanPhongPham = listProducts.get(position);
-                tvTitleAmount.setText("Số lượng cấp (" + vanPhongPham.getSoLuong() + ")");
+                tvTitleAmount.setText(getResources().getString(R.string.amount_allocation) + " (" + vanPhongPham.getSoLuong() + ")");
             }
 
             @Override
@@ -120,6 +121,7 @@ public class AllocationActivity extends BaseActivity {
             }
         });
 
+        // Nhập số lượng
         edtAmount.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -128,12 +130,10 @@ public class AllocationActivity extends BaseActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Log.d("vip", "on text changed " + s);
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                Log.d("vip", "after text change");
 
                 if (edtAmount.length() == 0) {
                     edtAmount.setText("0");
@@ -147,7 +147,7 @@ public class AllocationActivity extends BaseActivity {
                     if (amount > vanPhongPham.getSoLuong()) {
                         new ShakeAnimator().setDuration(700).setRepeatTimes(0).setTarget(edtAmount).start();
                         edtAmount.setText(vanPhongPham.getSoLuong() + "");
-                        edtAmount.setError("Số lượng hiện tại không đủ");
+                        edtAmount.setError(getResources().getString(R.string.amount_do_not_enough));
                         return;
                     }
 
@@ -159,6 +159,7 @@ public class AllocationActivity extends BaseActivity {
             }
         });
 
+        // Chọn ngày tạo
         tvDate.setOnClickListener(v -> {
 
             Calendar calendarCreate = Calendar.getInstance();
@@ -180,11 +181,12 @@ public class AllocationActivity extends BaseActivity {
 
         });
 
+        // Khi nhấn hoàn tất
         btnDone.setOnClickListener(v -> {
 
             if (TextUtils.isEmpty(edtAmount.getText().toString()) || Integer.parseInt(edtAmount.getText().toString()) == 0) {
                 new ShakeAnimator().setDuration(700).setRepeatTimes(0).setTarget(edtAmount).start();
-                edtAmount.setError("Số lượng không được để trống hoặc bằng 0");
+                edtAmount.setError(getResources().getString(R.string.amount_do_not_empty_and_equal_zero));
                 edtAmount.requestFocus();
                 return;
             }
@@ -230,18 +232,18 @@ public class AllocationActivity extends BaseActivity {
 
         }).observeOn(AndroidSchedulers.mainThread()).subscribe(aBoolean -> {
             if (aBoolean) {
-                CustomToast.showToastSuccesstion(getApplicationContext(), "Tạo phiếu thành công!", Toast.LENGTH_SHORT);
+                CustomToast.showToastSuccesstion(getApplicationContext(), getResources().getString(R.string.add_successful), Toast.LENGTH_SHORT);
 
                 Intent intent = getIntent();
                 setResult(RESULT_OK, intent);
 
                 finish();
             } else {
-                CustomToast.showToastError(getApplicationContext(), "Tạo phiếu thất bại!", Toast.LENGTH_SHORT);
+                CustomToast.showToastError(getApplicationContext(), getResources().getString(R.string.add_failed), Toast.LENGTH_SHORT);
             }
 
         }, throwable -> {
-            CustomToast.showToastError(getApplicationContext(), "Tạo phiếu thất bại!", Toast.LENGTH_SHORT);
+            CustomToast.showToastError(getApplicationContext(), getResources().getString(R.string.add_failed), Toast.LENGTH_SHORT);
         }));
 
     }
@@ -257,8 +259,8 @@ public class AllocationActivity extends BaseActivity {
             if (listProducts.size() < 1 || listStafts.size() < 1) {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("Thông báo").setMessage("Chưa có nhân viên hoặc sản phẩm để cấp phát!");
-                builder.setPositiveButton("Đồng ý",null);
+                builder.setTitle(getResources().getString(R.string.notification)).setMessage(getResources().getString(R.string.do_not_staft_and_product_to_allocate));
+                builder.setPositiveButton(getResources().getString(R.string.ok),null);
                 builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
@@ -273,7 +275,7 @@ public class AllocationActivity extends BaseActivity {
             selectProductAdapter.notifyDataSetChanged();
             selectStaftAdapter.notifyDataSetChanged();
 
-            tvTitleAmount.setText("Số lượng cấp (" + listProducts.get(0).getSoLuong() + ")");
+            tvTitleAmount.setText(getResources().getString(R.string.amount_allocation) + " (" + listProducts.get(0).getSoLuong() + ")");
 
 
         }));
@@ -290,7 +292,7 @@ public class AllocationActivity extends BaseActivity {
         compositeDisposable = new CompositeDisposable();
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Cấp phát");
+        getSupportActionBar().setTitle(getResources().getString(R.string.allocation));
 
         listProducts = new ArrayList<>();
         listStafts = new ArrayList<>();

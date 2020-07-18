@@ -56,7 +56,7 @@
                             android:layout_height="wrap_content"
                             android:textSize="18sp"
                             android:textColor="@color/color_black"
-                            android:text="@string/tv_ChonSP"/>
+                            android:text="@string/select_product"/>
 
                         <Spinner
                             android:id="@+id/spn_activity_allocation_select_product"
@@ -77,7 +77,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text=""
+                            android:text="@string/for_staft"
                             android:textColor="@color/color_black"
                             android:textSize="18sp" />
 
@@ -100,7 +100,7 @@
                             android:id="@+id/tv_activity_allocation_title_amount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/tv_SoLuongCap"
+                            android:text="@string/number"
                             android:textColor="@color/color_black"
                             android:textSize="18sp" />
 
@@ -108,7 +108,7 @@
                             android:id="@+id/edt_activity_allocation_enter_amount"
                             android:layout_width="match_parent"
                             android:background="@drawable/shape_background_text_box_normal"
-                            android:hint="@string/edt_NhapSoLuong"
+                            android:hint="@string/enter_amount"
                             android:inputType="number"
                             android:imeOptions="actionDone"
                             android:textSize="16sp"
@@ -127,7 +127,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/tv_DonGia"
+                            android:text="@string/price"
                             android:textColor="@color/color_black"
                             android:textSize="18sp" />
 
@@ -153,7 +153,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/tv_NgayCapPhat"
+                            android:text="@string/date_created"
                             android:textColor="@color/color_black"
                             android:textSize="18sp" />
 
@@ -188,7 +188,7 @@
                             android:id="@+id/edt_activity_allocation_note"
                             android:layout_width="match_parent"
                             android:background="@drawable/shape_background_text_box_normal"
-                            android:hint="@string/edt_GhiChu"
+                            android:hint="@string/note"
                             android:textSize="16sp"
                             android:layout_height="wrap_content"/>
 
@@ -205,7 +205,7 @@
                         <com.ttn.stationarymanagement.presentation.custom_view.MButtonActionBlue
                             android:id="@+id/btn_activity_allocation_done"
                             android:layout_width="wrap_content"
-                            android:text="@string/btn_Capphat"
+                            android:text="@string/allocation"
                             android:layout_height="42dp"/>
 
                     </LinearLayout>

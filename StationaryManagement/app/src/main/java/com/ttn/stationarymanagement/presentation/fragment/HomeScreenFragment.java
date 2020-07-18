@@ -103,27 +103,27 @@ public class HomeScreenFragment extends BaseFragment {
     private void initDataHomeScreen() {
 
         // Cấp phát
-        HomeModel ALLOCATION = new HomeModel(FUNCTION_ALLOCATION,"Cấp phát" , R.drawable.ic_sheet_color_32);
+        HomeModel ALLOCATION = new HomeModel(FUNCTION_ALLOCATION,getResources().getString(R.string.allocation) , R.drawable.ic_sheet_color_32);
         listFunctions.add(ALLOCATION);
 
         // Thống kê
-        HomeModel STATISTIC = new HomeModel(FUNCTION_STATISTIC,"Thống kê" , R.drawable.ic_statistic_color_32);
+        HomeModel STATISTIC = new HomeModel(FUNCTION_STATISTIC,getResources().getString(R.string.statistic) , R.drawable.ic_statistic_color_32);
         listFunctions.add(STATISTIC);
 
         // Nhân viên
-        HomeModel STAFT_MANAGER = new HomeModel(FUNCTION_STAFT_MANAGER,"Nhân viên" , R.drawable.ic_people_color_32);
+        HomeModel STAFT_MANAGER = new HomeModel(FUNCTION_STAFT_MANAGER,getResources().getString(R.string.staft), R.drawable.ic_people_color_32);
         listFunctions.add(STAFT_MANAGER);
 
         // Phòng ban
-        HomeModel DEPARTMENT_MANAGER = new HomeModel(FUNCTION_DEPARTMENT_MANAGER,"Phòng ban" , R.drawable.ic_desktop_color_32);
+        HomeModel DEPARTMENT_MANAGER = new HomeModel(FUNCTION_DEPARTMENT_MANAGER,getResources().getString(R.string.department) , R.drawable.ic_desktop_color_32);
         listFunctions.add(DEPARTMENT_MANAGER);
 
         // Sản phẩm
-        HomeModel PRODUCT_MANAGER = new HomeModel(FUNCTION_PRODUCT_MANAGER,"Văn phòng phẩm" , R.drawable.ic_printer_color_32);
+        HomeModel PRODUCT_MANAGER = new HomeModel(FUNCTION_PRODUCT_MANAGER,getResources().getString(R.string.stationery) , R.drawable.ic_printer_color_32);
         listFunctions.add(PRODUCT_MANAGER);
 
         // Vai trò
-        HomeModel ROLE_MANAGER = new HomeModel(FUNCTION_ROLE_MANAGER,"Vai trò" , R.drawable.ic_task_color_32);
+        HomeModel ROLE_MANAGER = new HomeModel(FUNCTION_ROLE_MANAGER,getResources().getString(R.string.role) , R.drawable.ic_task_color_32);
         listFunctions.add(ROLE_MANAGER);
 
         adapterAppFunction.notifyDataSetChanged();

@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Office manager</string>
-
     <string name="title_activity_home">HomeActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -13,50 +12,17 @@
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
 
+
     // Màn hình chính
-    <string name="allocation">Allocation</string>
-    <string name="statistic">Statistic</string>
-    <string name="staft">Staft manager</string>
-    <string name="department">Department</string>
-    <string name="stationery">Stationery</string>
-    <string name="role">Role</string>
-    <string name="search">Seach</string>
-    <string name="contact">Contact</string>
-    <string name="information">Information</string>
-    <string name="home_screen">Màn hình chính</string>
-    <string name="product">Sản phẩm</string>
-
-    // Cấp phát
-    <string name="code_bill">Mã phiếu</string>
-    <string name="for_staft">Cấp cho</string>
-    <string name="number">Số lượng</string>
-    <string name="total_price">Tổng giá</string>
-    <string name="no_votes_yet">Chưa có phiếu nào!</string>
-
-    <string name="delete_successful">Xóa thành công!</string>
-    <string name="delete_failed">Xóa thất bại</string>
-    <string name="select_product">Chọn sản phẩm</string>
-    <string name="price" >Đơn giá</string>
-    <string name = "date_created">Ngày cấp</string>
-    <string name = "note">Ghi chú</string>
-    <string name = "enter_amount">Nhập số lượng</string>
-    <string name="amount_allocation">Số lượng cấp</string>
-    <string name = "amount_do_not_enough">Số lượng không đủ</string>
-    <string name="amount_do_not_empty_and_equal_zero">Số lượng không được để trống hoặc bằng 0</string>
-    <string name="add_successful">Thêm thành công!</string>
-    <string name="add_failed">Thêm thất bại</string>
-    <string name="notification">Thông báo</string>
-    <string name="do_not_staft_and_product_to_allocate">Chưa có sản phẩm hoặc nhân viên để cấp phát!</string>
-    <string name="ok">Đồng ý</string>
-
-
-    // Tìm kiếm
-    <string name="please_enter_key_to_seach">Vui lòng nhập từ khóa cần tìm</string>
-    <string name="code_staft">Mã nhân viên</string>
-    <string name="code_product">Mã sản phẩm</string>
-    <string name="search_succesful">Tìm kiếm thành công</string>
-    <string name="occurre_error">Đã xảy ra lỗi</string>
-    <string name="cancel">Hủy</string>
+    <string name="allocation">Cấp phát</string>
+    <string name="statistic">Thống kê</string>
+    <string name="staft">Nhân viên</string>
+    <string name="department">Phòng ban</string>
+    <string name="stationery">Văn phòng phẩm</string>
+    <string name="role">Vai trò</string>
+    <string name="search">Tìm kiếm</string>
+    <string name="contact">Liên hệ</string>
+    <string name="information">Thông tin</string>
 
 
     //man hinh nhan vien

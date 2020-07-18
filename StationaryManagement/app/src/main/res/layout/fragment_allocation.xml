@@ -35,7 +35,7 @@
                 android:layout_marginTop="10dp"
                 android:textSize="18sp"
                 android:textColor="@color/color_blue_mac_os"
-                android:text="Chưa cấp phát phiếu nào"/>
+                android:text="@string/no_votes_yet"/>
 
         </LinearLayout>
 

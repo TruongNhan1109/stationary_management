@@ -99,8 +99,8 @@ public class SearchDialogFragment extends FullScreenDialog {
             if (TextUtils.isEmpty(edtSeachBox.getText().toString())) {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setMessage("Vui lòng nhập từ khóa cần tìm!");
-                builder.setPositiveButton("Đồng ý", null);
+                builder.setMessage(getResources().getString(R.string.please_enter_key_to_seach));
+                builder.setPositiveButton(getResources().getString(R.string.ok), null);
                 builder.show();
                 return;
             }
@@ -117,7 +117,7 @@ public class SearchDialogFragment extends FullScreenDialog {
                         // Tạo kết quả theo mã phiếu
                         if (capPhats.size() > 0) {
                             GroupBillModel groupBillModel = new GroupBillModel();
-                            groupBillModel.setNameGroup("Mã phiếu: " + key);
+                            groupBillModel.setNameGroup(getResources().getString(R.string.code_bill) + ": " + key);
                             groupBillModel.setListBills(capPhats);
 
                             listResult.add(groupBillModel);
@@ -132,7 +132,7 @@ public class SearchDialogFragment extends FullScreenDialog {
                         if (capPhats.size() > 0) {
 
                             GroupBillModel groupBillModel = new GroupBillModel();
-                            groupBillModel.setNameGroup("Mã nhân viên: " + key);
+                            groupBillModel.setNameGroup(getResources().getString(R.string.code_staft) + ": " + key);
                             groupBillModel.setListBills(capPhats);
 
                             listResult.add(groupBillModel);
@@ -147,7 +147,7 @@ public class SearchDialogFragment extends FullScreenDialog {
                         if (capPhats.size() > 0) {
 
                             GroupBillModel groupBillModel = new GroupBillModel();
-                            groupBillModel.setNameGroup("Mã sản phẩm: " + key);
+                            groupBillModel.setNameGroup(getResources().getString(R.string.code_product) +": " + key);
                             groupBillModel.setListBills(capPhats);
 
                             listResult.add(groupBillModel);
@@ -161,7 +161,7 @@ public class SearchDialogFragment extends FullScreenDialog {
                         if (nhanViens.size() > 0) {
 
                             GroupBillModel groupBillModel = new GroupBillModel();
-                            groupBillModel.setNameGroup("Nhân viên: " + key);
+                            groupBillModel.setNameGroup(getResources().getString(R.string.staft) + ": " + key);
                             List<CapPhat> list = new ArrayList<>();
 
                             for (NhanVien nv : nhanViens) {
@@ -188,7 +188,7 @@ public class SearchDialogFragment extends FullScreenDialog {
                         if (vanPhongPhams.size() > 0) {
 
                             GroupBillModel groupBillModel = new GroupBillModel();
-                            groupBillModel.setNameGroup("Sản phẩm: " + key);
+                            groupBillModel.setNameGroup(getResources().getString(R.string.product) + ": " + key);
 
                             List<CapPhat> list = new ArrayList<>();
 
@@ -208,10 +208,10 @@ public class SearchDialogFragment extends FullScreenDialog {
                         return Observable.just(true);
 
                     }).observeOn(AndroidSchedulers.mainThread()).subscribe(aBoolean -> {
-                        CustomToast.showToastSuccesstion(getContext(), "Tìm kiếm thành công", Toast.LENGTH_SHORT);
+                        CustomToast.showToastSuccesstion(getContext(), getResources().getString(R.string.search_succesful), Toast.LENGTH_SHORT);
                     }, throwable -> {
                         pvLoading.stop();
-                        CustomToast.showToastError(getContext(), "Đã xảy ra lỗi trong quá trình tìm kiếm", Toast.LENGTH_SHORT);
+                        CustomToast.showToastError(getContext(), getResources().getString(R.string.occurre_error), Toast.LENGTH_SHORT);
                     }, () -> {
                         pvLoading.stop();
                         if (listResult.size() > 0) {
@@ -280,14 +280,14 @@ public class SearchDialogFragment extends FullScreenDialog {
                                     adapterGroupBill.notifyItemRangeChanged(positionParent, listResult.size());
                                 }
 
-                                CustomToast.showToastSuccesstion(getContext(), "Xóa thành công", Toast.LENGTH_SHORT);
+                                CustomToast.showToastSuccesstion(getContext(), getResources().getString(R.string.delete_successful), Toast.LENGTH_SHORT);
 
                             } else {
-                                CustomToast.showToastError(getContext(), "Xóa thất bại", Toast.LENGTH_SHORT);
+                                CustomToast.showToastError(getContext(), getResources().getString(R.string.delete_failed), Toast.LENGTH_SHORT);
                             }
 
                         }, throwable -> {
-                            CustomToast.showToastError(getContext(), "Xóa thất bại", Toast.LENGTH_SHORT);
+                            CustomToast.showToastError(getContext(), getResources().getString(R.string.delete_failed), Toast.LENGTH_SHORT);
                         }));
 
             }
@@ -359,7 +359,7 @@ public class SearchDialogFragment extends FullScreenDialog {
 
                 }, throwable -> {
 
-                    CustomToast.showToastError(getContext(), "Xảy ra lỗi", Toast.LENGTH_SHORT);
+                    CustomToast.showToastError(getContext(), getResources().getString(R.string.occurre_error), Toast.LENGTH_SHORT);
 
                 }, () -> {
                     adapterSugestion.notifyDataSetChanged();

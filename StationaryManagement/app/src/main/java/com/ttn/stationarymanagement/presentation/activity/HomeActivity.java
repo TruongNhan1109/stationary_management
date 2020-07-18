@@ -224,42 +224,42 @@ public class HomeActivity extends BaseActivity implements  HomeScreenFragment.Ho
 
             case FUNCTION_ALLOCATION:       // Màn hình cấp phát
                 replaceFragment(R.id.content_view, AllocationFragment.newInstance(), "");
-                getSupportActionBar().setTitle("Cấp phát");
+                getSupportActionBar().setTitle(getResources().getString(R.string.allocation));
                 toolbar.setBackgroundColor(getResources().getColor(R.color.color_white));
                 toolbar.setNavigationIcon(R.drawable.ic_app_blue_24);
                 break;
 
             case FUNCTION_STAFT_MANAGER:        // Màn hình quản lý nhân viên
                 replaceFragment(R.id.content_view, StaftManagerFragment.newInstance(), "");
-                getSupportActionBar().setTitle("Nhân viên");
+                getSupportActionBar().setTitle(getResources().getString(R.string.staft));
                 toolbar.setBackgroundColor(getResources().getColor(R.color.color_white));
                 toolbar.setNavigationIcon(R.drawable.ic_app_blue_24);
                 break;
 
             case FUNCTION_DEPARTMENT_MANAGER:       // Màn hình quản lý phòng ban
                 replaceFragment(R.id.content_view, DepartmentManagerFragment.newInstance(), "");
-                getSupportActionBar().setTitle("Phòng ban");
+                getSupportActionBar().setTitle(getResources().getString(R.string.department));
                 toolbar.setBackgroundColor(getResources().getColor(R.color.color_white));
                 toolbar.setNavigationIcon(R.drawable.ic_app_blue_24);
                 break;
 
             case FUNCTION_PRODUCT_MANAGER:      // Màn hình quản lý văn phòng phẩm
                 replaceFragment(R.id.content_view, ProductManagerFragment.newInstance(), "");
-                getSupportActionBar().setTitle("Sản phẩm");
+                getSupportActionBar().setTitle(getResources().getString(R.string.product));
                 toolbar.setBackgroundColor(getResources().getColor(R.color.color_white));
                 toolbar.setNavigationIcon(R.drawable.ic_app_blue_24);
                 break;
 
             case FUNCTION_ROLE_MANAGER:     // Màn hình quản lý vai trò
                 replaceFragment(R.id.content_view, RoleManagerFragment.newInstance(), "");
-                getSupportActionBar().setTitle("Vai trò");
+                getSupportActionBar().setTitle(getResources().getString(R.string.role));
                 toolbar.setBackgroundColor(getResources().getColor(R.color.color_white));
                 toolbar.setNavigationIcon(R.drawable.ic_app_blue_24);
                 break;
 
             case FUNCTION_STATISTIC:        // Màn hình thống kê
                 replaceFragment(R.id.content_view, StatisticFragment.newInstance(), "");
-                getSupportActionBar().setTitle("Thống kê");
+                getSupportActionBar().setTitle(getResources().getString(R.string.statistic));
                 toolbar.setBackgroundColor(getResources().getColor(R.color.color_white));
                 toolbar.setNavigationIcon(R.drawable.ic_app_blue_24);
                 break;

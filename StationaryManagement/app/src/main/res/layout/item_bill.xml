@@ -38,7 +38,7 @@
                     android:textColor="@color/color_blue_mac_os"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:text="Mã phiếu: "/>
+                    android:text="@string/code_bill"/>
 
                 <LinearLayout
                     android:layout_width="1dp"
@@ -80,7 +80,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
                     android:textColor="@color/color_purple"
-                    android:text="Sản phẩm: "/>
+                    android:text="@string/product"/>
 
                 <TextView
                     android:id="@+id/tv_item_bill_name_product"
@@ -104,7 +104,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
                     android:textColor="@color/color_purple"
-                    android:text="Cấp cho: "/>
+                    android:text="@string/for_staft"/>
 
                 <TextView
                     android:id="@+id/tv_item_bill_name_staft"
@@ -128,7 +128,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
                     android:textColor="@color/color_purple"
-                    android:text="Số lượng: "/>
+                    android:text="@string/number"/>
 
                 <TextView
                     android:id="@+id/tv_item_bill_amount"
@@ -151,7 +151,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
                     android:textColor="@color/color_purple"
-                    android:text="Tổng giá: "/>
+                    android:text="@string/total_price"/>
 
                 <TextView
                     android:id="@+id/tv_item_bill_total_price"
