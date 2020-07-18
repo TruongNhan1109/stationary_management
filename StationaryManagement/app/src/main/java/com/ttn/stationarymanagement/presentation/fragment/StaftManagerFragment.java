@@ -86,6 +86,8 @@ public class StaftManagerFragment extends BaseFragment {
                 Intent intent = AddStaftActivity.getCallingIntent(getContext());
                 intent.putExtra("ID_STAFT", nhanVien.getMaNV());
                 startActivityForResult(intent, AddStaftActivity.REQUEST_EDIT_STAFT);
+                // Animation chuyển cảnh
+                getActivity().overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
 
             }
 
@@ -189,6 +191,8 @@ public class StaftManagerFragment extends BaseFragment {
 
                 Intent intent = AddStaftActivity.getCallingIntent(getContext());
                 startActivityForResult(intent, AddStaftActivity.REQUEST_ADD_STAFT);
+                // Animation chuyển cảnh
+                getActivity().overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
                 return true;
 
         }

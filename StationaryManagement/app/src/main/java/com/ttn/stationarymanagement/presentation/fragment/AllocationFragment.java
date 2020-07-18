@@ -172,6 +172,8 @@ public class AllocationFragment extends BaseFragment {
         fbAdd.setOnClickListener(v -> {
             Intent intent = AllocationActivity.getCallingIntent(getContext());
             startActivityForResult(intent, AllocationActivity.REQUEST_ADD_BILL);
+            // Animation chuyển cảnh
+            getActivity().overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
 
         });
 
@@ -184,6 +186,8 @@ public class AllocationFragment extends BaseFragment {
                 Intent intent = DetailBillActivity.getCallingIntent(getContext());
                 intent.putExtra("ID_BILL", mItem.getMaPhieu());
                 startActivity(intent);
+                // Animation chuyển cảnh
+                getActivity().overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
 
             }
 

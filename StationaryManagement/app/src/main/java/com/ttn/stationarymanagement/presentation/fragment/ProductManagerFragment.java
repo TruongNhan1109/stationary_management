@@ -97,6 +97,9 @@ public class ProductManagerFragment extends BaseFragment {
             Intent intent = NewProductActivity.getCallingIntent(getContext());
             startActivityForResult(intent, NewProductActivity.KEY_ADD_PRODUCT);
 
+            // Animation chuyển cảnh
+            getActivity().overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
+
         });
 
         groupProductAdapter.setListener(new GroupProductAdapter.GroupProductApapterListener() {
@@ -106,6 +109,8 @@ public class ProductManagerFragment extends BaseFragment {
                 Intent intent = NewProductActivity.getCallingIntent(getContext());
                 intent.putExtra("PRODUCT_ID", item.getMaVPP());
                 startActivityForResult(intent, NewProductActivity.KEY_ADD_PRODUCT);
+                // Animation chuyển cảnh
+                getActivity().overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
 
             }
 

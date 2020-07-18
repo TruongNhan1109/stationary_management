@@ -165,15 +165,20 @@ public class HomeActivity extends BaseActivity implements  HomeScreenFragment.Ho
                 return true;
 
             case R.id.mn_contact:       // Liên hệ
+                changeViewById(FUNCTION_ROLE_MANAGER);
 
                 Intent intent = WebViewActivity.getCallingIntent(this);
                 intent.putExtra(WebViewActivity.KEY_LINK, "https://www.google.com/" );
                 startActivity(intent);
-                
+
                 drawerLayout.closeDrawers();
                 return true;
 
             case R.id.mn_infor:     // Thông tin ứng dụng
+
+                Intent inforApp = InformationAppActivity.getCallingIntent(this);
+                startActivity(inforApp);
+
                 drawerLayout.closeDrawers();
                 return true;
         }

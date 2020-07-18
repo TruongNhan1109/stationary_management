@@ -37,7 +37,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".presentation.activity.WebViewActivity"></activity>
+        <activity android:name=".presentation.activity.InformationAppActivity"></activity>
+        <activity android:name=".presentation.activity.WebViewActivity" />
         <activity android:name=".presentation.activity.DetailBillActivity" />
         <activity android:name=".presentation.activity.AllocationActivity" />
         <activity android:name=".presentation.activity.AddStaftActivity" />
