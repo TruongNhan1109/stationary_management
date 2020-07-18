@@ -165,6 +165,11 @@ public class HomeActivity extends BaseActivity implements  HomeScreenFragment.Ho
                 return true;
 
             case R.id.mn_contact:       // Liên hệ
+
+                Intent intent = WebViewActivity.getCallingIntent(this);
+                intent.putExtra(WebViewActivity.KEY_LINK, "https://www.google.com/" );
+                startActivity(intent);
+                
                 drawerLayout.closeDrawers();
                 return true;
 
