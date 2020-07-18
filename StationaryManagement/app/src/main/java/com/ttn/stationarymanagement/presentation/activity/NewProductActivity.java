@@ -2,14 +2,17 @@ package com.ttn.stationarymanagement.presentation.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.FileProvider;
 
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,6 +23,7 @@ import android.widget.Toast;
 import com.daimajia.androidanimations.library.attention.ShakeAnimator;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+import com.ttn.stationarymanagement.BuildConfig;
 import com.ttn.stationarymanagement.R;
 import com.ttn.stationarymanagement.data.local.WorkWithDb;
 import com.ttn.stationarymanagement.data.local.model.VanPhongPham;
@@ -29,6 +33,9 @@ import com.ttn.stationarymanagement.utils.CustomToast;
 import com.ttn.stationarymanagement.utils.GetDataToCommunicate;
 
 import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -72,6 +79,7 @@ public class NewProductActivity extends BaseActivity {
     Button btnDone;
 
     private int requestSelectPhoto = 1;
+    private int requestCamera = 2;
 
     private String imageSelect;
 
@@ -146,6 +154,8 @@ public class NewProductActivity extends BaseActivity {
 
     }
 
+    File mPhotoFile;
+
     private void setEvents() {
 
         // Khi nhập tên sản phẩm
@@ -199,28 +209,52 @@ public class NewProductActivity extends BaseActivity {
             SelectPhotoBottomSheet selectPhotoBottomSheet = SelectPhotoBottomSheet.newInstance();
             selectPhotoBottomSheet.setListener(new SelectPhotoBottomSheet.SelectPhotoDialogListener() {
                 @Override
-                public void onSelectFromLibrary() {
+                public void onSelectFromLibrary() {     // Chọn ảnh từ thư viện
 
-                    Intent intent = new Intent();
-
-                    // Chỉ định kiểu file cần hiển thị
-                    intent.setType("image/*");
-                    intent.setAction(Intent.ACTION_GET_CONTENT);
-
-                    //Hiển thị các ứng dụng có thể xử lý ảnh
-                    startActivityForResult(Intent.createChooser(intent, getResources().getString(R.string.select_photo)), requestSelectPhoto);
+                    Intent pickPhoto = new Intent(Intent.ACTION_PICK,
+                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    pickPhoto.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    startActivityForResult(pickPhoto, requestSelectPhoto);
 
                 }
 
                 @Override
-                public void onSelectFromCamera() {
+                public void onSelectFromCamera() {      // Chọn ảnh từ camera
 
+                    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                        // Create the File where the photo should go
+                        File photoFile = null;
+                        try {
+                            photoFile = createImageFile();
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                            // Error occurred while creating the File
+                        }
+                        if (photoFile != null) {
+                            Uri photoURI = FileProvider.getUriForFile(NewProductActivity.this,
+                                    BuildConfig.APPLICATION_ID + ".provider", photoFile);
+
+                            mPhotoFile = photoFile; // Lưu file ảnh được tạo
+                            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                            startActivityForResult(takePictureIntent, requestCamera);
+                        }
+                    }
                 }
             });
 
             selectPhotoBottomSheet.show(getSupportFragmentManager(), SelectPhotoBottomSheet.TAG);
 
         });
+    }
+
+    private File createImageFile() throws IOException {
+        String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+        String mFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File mFile = File.createTempFile(mFileName, ".jpg", storageDir);
+        return mFile;
+
     }
 
     // Lưu thông tin được cập nhật
@@ -297,11 +331,8 @@ public class NewProductActivity extends BaseActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
-        if (data == null) {
-            return;
-        }
+        super.onActivityResult(requestCode, resultCode, data);
 
         // Nhận kết quả chọn ảnh từ thư viện
         if (requestCode == requestSelectPhoto && resultCode == RESULT_OK) {
@@ -333,14 +364,36 @@ public class NewProductActivity extends BaseActivity {
 
         }
 
+        if (requestCode == requestCamera && resultCode == RESULT_OK) {          // Chụp ảnh thành công
+
+            if (mPhotoFile != null) {
+
+                imageSelect = mPhotoFile.getAbsolutePath();
+
+                Picasso.get().load(new File(imageSelect)).error(R.mipmap.app_icon).fit().centerInside().into(ivImageProduct, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+
+            }
+
+            CustomToast.showToastSuccesstion(this, getResources().getString(R.string.take_photo_success), Toast.LENGTH_SHORT);
+
+        }
+
     }
 
     public String getPath(Uri uri) {
         String[] projection = {MediaStore.Video.Media.DATA};
         Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
         if (cursor != null) {
-            // HERE YOU WILL GET A NULLPOINTER IF CURSOR IS NULL
-            // THIS CAN BE, IF YOU USED OI FILE MANAGER FOR PICKING THE MEDIA
+
             int column_index = cursor
                     .getColumnIndexOrThrow(MediaStore.Video.Media.DATA);
             cursor.moveToFirst();
@@ -392,4 +445,6 @@ public class NewProductActivity extends BaseActivity {
         super.onDestroy();
         compositeDisposable.dispose();
     }
+
+
 }

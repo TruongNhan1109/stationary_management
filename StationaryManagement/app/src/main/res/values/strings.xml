@@ -138,5 +138,7 @@
     <string name="vietnamese">Vietnamese</string>
     <string name="english">English</string>
 
+    <string name="take_photo_success">Take photo success</string>
+
 
 </resources>

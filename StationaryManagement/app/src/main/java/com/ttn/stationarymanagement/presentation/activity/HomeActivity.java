@@ -66,6 +66,8 @@ public class HomeActivity extends BaseActivity implements  HomeScreenFragment.Ho
         askPermission();
         initHomeScreen();
 
+        readDisk();
+
     }
 
     private void askPermission() {
@@ -301,6 +303,35 @@ public class HomeActivity extends BaseActivity implements  HomeScreenFragment.Ho
 
             ActivityCompat.requestPermissions(HomeActivity.this,
                     new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    2);
+        }
+    }
+
+    private void readDisk() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) { // Sẽ hiện nếu bị từ chối lần
+
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+            alertDialog.setTitle("Quyền truy cập bộ nhớ");
+            alertDialog.setMessage("Ứng dụng cần truy cập bộ nhớ để chọn ảnh");
+
+            alertDialog.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                    ActivityCompat.requestPermissions(HomeActivity.this,
+                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                            1);
+
+                }
+            });
+
+            alertDialog.setNegativeButton("Không", null);
+            alertDialog.show();
+
+        } else { // Hỏi trực tiếp
+
+            ActivityCompat.requestPermissions(HomeActivity.this,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                     2);
         }
     }

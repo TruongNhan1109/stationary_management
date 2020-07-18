@@ -136,6 +136,9 @@
     <string name="vietnamese">Tiếng việt</string>
     <string name="english">Tiếng anh</string>
 
+    <string name="take_photo_success">Chụp ảnh thành công!</string>
+
+
 
 
 </resources>
