@@ -44,4 +44,10 @@
         <item name="android:background">@drawable/shape_background_bottom_sheeet_white</item>
     </style>
 
+    <style name="style_text_box_quare">
+        <item name="android:maxLines" >1</item>
+        <item name="android:background">@color/color_grey_background</item>
+        <item name="android:textColor">@color/color_black</item>
+    </style>
+
 </resources>

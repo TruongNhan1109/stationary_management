@@ -63,15 +63,18 @@ public class HomeActivity extends BaseActivity implements  HomeScreenFragment.Ho
         ButterKnife.bind(this);
 
         setControls();
-        askPermission();
+
         initHomeScreen();
 
-        readDisk();
+        askPermission();
+
 
     }
 
     private void askPermission() {
         askPermisionWriteExternalStorage();
+        askPermisionReadExternalStorage();
+        askPermisionCamera();
     }
 
     // Thiết lập màn hình hiển thị mặc định (Home Screen)
@@ -282,21 +285,19 @@ public class HomeActivity extends BaseActivity implements  HomeScreenFragment.Ho
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) { // Sẽ hiện nếu bị từ chối lần
 
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-            alertDialog.setTitle("Quyền truy cập bộ nhớ");
-            alertDialog.setMessage("Ứng dụng cần truy cập bộ nhớ để chọn ảnh");
+            alertDialog.setMessage(getResources().getString(R.string.require_write_permission));
 
-            alertDialog.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
+            alertDialog.setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-
                     ActivityCompat.requestPermissions(HomeActivity.this,
                             new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                            1);
+                            2);
 
                 }
             });
 
-            alertDialog.setNegativeButton("Không", null);
+            alertDialog.setNegativeButton(getResources().getString(R.string.no), null);
             alertDialog.show();
 
         } else { // Hỏi trực tiếp
@@ -307,32 +308,39 @@ public class HomeActivity extends BaseActivity implements  HomeScreenFragment.Ho
         }
     }
 
-    private void readDisk() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) { // Sẽ hiện nếu bị từ chối lần
+    // Xin cấp quyền đọc bộ nhớ
+    private void askPermisionReadExternalStorage() {
+
+        ActivityCompat.requestPermissions(HomeActivity.this,
+                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                1);
+
+    }
+
+    private void askPermisionCamera() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) { // Sẽ hiện nếu bị từ chối lần
 
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-            alertDialog.setTitle("Quyền truy cập bộ nhớ");
-            alertDialog.setMessage("Ứng dụng cần truy cập bộ nhớ để chọn ảnh");
+            alertDialog.setMessage(getResources().getString(R.string.require_camera_permission));
 
-            alertDialog.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
+            alertDialog.setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-
                     ActivityCompat.requestPermissions(HomeActivity.this,
-                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                            1);
+                            new String[]{Manifest.permission.CAMERA},
+                            3);
 
                 }
             });
 
-            alertDialog.setNegativeButton("Không", null);
+            alertDialog.setNegativeButton(getResources().getString(R.string.no), null);
             alertDialog.show();
 
         } else { // Hỏi trực tiếp
 
             ActivityCompat.requestPermissions(HomeActivity.this,
-                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                    2);
+                    new String[]{Manifest.permission.CAMERA},
+                    3);
         }
     }
 

@@ -139,6 +139,9 @@
     <string name="english">English</string>
 
     <string name="take_photo_success">Take photo success</string>
+    <string name="no">Không</string>
+    <string name="require_write_permission">Ứng dụng cần được cấp quyền ghi bộ nhớ</string>
+    <string name="require_camera_permission">Ứng dụng cần được cấp quyền sử dụng camera</string>
 
 
 </resources>

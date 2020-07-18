@@ -7,6 +7,8 @@
     <LinearLayout
         style="@style/area_layout_content"
         android:layout_width="match_parent"
+        android:focusableInTouchMode="true"
+        android:focusable="true"
         android:layout_height="wrap_content"
         android:background="@drawable/shape_background_search_white"
         android:minHeight="200dp"

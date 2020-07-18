@@ -7,6 +7,8 @@
     <LinearLayout
         style="@style/area_layout_content"
         android:layout_width="match_parent"
+        android:focusableInTouchMode="true"
+        android:focusable="true"
         android:layout_height="wrap_content"
         android:background="@drawable/shape_background_search_white"
         android:minHeight="200dp"
@@ -33,16 +35,15 @@
         </LinearLayout>
 
         <EditText
+            style="@style/style_text_box_quare"
             android:id="@+id/edt_dialog_add_role_role"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
             android:layout_marginTop="20dp"
-            android:background="@color/color_grey_background"
             android:hint="@string/enter_role"
             android:imeOptions="actionDone"
             android:inputType="text"
-            android:maxLines="1"
             android:paddingHorizontal="5dp"
             android:paddingVertical="10dp" />
 
