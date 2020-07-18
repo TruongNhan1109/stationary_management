@@ -15,6 +15,7 @@ import android.view.WindowManager;
 import com.google.android.material.navigation.NavigationView;
 import com.ttn.stationarymanagement.R;
 import com.ttn.stationarymanagement.presentation.baseview.BaseActivity;
+import com.ttn.stationarymanagement.presentation.dialog_fragment.SelectLanguageDialog;
 import com.ttn.stationarymanagement.presentation.fragment.AllocationFragment;
 import com.ttn.stationarymanagement.presentation.fragment.DepartmentManagerFragment;
 import com.ttn.stationarymanagement.presentation.fragment.HomeScreenFragment;
@@ -164,8 +165,15 @@ public class HomeActivity extends BaseActivity implements  HomeScreenFragment.Ho
                 drawerLayout.closeDrawers();
                 return true;
 
+            case R.id.mn_language:       // Chuyển ngôn ngữ
+
+                SelectLanguageDialog selectLanguageDialog = SelectLanguageDialog.newInstance();
+                selectLanguageDialog.show(getSupportFragmentManager(), "");
+
+                drawerLayout.closeDrawers();
+                return true;
+
             case R.id.mn_contact:       // Liên hệ
-                changeViewById(FUNCTION_ROLE_MANAGER);
 
                 Intent intent = WebViewActivity.getCallingIntent(this);
                 intent.putExtra(WebViewActivity.KEY_LINK, "https://www.google.com/" );

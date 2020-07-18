@@ -10,6 +10,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.ttn.stationarymanagement.R;
+import com.ttn.stationarymanagement.utils.LanguageUtils;
+
 public class MyApp extends Application {
 
     private static Context context;

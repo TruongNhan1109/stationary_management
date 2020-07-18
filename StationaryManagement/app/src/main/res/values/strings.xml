@@ -3,7 +3,7 @@
 
     // Language code
     <string name="language_english_code" translatable="false">en</string>
-    <string name="language_vietnamese_code" translatable="false">vi </string>
+    <string name="language_vietnamese_code" translatable="false">vi</string>
 
     <string name="title_activity_home">HomeActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -132,7 +132,11 @@
     <string name="close">Close</string>
     <string name="select_photo_from">Select photo from</string>
 
-    <string name="language">Ngôn ngữ</string>
+    <string name="language">Language</string>
+    <string name="change">Change</string>
+    <string name="select_language">Select language display</string>
+    <string name="vietnamese">Vietnamese</string>
+    <string name="english">English</string>
 
 
 </resources>

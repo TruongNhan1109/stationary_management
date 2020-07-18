@@ -130,6 +130,12 @@
     <string name="close">Đóng</string>
     <string name="select_photo_from">Chọn ảnh từ</string>
 
+    <string name="language">Ngôn ngữ</string>
+    <string name="change">Thay đổi</string>
+    <string name="select_language">Chọn ngôn ngữ hiện thị</string>
+    <string name="vietnamese">Tiếng việt</string>
+    <string name="english">Tiếng anh</string>
+
 
 
 </resources>

@@ -7,6 +7,7 @@ package com.ttn.stationarymanagement.data.config;
 public class Constants {
 
     public static final String CONFIG_APP = "data_config";
+    public static final String LANG_CODE = "App_Lang_Code";
 
     // Id Funtion
     public static final int FUNTION_HOME = 0;
