@@ -61,8 +61,8 @@ public class StationeryAdapter extends  RecyclerView.Adapter<StationeryAdapter.S
 
         holder.tvNameProduct.setText(!TextUtils.isEmpty(mItem.getTenSP()) ? mItem.getTenSP() : "");
 
-        holder.tvNumber.setText("Số lượng " +  mItem.getSoLuong()  + (TextUtils.isEmpty(mItem.getDonVi()) ? "" : " (" + mItem.getDonVi() + ")"));
-        holder.tvPrice.setText("Đơn giá "  + GetDataToCommunicate.changeToPrice( mItem.getDonGia()) + "");
+        holder.tvNumber.setText(mContext.getResources().getString(R.string.number) + ": " +  mItem.getSoLuong()  + (TextUtils.isEmpty(mItem.getDonVi()) ? "" : " (" + mItem.getDonVi() + ")"));
+        holder.tvPrice.setText(mContext.getResources().getString(R.string.price) + ": " + GetDataToCommunicate.changeToPrice( mItem.getDonGia()) + "");
 
         if (!TextUtils.isEmpty(mItem.getGhiChu())) {
             holder.tvNote.setVisibility(View.VISIBLE);

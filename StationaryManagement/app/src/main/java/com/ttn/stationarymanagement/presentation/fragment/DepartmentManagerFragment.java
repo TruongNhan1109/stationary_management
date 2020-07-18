@@ -104,13 +104,13 @@ public class DepartmentManagerFragment extends BaseFragment {
 
                         compositeDisposable.add(obUpload.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(aBoolean -> {
                             if (aBoolean) {     // Cập nhật thành công
-                                CustomToast.showToastSuccesstion(getContext(), "Cập nhật thành công", Toast.LENGTH_SHORT);
+                                CustomToast.showToastSuccesstion(getContext(), getResources().getString(R.string.upload_success), Toast.LENGTH_SHORT);
                                 adapterDepartment.notifyItemChanged(position);
                             } else {
-                                CustomToast.showToastError(getContext(), "Cập nhật thất bại", Toast.LENGTH_SHORT);
+                                CustomToast.showToastError(getContext(), getResources().getString(R.string.upload_failed), Toast.LENGTH_SHORT);
                             }
                         }, throwable -> {
-                            CustomToast.showToastError(getContext(), "Cập nhật thất bại", Toast.LENGTH_SHORT);
+                            CustomToast.showToastError(getContext(),  getResources().getString(R.string.upload_failed), Toast.LENGTH_SHORT);
                         }));
 
                     }
@@ -137,15 +137,15 @@ public class DepartmentManagerFragment extends BaseFragment {
                 compositeDisposable.add(obUpload.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(aBoolean -> {
                     if (aBoolean) {
 
-                        CustomToast.showToastSuccesstion(getContext(), "Xóa thành công", Toast.LENGTH_SHORT);
+                        CustomToast.showToastSuccesstion(getContext(), getResources().getString(R.string.delete_successful), Toast.LENGTH_SHORT);
                         listDepartment.remove(position);
                         adapterDepartment.notifyItemRemoved(position);
                         adapterDepartment.notifyItemRangeChanged(position, listDepartment.size());
                     } else {
-                        CustomToast.showToastError(getContext(), "Xóa  thất bại", Toast.LENGTH_SHORT);
+                        CustomToast.showToastError(getContext(),  getResources().getString(R.string.delete_failed), Toast.LENGTH_SHORT);
                     }
                 }, throwable -> {
-                    CustomToast.showToastError(getContext(), "Xóa thất bại", Toast.LENGTH_SHORT);
+                    CustomToast.showToastError(getContext(), getResources().getString(R.string.delete_failed), Toast.LENGTH_SHORT);
                 }));
             }
         });

@@ -26,7 +26,7 @@
                 android:paddingHorizontal="15dp"
                 android:paddingVertical="5dp"
                 android:background="@drawable/shape_gray_border_text"
-                android:text="Hủy"
+                android:text="@string/cancel"
                 android:textColor="@color/color_blue"
                 android:textSize="16sp" />
 
@@ -39,7 +39,7 @@
             android:layout_marginHorizontal="10dp"
             android:layout_marginTop="20dp"
             android:background="@color/color_grey_background"
-            android:hint="Nhập vai trò"
+            android:hint="@string/enter_role"
             android:imeOptions="actionDone"
             android:inputType="text"
             android:maxLines="1"
@@ -63,7 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="42dp"
                 android:background="@drawable/state_background_button_blue"
-                android:text="Thêm"
+                android:text="@string/add"
                 android:textColor="@color/color_white" />
 
         </LinearLayout>

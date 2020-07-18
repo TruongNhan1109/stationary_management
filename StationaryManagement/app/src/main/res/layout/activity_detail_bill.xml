@@ -42,7 +42,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Phiếu Xuất Sản Phẩm"
+                            android:text="@string/product_delivery_notes"
                             android:textColor="@color/color_black"
                             android:textSize="26sp" />
 
@@ -76,7 +76,7 @@
                                 android:layout_width="1dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Ngày cấp:"
+                                android:text="@string/date_allocated"
                                 android:textColor="@color/color_black"
                                 android:textSize="16sp" />
 
@@ -105,7 +105,7 @@
                                 android:layout_width="1dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Mã nhân viên:"
+                                android:text="@string/code_staft"
                                 android:textColor="@color/color_black"
                                 android:textSize="16sp" />
 
@@ -132,7 +132,7 @@
                                 android:layout_width="1dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Tên nhân viên:"
+                                android:text="@string/name_of_staft"
                                 android:textColor="@color/color_black"
                                 android:textSize="16sp" />
 
@@ -161,7 +161,7 @@
                                 android:layout_width="1dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Mã sản phẩm:"
+                                android:text="@string/code_product"
                                 android:textColor="@color/color_black"
                                 android:textSize="16sp" />
 
@@ -188,7 +188,7 @@
                                 android:layout_width="1dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Sản phẩm cấp:"
+                                android:text="@string/product_provided"
                                 android:textColor="@color/color_black"
                                 android:textSize="16sp" />
 
@@ -216,7 +216,7 @@
                                 android:layout_width="1dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Số lượng:"
+                                android:text="@string/number"
                                 android:textColor="@color/color_black"
                                 android:textSize="16sp" />
 
@@ -245,7 +245,7 @@
                                 android:layout_width="1dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Tổng giá:"
+                                android:text="@string/total_price"
                                 android:textStyle="bold"
                                 android:textColor="@color/color_black"
                                 android:textSize="16sp" />
@@ -270,7 +270,7 @@
                             android:layout_marginTop="8dp"
                             android:textColor="@color/color_black"
                             android:textSize="16sp"
-                            android:text="Ghi chú: ghi chú"/>
+                            android:text="@string/note"/>
 
 
                     </LinearLayout>

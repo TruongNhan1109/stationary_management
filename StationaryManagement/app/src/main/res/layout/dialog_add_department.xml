@@ -27,7 +27,7 @@
                 android:background="@drawable/shape_gray_border_text"
                 android:layout_marginTop="5dp"
                 android:textColor="@color/color_blue"
-                android:text="Hủy"/>
+                android:text="@string/cancel"/>
 
         </LinearLayout>
 
@@ -43,7 +43,7 @@
             android:imeOptions="actionDone"
             android:maxLines="1"
             android:background="@color/color_grey_background"
-            android:hint="Nhập phòng ban"/>
+            android:hint="@string/enter_name_department"/>
 
         <EditText
             android:id="@+id/edt_dialog_add_department_note"
@@ -57,7 +57,7 @@
             android:imeOptions="actionDone"
             android:maxLines="1"
             android:background="@color/color_grey_background"
-            android:hint="Ghi chú"/>
+            android:hint="@string/note"/>
 
         <View
             android:layout_width="match_parent"
@@ -75,7 +75,7 @@
                 android:id="@+id/btn_dialog_add_department_add"
                 android:layout_width="wrap_content"
                 android:layout_height="42dp"
-                android:text="Thêm"/>
+                android:text="@string/add"/>
 
         </LinearLayout>
 

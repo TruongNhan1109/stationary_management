@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Office manager</string>
 
+    // Language code
+    <string name="language_english_code" translatable="false">en</string>
+    <string name="language_vietnamese_code" translatable="false">vi </string>
+
     <string name="title_activity_home">HomeActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -23,83 +27,112 @@
     <string name="search">Seach</string>
     <string name="contact">Contact</string>
     <string name="information">Information</string>
-    <string name="home_screen">Màn hình chính</string>
-    <string name="product">Sản phẩm</string>
+    <string name="home_screen">Home</string>
+    <string name="product">Product</string>
 
     // Cấp phát
-    <string name="code_bill">Mã phiếu</string>
-    <string name="for_staft">Cấp cho</string>
-    <string name="number">Số lượng</string>
-    <string name="total_price">Tổng giá</string>
-    <string name="no_votes_yet">Chưa có phiếu nào!</string>
+    <string name="code_bill">Id Bill</string>
+    <string name="for_staft">For staft</string>
+    <string name="number">Number</string>
+    <string name="total_price">Total price</string>
+    <string name="no_votes_yet">No bill yet!</string>
 
-    <string name="delete_successful">Xóa thành công!</string>
-    <string name="delete_failed">Xóa thất bại</string>
-    <string name="select_product">Chọn sản phẩm</string>
-    <string name="price" >Đơn giá</string>
-    <string name = "date_created">Ngày cấp</string>
-    <string name = "note">Ghi chú</string>
-    <string name = "enter_amount">Nhập số lượng</string>
-    <string name="amount_allocation">Số lượng cấp</string>
-    <string name = "amount_do_not_enough">Số lượng không đủ</string>
-    <string name="amount_do_not_empty_and_equal_zero">Số lượng không được để trống hoặc bằng 0</string>
-    <string name="add_successful">Thêm thành công!</string>
-    <string name="add_failed">Thêm thất bại</string>
-    <string name="notification">Thông báo</string>
-    <string name="do_not_staft_and_product_to_allocate">Chưa có sản phẩm hoặc nhân viên để cấp phát!</string>
-    <string name="ok">Đồng ý</string>
-
+    <string name="delete_successful">Delete successful!</string>
+    <string name="delete_failed">Delete failed!</string>>
+    <string name="select_product">Select product</string>
+    <string name="price" >Price</string>
+    <string name = "date_created">Date crete</string>
+    <string name = "note">Note</string>
+    <string name = "enter_amount">Enter amount</string>
+    <string name="amount_allocation">Enter number of allocation</string>
+    <string name = "amount_do_not_enough">Amount do not enough!</string>
+    <string name="amount_do_not_empty_and_equal_zero">Amount do not empty and equal zero</string>
+    <string name="add_successful">Add successful!</string>
+    <string name="add_failed">Add failed!</string>>
+    <string name="notification">Notification</string>
+    <string name="do_not_staft_and_product_to_allocate">Do not staft and product for allocate</string>
+    <string name="ok">Ok</string>
+    <string name="product_delivery_notes">Product Delivery Notes</string>
+    <string name="date_allocated">Date allocated</string>
+    <string name="name_of_staft">Staft name</string>
+    <string name="product_provided">Product provided</string>
+    <string name="do_not_get_infor_of_product">Do not get infor of product</string>
+    <string name="detail_bill">Detail bill</string>
 
     // Tìm kiếm
-    <string name="please_enter_key_to_seach">Vui lòng nhập từ khóa cần tìm</string>
-    <string name="code_staft">Mã nhân viên</string>
-    <string name="code_product">Mã sản phẩm</string>
-    <string name="search_succesful">Tìm kiếm thành công</string>
-    <string name="occurre_error">Đã xảy ra lỗi</string>
-    <string name="cancel">Hủy</string>
+    <string name="please_enter_key_to_seach">Please enter key</string>
+    <string name="code_staft">Staft Id</string>
+    <string name="code_product">Product Id</string>
+    <string name="search_succesful">Seach successful!</string>
+    <string name="occurre_error">Occure error!</string>
+    <string name="cancel">Cancel</string>
+
+    // Thống kê
+    <string name="most_used_products">Most used products</string>
+    <string name="products">Products</string>
+    <string name="number_of_products_allocated_to_each_department">Number of products allocated to each department</string>
+    <string name="no_data_available">No data available</string>
 
 
-    //man hinh nhan vien
+    // Nhân viên
+    <string name="staft_list">Staft list</string>
+    <string name="employee__does_not_exist">Emplayee does not exist</string>
+    <string name="edit_staft">Edit infor of staft</string>
+    <string name="upload">Upload</string>
+    <string name="select_photo">Select photo</string>
+    <string name="name_staft_do_not_empty">Name staft do not empty</string>
+    <string name="email_do_not_empty">Email do not empty</string>
+    <string name="email_format_invalid">Email format invalid</string>
+    <string name="upload_success"> Upload successful! </string>
+    <string name="upload_failed">Upload failed! </string>
+    <string name="add_staft">Add staft</string>
+    <string name="select_photo_fail">Select photo failed!</string>
+    <string name="enter_name_staft">Enter name of staft</string>
+    <string name="date_of_birth">Date of birth</string>
+    <string name="phone">Phone</string>
+    <string name="email">Email </string>
+    <string name="gender">Gender</string>
+    <string name="male">Male</string>
+    <string name="female">female</string>
+    <string name="other">Other</string>
+    <string name="select_department">Select department</string>
+    <string name="select_role">Select role</string>
+    <string name="add">Add</string>
+    <string name="enter_phone">Enter phone number</string>
+    <string name="enter_email">Enter email</string>
+    <string name="enter_note">Enter note</string>
+    <string name="please_setting_role_and_department_in_the_first">Please setting role and department in the frist!</string>
 
-    <string name="tv_TenNhanVien">Tên nhân viên</string>
-    <string name="edt_Nhapten">Nhập tên nhân viên</string>
-    <string name="tv_Ngaysinh">Ngày sinh</string>
-    <string name="tv_ChonNgaysinh">Chọn ngày sinh</string>
-    <string name="tv_SDT">Số điện thoại</string>
-    <string name="edt_NhapSDt">Nhập số điện thoại</string>
-    <string name="tv_Email">Email</string>
-    <string name="edt_NhapEmail">Nhập Email</string>
-    <string name="tv_GioiTinh">Giới tính</string>
-    <string name="rdbtn_Nam">Nam</string>
-    <string name="rdbtn_Nu">Nu</string>
-    <string name="rdbtn_Khac">Khác</string>
-    <string name="tv_ChonPB">Chọn phòng ban</string>
-    <string name="tv_ChonVaiTro">Chọn vai trò</string>
-    <string name="tv_GhiChu">Ghi chú</string>
-    <string name="edt_NhapGhiChu">Nhập ghi chú</string>
-    <string name="btn_Them">Thêm</string>
+    <string name="name_department_do_not_empty">Name department do not empty</string>
+    <string name="enter_name_department">Enter name department</string>
+    <string name="list" >List</string>
 
+    // Van phong Phẩm
+    <string name="no_product">No product</string>
+    <string name ="name_of_product">Name of product</string>
+    <string name ="enter_name_of_product">Enter name of product</string>
+    <string name="unit">Unit</string>
+    <string name="enter_unit">Enter unit</string>
+    <string name="enter_price">Enter price</string>
+    <string name="save">Save</string>
+    <string name="can_not_get_info_proudct">Can not get infor of product</string>
+    <string name="please_enter_name_of_product">Please enter name of proudct</string>
+    <string name="please_enter_number">Please enter number</string>
+    <string name="enter_price_of_product">Enter price of product</string>
+    <string name="add_product">Add product</string>
+    <string name="edit">Edit</string>
+    <string name="import_product">Import product</string>
+    <string name="delete_product">Delete product</string>
+    <string name="role_name_do_not_empty">Role name do not empty</string>
+    <string name="enter_role">Enter role</string>
+    <string name="no_department_yet">No department yet</string>
 
-    //Màn hình phòng ban
-    <string name="TenPB">Tên phòng ban</string>
-    <string name="NoiDungGhiChuPB">Nội dung ghi chú phòng ban</string>
-    <string name="tv_ChuaCoPhongBanNao">Chưa có phòng ban nào</string>
+    <string name="select_photo_from_library">Select photo from library</string>
+    <string name="select_photo_from_camera">From camera</string>
+    <string name="close">Close</string>
+    <string name="select_photo_from">Select photo from</string>
 
-    //Màn hình sản phẩm
-    <string name="tv_ChonSP">Chọn sản phẩm</string>
-    <string name="tv_SoLuongCap">Số lượng cấp</string>
-    <string name="edt_NhapSoLuong">Nhập số lượng</string>
-    <string name="tv_DonGia">Đơn giá</string>
-    <string name="tv_NgayCapPhat">Ngày cấp phát</string>
-    <string name="edt_GhiChu">Ghi chú</string>
-    <string name="btn_Capphat">Cập phát</string>
+    <string name="language">Ngôn ngữ</string>
 
-    //Tên chức năng
-    <string name="tv_ChonChucNang">Chọn chức năng</string>
-
-    //item
-    <string name="tv_ITem">Item</string>
-
-    //fragment_statistic
 
 </resources>

@@ -133,11 +133,11 @@ public class NewProductActivity extends BaseActivity {
                         edtPrice.setText(productEdit.getDonGia() + "");
                         edtNote.setText(!TextUtils.isEmpty(productEdit.getGhiChu()) ? productEdit.getGhiChu() : "");
                         edtNumberProduct.setEnabled(false);
-                        btnDone.setText("Cập nhật");
+                        btnDone.setText(getResources().getString(R.string.upload));
 
 
                     }, throwable -> {
-                        CustomToast.showToastError(getApplicationContext(), "Không lấy được dữ liệu sản phẩm", Toast.LENGTH_SHORT);
+                        CustomToast.showToastError(getApplicationContext(), getResources().getString(R.string.can_not_get_info_proudct), Toast.LENGTH_SHORT);
                         finish();
                     }));
 
@@ -161,7 +161,7 @@ public class NewProductActivity extends BaseActivity {
             if (TextUtils.isEmpty(edtNameProduct.getText().toString())) {
 
                 new ShakeAnimator().setDuration(700).setRepeatTimes(0).setTarget(edtNameProduct).start();
-                edtNameProduct.setError("Vui lòng nhập tên sản phẩm");
+                edtNameProduct.setError(getResources().getString(R.string.please_enter_name_of_product));
                 edtNameProduct.requestFocus();
                 return;
             }
@@ -169,7 +169,7 @@ public class NewProductActivity extends BaseActivity {
             // Kiểm tra số lượng
             if (TextUtils.isEmpty(edtNumberProduct.getText().toString())) {
                 new ShakeAnimator().setDuration(700).setRepeatTimes(0).setTarget(edtNumberProduct).start();
-                edtNumberProduct.setError("Nhập số lượng sản phẩm");
+                edtNumberProduct.setError(getResources().getString(R.string.please_enter_number));
                 edtNumberProduct.requestFocus();
                 return;
 
@@ -179,7 +179,7 @@ public class NewProductActivity extends BaseActivity {
             if (TextUtils.isEmpty(edtPrice.getText().toString())) {
 
                 new ShakeAnimator().setDuration(700).setRepeatTimes(0).setTarget(edtPrice).start();
-                edtPrice.setError("Nhập giá sản phẩm");
+                edtPrice.setError(getResources().getString(R.string.enter_price_of_product));
                 edtPrice.requestFocus();
                 return;
 
@@ -208,7 +208,7 @@ public class NewProductActivity extends BaseActivity {
                     intent.setAction(Intent.ACTION_GET_CONTENT);
 
                     //Hiển thị các ứng dụng có thể xử lý ảnh
-                    startActivityForResult(Intent.createChooser(intent, "Chọn ảnh của ban"), requestSelectPhoto);
+                    startActivityForResult(Intent.createChooser(intent, getResources().getString(R.string.select_photo)), requestSelectPhoto);
 
                 }
 
@@ -239,18 +239,18 @@ public class NewProductActivity extends BaseActivity {
 
                 .subscribe(aBoolean -> {        // Cập nhật thành công
                     if (aBoolean) {
-                        CustomToast.showToastSuccesstion(getApplicationContext(), "Cập nhật thành công", Toast.LENGTH_SHORT);
+                        CustomToast.showToastSuccesstion(getApplicationContext(), getResources().getString(R.string.upload_success), Toast.LENGTH_SHORT);
 
                         Intent intent = getIntent();
                         setResult(KEY_EDIT_PRODUCT, intent);
                         finish();
 
                     } else {
-                        CustomToast.showToastError(getApplicationContext(), "Cập nhật thất bại", Toast.LENGTH_SHORT);
+                        CustomToast.showToastError(getApplicationContext(), getResources().getString(R.string.upload_failed), Toast.LENGTH_SHORT);
                     }
 
                 }, throwable -> {
-                    CustomToast.showToastError(getApplicationContext(), "Cập nhật thất bại", Toast.LENGTH_SHORT);
+                    CustomToast.showToastError(getApplicationContext(), getResources().getString(R.string.upload_failed), Toast.LENGTH_SHORT);
                 }));
 
     }
@@ -271,18 +271,18 @@ public class NewProductActivity extends BaseActivity {
                 observeOn(AndroidSchedulers.mainThread()).subscribe(aBoolean -> {
 
             if (aBoolean) {
-                CustomToast.showToastSuccesstion(getApplicationContext(), "Thêm thành công", Toast.LENGTH_SHORT);
+                CustomToast.showToastSuccesstion(getApplicationContext(), getResources().getString(R.string.add_successful), Toast.LENGTH_SHORT);
 
                 Intent intent = getIntent();
                 setResult(KEY_ADD_PRODUCT, intent);
                 finish();
 
             } else {
-                CustomToast.showToastError(getApplicationContext(), "Thêm thất bại", Toast.LENGTH_SHORT);
+                CustomToast.showToastError(getApplicationContext(), getResources().getString(R.string.add_failed), Toast.LENGTH_SHORT);
             }
 
         }, throwable -> {
-            CustomToast.showToastError(getApplicationContext(), "Thêm thất bại", Toast.LENGTH_SHORT);
+            CustomToast.showToastError(getApplicationContext(), getResources().getString(R.string.add_failed), Toast.LENGTH_SHORT);
         }));
 
 
@@ -292,7 +292,7 @@ public class NewProductActivity extends BaseActivity {
         compositeDisposable = new CompositeDisposable();
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Thêm sản phẩm");
+        getSupportActionBar().setTitle(getResources().getString(R.string.add_product));
     }
 
     @Override
@@ -328,7 +328,7 @@ public class NewProductActivity extends BaseActivity {
                 });
 
             } else {
-                CustomToast.showToastError(getApplicationContext(), "Chọn ảnh thất bại", Toast.LENGTH_SHORT);
+                CustomToast.showToastError(getApplicationContext(), getResources().getString(R.string.select_photo_fail), Toast.LENGTH_SHORT);
             }
 
         }

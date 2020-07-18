@@ -172,7 +172,7 @@ public class AddStaftActivity extends BaseActivity {
 
                     //  Kiểm tra không cho phép thêm hay sửa nếu danh sách phòng ban hoặc vai trò trống
                     if (listVaiTro.size() < 1 || listPhongBan.size() < 1) {
-                        CustomToast.showToastWarning(getApplicationContext(), "Vui lòng thiết lập phòng ban và vai trò trước", Toast.LENGTH_SHORT);
+                        CustomToast.showToastWarning(getApplicationContext(), getResources().getString(R.string.please_setting_role_and_department_in_the_first), Toast.LENGTH_SHORT);
                         finish();
                     }
 
@@ -180,7 +180,7 @@ public class AddStaftActivity extends BaseActivity {
                     selectDepartmentAdapter.notifyDataSetChanged();
 
                 }, throwable -> {
-                    CustomToast.showToastError(getApplicationContext(), "Đã xảy ra lỗi", Toast.LENGTH_SHORT);
+                    CustomToast.showToastError(getApplicationContext(), getResources().getString(R.string.occurre_error), Toast.LENGTH_SHORT);
 
                 }, () -> {
 
@@ -273,8 +273,8 @@ public class AddStaftActivity extends BaseActivity {
                 edtNote.setText(nhanVien.getGhiChu());      // Ghi chú
             }
 
-            btnAdd.setText("Cập nhật");
-            getSupportActionBar().setTitle("Chỉnh sửa thông tin");
+            btnAdd.setText(getResources().getString(R.string.upload));
+            getSupportActionBar().setTitle(getResources().getString(R.string.edit_staft));
         });
 
 
@@ -292,7 +292,7 @@ public class AddStaftActivity extends BaseActivity {
             intent.setAction(Intent.ACTION_GET_CONTENT);
 
             //Hiển thị các ứng dụng có thể xử lý ảnh
-            startActivityForResult(Intent.createChooser(intent, "Chọn ảnh của ban"), requestSelectPhoto);
+            startActivityForResult(Intent.createChooser(intent, getResources().getString(R.string.select_photo)), requestSelectPhoto);
 
         });
 
@@ -355,7 +355,7 @@ public class AddStaftActivity extends BaseActivity {
             if (TextUtils.isEmpty(edtNameStaft.getText().toString())) {
 
                 new ShakeAnimator().setDuration(700).setRepeatTimes(0).setTarget(edtNameStaft).start();
-                edtNameStaft.setError("Tên nhân viên không được để trống");
+                edtNameStaft.setError(getResources().getString(R.string.name_staft_do_not_empty));
                 edtNameStaft.requestFocus();
                 return;
             }
@@ -363,7 +363,7 @@ public class AddStaftActivity extends BaseActivity {
             // Kiểm tra email
             if (TextUtils.isEmpty(edtEmail.getText().toString())) {
                 new ShakeAnimator().setDuration(700).setRepeatTimes(0).setTarget(edtEmail).start();
-                edtEmail.setError("Email không được để trống");
+                edtEmail.setError(getResources().getString(R.string.email_do_not_empty));
                 edtEmail.requestFocus();
                 return;
             }
@@ -371,7 +371,7 @@ public class AddStaftActivity extends BaseActivity {
             // Kiểm tra cấu trúc email
             if (!AppUtils.checkValidEmail(edtEmail.getText().toString())) {
                 new ShakeAnimator().setDuration(700).setRepeatTimes(0).setTarget(edtEmail).start();
-                edtEmail.setError("Sai cấu trúc email");
+                edtEmail.setError(getResources().getString(R.string.email_format_invalid));
                 edtEmail.requestFocus();
                 return;
             }
@@ -434,17 +434,17 @@ public class AddStaftActivity extends BaseActivity {
                 .subscribe(aBoolean -> {
 
                     if (aBoolean) {     // Cập nhật thành công
-                        CustomToast.showToastSuccesstion(this, "Cập nhật thành công", Toast.LENGTH_SHORT);
+                        CustomToast.showToastSuccesstion(this, getResources().getString(R.string.upload_success), Toast.LENGTH_SHORT);
 
                         Intent intent = getIntent();
                         setResult(RESULT_OK, intent);
                         finish();
 
                     } else {
-                        CustomToast.showToastError(this, "Cập nhật thất bại", Toast.LENGTH_SHORT);
+                        CustomToast.showToastError(this, getResources().getString(R.string.upload_failed), Toast.LENGTH_SHORT);
                     }
                 }, throwable -> {
-                    CustomToast.showToastError(this, "Cập nhật thất bại", Toast.LENGTH_SHORT);
+                    CustomToast.showToastError(this, getResources().getString(R.string.upload_failed), Toast.LENGTH_SHORT);
                 }, () -> {
 
                 }));
@@ -506,17 +506,17 @@ public class AddStaftActivity extends BaseActivity {
         compositeDisposable.add(createStaft.subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(r -> {
                     if (r) {
-                        CustomToast.showToastSuccesstion(getApplicationContext(), "Thêm thành công", Toast.LENGTH_SHORT);
+                        CustomToast.showToastSuccesstion(getApplicationContext(), getResources().getString(R.string.add_successful), Toast.LENGTH_SHORT);
                         Intent intent = getIntent();
                         setResult(RESULT_OK, intent);
                         finish();
 
                     } else {
-                        CustomToast.showToastError(getApplicationContext(), "Thêm thất bại", Toast.LENGTH_SHORT);
+                        CustomToast.showToastError(getApplicationContext(), getResources().getString(R.string.add_failed), Toast.LENGTH_SHORT);
                     }
 
                 }, throwable -> {
-                    CustomToast.showToastError(getApplicationContext(), "Thêm thất bại", Toast.LENGTH_SHORT);
+                    CustomToast.showToastError(getApplicationContext(), getResources().getString(R.string.add_failed), Toast.LENGTH_SHORT);
                 }));
 
     }
@@ -528,7 +528,7 @@ public class AddStaftActivity extends BaseActivity {
         // Khởi tạo toolbar
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Thêm nhân viên");
+        getSupportActionBar().setTitle(getResources().getString(R.string.add_staft));
 
         // Khởi tạo danh vai trò và adapter quản lý
         listVaiTro = new ArrayList();
@@ -575,7 +575,7 @@ public class AddStaftActivity extends BaseActivity {
                 });
 
             } else {
-                CustomToast.showToastError(getApplicationContext(), "Chọn ảnh thất bại", Toast.LENGTH_SHORT);
+                CustomToast.showToastError(getApplicationContext(), getResources().getString(R.string.select_photo_fail), Toast.LENGTH_SHORT);
             }
 
         }

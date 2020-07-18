@@ -84,19 +84,19 @@ public class ShowDetailProductDialog extends FullScreenDialog {
                 ivPicture.setImageResource(R.drawable.ic_part_color_24);
             }
 
-            tvPrice.setText("Đơn giá: " + GetDataToCommunicate.changeToPrice(product.getDonGia()));
+            tvPrice.setText(getResources().getString(R.string.price) + ": "+ GetDataToCommunicate.changeToPrice(product.getDonGia()));
 
-            tvUnit.setText(!TextUtils.isEmpty(product.getDonVi()) ? "Đơn vị: " + product.getDonVi()  : "");
+            tvUnit.setText(!TextUtils.isEmpty(product.getDonVi()) ? getResources().getString(R.string.unit) + ": " + product.getDonVi()  : "");
 
             if (!TextUtils.isEmpty(product.getGhiChu())) {
                 tvNote.setVisibility(View.VISIBLE);
-                tvNote.setText("Ghi chú: " + product.getGhiChu());
+                tvNote.setText(getResources().getString(R.string.note) + ": " + product.getGhiChu());
             } else {
                 tvNote.setVisibility(View.GONE);
             }
 
         } else {
-            CustomToast.showToastError(getContext(), "Không lấy được thông tin sản phẩm", Toast.LENGTH_SHORT);
+            CustomToast.showToastError(getContext(), getResources().getString(R.string.can_not_get_info_proudct), Toast.LENGTH_SHORT);
             dismiss();
         }
 

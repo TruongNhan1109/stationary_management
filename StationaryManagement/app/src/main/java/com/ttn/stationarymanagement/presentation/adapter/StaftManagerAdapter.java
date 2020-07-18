@@ -60,11 +60,11 @@ public class StaftManagerAdapter  extends RecyclerView.Adapter<StaftManagerAdapt
         holder.tvNameStaft.append( " (" + mItem.getNgaySinh() + ")");
 
         if (mItem.getGT() == 0) {
-            holder.tvGenderStaft.setText("GT: Nam");
+            holder.tvGenderStaft.setText( mContext.getResources().getString(R.string.gender) + ": " + mContext.getResources().getString(R.string.male));
         } else if (mItem.getGT() == 1) {
-            holder.tvGenderStaft.setText("GT: Nữ");
+            holder.tvGenderStaft.setText(mContext.getResources().getString(R.string.gender) + ": " + mContext.getResources().getString(R.string.female));
         } else {
-            holder.tvGenderStaft.setText("GT: Khác");
+            holder.tvGenderStaft.setText(mContext.getResources().getString(R.string.gender) + ": " + mContext.getResources().getString(R.string.other));
         }
 
         if (!TextUtils.isEmpty(mItem.getSDT())) {
@@ -85,7 +85,7 @@ public class StaftManagerAdapter  extends RecyclerView.Adapter<StaftManagerAdapt
 
         if (vaitro != null) {
             holder.tvRoleStaft.setVisibility(View.VISIBLE);
-            holder.tvRoleStaft.setText( "VT: " + vaitro.getTenVaiTro());
+            holder.tvRoleStaft.setText( mContext.getResources().getString(R.string.role) +": " + vaitro.getTenVaiTro());
         } else {
             holder.tvRoleStaft.setVisibility(View.GONE);
         }

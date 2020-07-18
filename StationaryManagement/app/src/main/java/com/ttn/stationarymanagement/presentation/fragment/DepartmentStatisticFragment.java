@@ -91,6 +91,7 @@ public class DepartmentStatisticFragment extends BaseFragment {
                 .flatMap(capPhats -> Observable.fromIterable(capPhats))
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(capPhat -> {
 
+                    // Góm nhóm các sản phẩm theo mã nhân viên
                     if (groupByStaftId.get(capPhat.getMaNV()) == null) {
 
                         List<CapPhat> listBills = new ArrayList<>();
@@ -103,9 +104,10 @@ public class DepartmentStatisticFragment extends BaseFragment {
                         listBills.add(capPhat);
 
                     }
-        }, throwable -> CustomToast.showToastError(getContext(), "Đã xảy ra lỗi", Toast.LENGTH_SHORT)
+        }, throwable -> CustomToast.showToastError(getContext(), getResources().getString(R.string.occurre_error), Toast.LENGTH_SHORT)
         , () -> {
 
+                    // Gom nhóm các nhân viên theo từng phòng ban
                     for(Map.Entry<Long, List<CapPhat>> entry: groupByStaftId.entrySet()) {
                         NhanVien nhanVien = WorkWithDb.getInstance().getStaftById(entry.getKey());
 
@@ -134,8 +136,9 @@ public class DepartmentStatisticFragment extends BaseFragment {
 
                     ArrayList listRooms = new ArrayList();
                     List<String> listNameDepartment = new ArrayList<>();
-
                     int index = 0;
+
+                    // Thống kê số lượng dùng theo từng phòng ban
                     for(Map.Entry<Long, Integer> entry: result.entrySet()) {
 
                         PhongBan phongBan = WorkWithDb.getInstance().getDepartmentById(entry.getKey());
@@ -155,13 +158,14 @@ public class DepartmentStatisticFragment extends BaseFragment {
                         }
                     }
 
-                    BarDataSet bardataset = new BarDataSet(listRooms, "Số lượng cấp phát theo phòng ban");
+                    // Thiết lập biểu đồ
+                    BarDataSet bardataset = new BarDataSet(listRooms, getResources().getString(R.string.number_of_products_allocated_to_each_department));
                     chart.animateY(3000);
 
                     BarData data = new BarData(listNameDepartment, bardataset);
                     bardataset.setColors(ColorTemplate.COLORFUL_COLORS);
                     chart.setBackgroundColor(Color.WHITE);
-                    chart.setNoDataText("Chưa có số liệu");
+                    chart.setNoDataText(getResources().getString(R.string.no_data_available));
                     chart.setData(data);
 
                 }));

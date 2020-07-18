@@ -129,7 +129,7 @@ public class ProductManagerFragment extends BaseFragment {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(aBoolean -> {
                             if (aBoolean) {     // Xóa thành công
-                                CustomToast.showToastSuccesstion(getContext(), "Đã xóa sản phẩm", Toast.LENGTH_SHORT);
+                                CustomToast.showToastSuccesstion(getContext(), getResources().getString(R.string.delete_successful), Toast.LENGTH_SHORT);
 
                                 groupProductModels.get(positionGroup).getVanPhongPhamList().remove(itemDelete);
 
@@ -143,11 +143,11 @@ public class ProductManagerFragment extends BaseFragment {
                                 }
 
                             } else {
-                                CustomToast.showToastError(getContext(), "Xóa thất bại", Toast.LENGTH_SHORT);
+                                CustomToast.showToastError(getContext(),  getResources().getString(R.string.delete_failed), Toast.LENGTH_SHORT);
                             }
 
                         }, throwable -> {
-                            CustomToast.showToastError(getContext(), "Xóa thất bại", Toast.LENGTH_SHORT);
+                            CustomToast.showToastError(getContext(),  getResources().getString(R.string.delete_failed), Toast.LENGTH_SHORT);
                         }));
             }
 
@@ -162,7 +162,7 @@ public class ProductManagerFragment extends BaseFragment {
                     vanPhongPham.setSoLuong(vanPhongPham.getSoLuong() + amount);
                     WorkWithDb.getInstance().update(vanPhongPham);
                     groupProductAdapter.notifyItemChanged(positionGroup);
-                    CustomToast.showToastSuccesstion(getContext(), "Cập nhật thành công!", Toast.LENGTH_SHORT);
+                    CustomToast.showToastSuccesstion(getContext(), getResources().getString(R.string.upload_success), Toast.LENGTH_SHORT);
 
                 });
 
@@ -261,7 +261,7 @@ public class ProductManagerFragment extends BaseFragment {
                     }
 
                 }, throwable -> {
-                    CustomToast.showToastError(getContext(), "Đã xảy ra lỗi", Toast.LENGTH_SHORT);
+                    CustomToast.showToastError(getContext(), getResources().getString(R.string.occurre_error), Toast.LENGTH_SHORT);
                 })
         );
 

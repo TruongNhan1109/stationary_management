@@ -52,6 +52,11 @@
         <menu>
 
             <item
+                android:id="@+id/mn_language"
+                android:icon="@drawable/ic_book_color_32"
+                android:title="@string/language" />
+
+            <item
                 android:id="@+id/mn_contact"
                 android:icon="@drawable/ic_book_color_32"
                 android:title="@string/contact" />

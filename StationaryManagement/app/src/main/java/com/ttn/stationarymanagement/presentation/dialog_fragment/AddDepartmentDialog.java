@@ -100,7 +100,7 @@ public class AddDepartmentDialog extends DialogFragment {
             // Đưa dữ liệu cần được lưu lên hiển thị
             edtNameDepartment.setText(name);
             edtNote.setText(note);
-            btnAdd.setText("Cập nhật");
+            btnAdd.setText(getResources().getString(R.string.upload));
             isUpload = true;
 
         }
@@ -117,7 +117,7 @@ public class AddDepartmentDialog extends DialogFragment {
 
             // Kiểm tra tên phòng ban
             if (TextUtils.isEmpty(edtNameDepartment.getText().toString())) {
-                edtNameDepartment.setError("Phòng ban không được để trống");
+                edtNameDepartment.setError(getResources().getString(R.string.name_department_do_not_empty));
                 edtNameDepartment.requestFocus();
                 return;
             }
@@ -163,7 +163,7 @@ public class AddDepartmentDialog extends DialogFragment {
         compositeDisposable.add(obCreateDepartment.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(aBoolean -> {
 
             if (aBoolean) {
-                CustomToast.showToastSuccesstion(getContext(), "Thêm thành công", Toast.LENGTH_SHORT);
+                CustomToast.showToastSuccesstion(getContext(), getResources().getString(R.string.add_successful), Toast.LENGTH_SHORT);
 
                 if (mListener != null) {
                     mListener.onAddSuccesstion();
@@ -171,11 +171,11 @@ public class AddDepartmentDialog extends DialogFragment {
                 }
 
             } else {
-                CustomToast.showToastError(getContext(), "Thêm thất bại", Toast.LENGTH_SHORT);
+                CustomToast.showToastError(getContext(), getResources().getString(R.string.add_failed), Toast.LENGTH_SHORT);
             }
 
         }, throwable -> {
-            CustomToast.showToastError(getContext(), "Thêm thất bại", Toast.LENGTH_SHORT);
+            CustomToast.showToastError(getContext(), getResources().getString(R.string.add_failed), Toast.LENGTH_SHORT);
         }));
 
     }

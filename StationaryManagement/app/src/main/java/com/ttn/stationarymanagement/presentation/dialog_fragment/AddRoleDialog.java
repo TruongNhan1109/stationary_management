@@ -102,7 +102,7 @@ public class AddRoleDialog extends DialogFragment {
         if (!TextUtils.isEmpty(nameRole)) { // Có vai trò cần sửa
             edtRole.setText(nameRole);
             isUpload = true;
-            btnAdd.setText("Cập nhật");
+            btnAdd.setText(getResources().getString(R.string.upload));
         }
 
     }
@@ -114,7 +114,7 @@ public class AddRoleDialog extends DialogFragment {
 
             // Kiểm tra vai trò
             if (TextUtils.isEmpty(edtRole.getText().toString())) {
-                edtRole.setError("Không được để trống!");
+                edtRole.setError(getResources().getString(R.string.role_name_do_not_empty));
                 edtRole.requestFocus();
                 return;
             }
@@ -141,7 +141,7 @@ public class AddRoleDialog extends DialogFragment {
 
                     if (aBoolean) {
 
-                        CustomToast.showToastSuccesstion(getContext(), "Thêm thành công", Toast.LENGTH_SHORT);
+                        CustomToast.showToastSuccesstion(getContext(), getResources().getString(R.string.add_successful), Toast.LENGTH_SHORT);
 
                         if (mListener != null) {
                             mListener.onAddSuccesstion();
@@ -149,10 +149,10 @@ public class AddRoleDialog extends DialogFragment {
                         }
 
                     } else {
-                        CustomToast.showToast(getContext(), "Thêm thất bại", Toast.LENGTH_SHORT);
+                        CustomToast.showToast(getContext(), getResources().getString(R.string.add_failed), Toast.LENGTH_SHORT);
                     }
                 }, throwable -> {
-                    CustomToast.showToastError(getContext(), "Thêm thất bại", Toast.LENGTH_SHORT);
+                    CustomToast.showToastError(getContext(), getResources().getString(R.string.add_failed), Toast.LENGTH_SHORT);
                 }));
     }
 

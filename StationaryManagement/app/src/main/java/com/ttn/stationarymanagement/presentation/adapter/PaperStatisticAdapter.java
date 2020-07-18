@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
+import com.ttn.stationarymanagement.R;
 import com.ttn.stationarymanagement.presentation.fragment.DepartmentStatisticFragment;
 import com.ttn.stationarymanagement.presentation.fragment.ProductStatisticFragment;
 
@@ -16,11 +17,13 @@ import java.util.List;
 
 public class PaperStatisticAdapter extends FragmentStatePagerAdapter {
 
-    List<Fragment> listFragment;
+   private List<Fragment> listFragment;
+   private Context mContext;
 
     public PaperStatisticAdapter(@NonNull FragmentManager fm, Context context) {
         super(fm);
 
+        this.mContext = context;
         listFragment = new ArrayList<>();
 
         ProductStatisticFragment productStatisticFragment = ProductStatisticFragment.newInstance();
@@ -57,10 +60,10 @@ public class PaperStatisticAdapter extends FragmentStatePagerAdapter {
         String title = "";
         switch (position){
             case 0:
-                title = "Sản phẩm";
+                title = mContext.getResources().getString(R.string.product);
                 break;
             case 1:
-                title = "Phòng ban";
+                title = mContext.getResources().getString(R.string.department);
                 break;
 
         }

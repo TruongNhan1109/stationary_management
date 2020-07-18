@@ -64,7 +64,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/tv_TenNhanVien"
+                            android:text="@string/name_of_staft"
                             android:layout_marginBottom="5dp"
                             android:textColor="@color/color_black"
                             android:textSize="20sp"/>
@@ -79,7 +79,7 @@
                             android:drawableLeft="@drawable/ic_people_24"
                             android:drawablePadding="3dp"
                             android:background="@drawable/state_background_text_box_white"
-                            android:hint="@string/edt_Nhapten"/>
+                            android:hint="@string/enter_name_staft"/>
 
                     </LinearLayout>
 
@@ -93,7 +93,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/tv_Ngaysinh"
+                            android:text="@string/date_of_birth"
                             android:layout_marginBottom="5dp"
                             android:textColor="@color/color_black"
                             android:textSize="20sp"/>
@@ -106,7 +106,7 @@
                             android:background="@drawable/state_background_text_box_white"
                             android:drawableLeft="@drawable/ic_calendar_24"
                             android:drawablePadding="3dp"
-                            android:hint="@string/tv_ChonNgaysinh"
+                            android:hint=""
                             android:textSize="16sp"
                             android:imeOptions="actionNext"
                             android:maxLines="1"
@@ -125,7 +125,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/tv_SDT"
+                            android:text="@string/phone"
                             android:layout_marginBottom="5dp"
                             android:textColor="@color/color_black"
                             android:textSize="20sp"/>
@@ -140,7 +140,7 @@
                             android:drawableLeft="@drawable/ic_phone_24"
                             android:drawablePadding="3dp"
                             android:background="@drawable/state_background_text_box_white"
-                            android:hint="@string/edt_NhapSDt"/>
+                            android:hint="@string/enter_phone"/>
 
                     </LinearLayout>
 
@@ -154,7 +154,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/tv_Email"
+                            android:text="@string/email"
                             android:layout_marginBottom="5dp"
                             android:textColor="@color/color_black"
                             android:textSize="20sp"/>
@@ -169,7 +169,7 @@
                             android:drawableLeft="@drawable/ic_mail_24"
                             android:drawablePadding="3dp"
                             android:background="@drawable/state_background_text_box_white"
-                            android:hint="@string/edt_NhapEmail"/>
+                            android:hint="@string/enter_email"/>
 
                     </LinearLayout>
 
@@ -186,7 +186,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="5dp"
-                            android:text="@string/tv_GioiTinh"
+                            android:text="@string/gender"
                             android:textColor="@color/color_black"
                             android:textSize="20sp" />
 
@@ -202,20 +202,20 @@
                                 android:checked="true"
                                 android:layout_marginRight="5dp"
                                 android:layout_height="wrap_content"
-                                android:text="@string/rdbtn_Nam"/>
+                                android:text="@string/male"/>
 
                             <RadioButton
                                 android:id="@+id/rdo_female"
                                 android:layout_width="wrap_content"
                                 android:layout_marginRight="5dp"
                                 android:layout_height="wrap_content"
-                                android:text="@string/rdbtn_Nu"/>
+                                android:text="@string/female"/>
 
                             <RadioButton
                                 android:id="@+id/rdo_other"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/rdbtn_Khac"/>
+                                android:text="@string/other"/>
                         </RadioGroup>
 
                     </LinearLayout>
@@ -230,7 +230,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="5dp"
-                            android:text="@string/tv_ChonPB"
+                            android:text="@string/select_department"
                             android:textColor="@color/color_black"
                             android:textSize="20sp" />
 
@@ -251,7 +251,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/tv_ChonVaiTro"
+                            android:text="@string/select_role"
                             android:layout_marginBottom="5dp"
                             android:textColor="@color/color_black"
                             android:textSize="20sp"/>
@@ -274,7 +274,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/tv_GhiChu"
+                            android:text="@string/note"
                             android:layout_marginBottom="5dp"
                             android:textColor="@color/color_black"
                             android:textSize="20sp"/>
@@ -289,7 +289,7 @@
                             android:drawableLeft="@drawable/ic_note_line_24"
                             android:drawablePadding="3dp"
                             android:background="@drawable/state_background_text_box_white"
-                            android:hint="@string/edt_NhapGhiChu"/>
+                            android:hint="@string/enter_note"/>
 
                     </LinearLayout>
 
@@ -307,7 +307,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="42dp"
                             android:paddingHorizontal="15dp"
-                            android:text="@string/btn_Them" />
+                            android:text="@string/add" />
 
                     </LinearLayout>
 

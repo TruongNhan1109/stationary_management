@@ -103,18 +103,18 @@ public class StaftManagerFragment extends BaseFragment {
                         .subscribe(aBoolean -> {
 
                             if (aBoolean) {     // Xóa thanh công
-                                CustomToast.showToastSuccesstion(getContext(), "Đã xóa nhân viên", Toast.LENGTH_SHORT);
+                                CustomToast.showToastSuccesstion(getContext(), getResources().getString(R.string.delete_successful), Toast.LENGTH_SHORT);
 
                                 listNhanVien.remove(position);
                                 adapter.notifyItemRemoved(position);
                                 adapter.notifyItemRangeChanged(position, listNhanVien.size());
 
                             } else {
-                                CustomToast.showToastError(getContext(), "Xóa thất bại", Toast.LENGTH_SHORT);
+                                CustomToast.showToastError(getContext(), getResources().getString(R.string.delete_failed), Toast.LENGTH_SHORT);
                             }
 
                         }, throwable -> {
-                            CustomToast.showToastError(getContext(), "Xóa thất bại", Toast.LENGTH_SHORT);
+                            CustomToast.showToastError(getContext(), getResources().getString(R.string.delete_failed), Toast.LENGTH_SHORT);
                         });
             }
         });
@@ -142,7 +142,7 @@ public class StaftManagerFragment extends BaseFragment {
                         tvNotifyEmpty.setVisibility(View.GONE);
                         tvTotalStaft.setVisibility(View.VISIBLE);
 
-                        tvTotalStaft.setText("Danh sách nhân viên (" + nhanViens.size() + ")");     // Hiển thị tổng số nhân viên
+                        tvTotalStaft.setText(getResources().getString(R.string.staft_list) + " (" + nhanViens.size() + ")");     // Hiển thị tổng số nhân viên
 
                         listNhanVien.clear();
                         listNhanVien.addAll(nhanViens);

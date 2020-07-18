@@ -120,14 +120,14 @@ public class RoleManagerFragment extends BaseFragment {
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(aBoolean -> {
                                     if (aBoolean) { // Thành công
-                                        CustomToast.showToastSuccesstion(getContext(), "Cập nhật thành công", Toast.LENGTH_SHORT);
+                                        CustomToast.showToastSuccesstion(getContext(), getResources().getString(R.string.upload_success), Toast.LENGTH_SHORT);
                                         adapterRole.notifyItemChanged(position);
                                     } else {        // Thất bại
-                                        CustomToast.showToastError(getContext(), "Cập nhật thất bai", Toast.LENGTH_SHORT);
+                                        CustomToast.showToastError(getContext(), getResources().getString(R.string.upload_success), Toast.LENGTH_SHORT);
                                     }
 
                                 }, throwable -> {
-                                    CustomToast.showToastError(getContext(), "Cập nhật thất bai", Toast.LENGTH_SHORT);
+                                    CustomToast.showToastError(getContext(), getResources().getString(R.string.upload_success), Toast.LENGTH_SHORT);
                                 }));
                     }
                 });
@@ -157,15 +157,15 @@ public class RoleManagerFragment extends BaseFragment {
                             if (aBoolean) {     // Xóa thành công
 
                                 listRole.remove(position);
-                                CustomToast.showToastSuccesstion(getContext(), "Đã xóa", Toast.LENGTH_SHORT);
+                                CustomToast.showToastSuccesstion(getContext(), getResources().getString(R.string.delete_successful), Toast.LENGTH_SHORT);
                                 adapterRole.notifyItemRemoved(position);
                                 adapterRole.notifyItemRangeChanged(position, listRole.size());
 
                             } else {
-                                CustomToast.showToastError(getContext(), "Xóa thất bại", Toast.LENGTH_SHORT);
+                                CustomToast.showToastError(getContext(), getResources().getString(R.string.delete_failed), Toast.LENGTH_SHORT);
                             }
                         }, throwable -> {
-                            CustomToast.showToastError(getContext(), "Xóa thất bại", Toast.LENGTH_SHORT);
+                            CustomToast.showToastError(getContext(), getResources().getString(R.string.delete_failed), Toast.LENGTH_SHORT);
                         }));
             }
         });

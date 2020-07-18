@@ -19,7 +19,7 @@
             android:visibility="gone"
             android:textColor="@color/color_light_blue"
             android:gravity="center"
-            android:text="@string/tv_ChuaCoPhongBanNao"/>
+            android:text="@string/no_department_yet"/>
 
 
         <androidx.recyclerview.widget.RecyclerView

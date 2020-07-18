@@ -90,7 +90,7 @@ public class ProductStatisticFragment extends BaseFragment {
         ).observeOn(AndroidSchedulers.mainThread()).subscribe(vanPhongPham -> {
             listDataChart.add(new ValueDataEntry(vanPhongPham.getTenSP(), vanPhongPham.getDaDung()));
         }, throwable -> {
-            CustomToast.showToastError(getContext(), "Đã xảy ra lỗi", Toast.LENGTH_SHORT);
+            CustomToast.showToastError(getContext(), getResources().getString(R.string.occurre_error) ,Toast.LENGTH_SHORT);
         }, () -> {
 
             if (listDataChart.size() > 0) {
@@ -122,12 +122,12 @@ public class ProductStatisticFragment extends BaseFragment {
 
         Pie pieProduct = AnyChart.pie();
         pieProduct.data(listDataChart);
-        pieProduct.title("Sản phẩm sử dụng nhiều nhất");
+        pieProduct.title(getResources().getString(R.string.most_used_products));
         pieProduct.labels().position("outside");
 
         pieProduct.legend().title().enabled(true);
         pieProduct.legend().title()
-                .text("Các sản phẩm")
+                .text(getResources().getString(R.string.products))
                 .padding(0d, 0d, 10d, 0d);
 
         pieProduct.legend()

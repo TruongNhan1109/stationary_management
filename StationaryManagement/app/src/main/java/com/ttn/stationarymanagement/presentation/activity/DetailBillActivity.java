@@ -114,7 +114,7 @@ public class DetailBillActivity extends BaseActivity {
 
                 // Hiển thị các thông tin
 
-                tvIdBill.setText("Mã phiếu: " + capPhat.getMaPhieu());
+                tvIdBill.setText(getResources().getString(R.string.code_bill) + ": " + capPhat.getMaPhieu());
                 tvDateCreate.setText(capPhat.getNgayCap());
                 tvIdStaft.setText(capPhat.getMaNV() + "");
                 tvIdProduct.setText(capPhat.getMaVPP() + "");
@@ -122,7 +122,7 @@ public class DetailBillActivity extends BaseActivity {
                 tvTotalPrice.setText(GetDataToCommunicate.changeToPrice( capPhat.getSoLuong() * capPhat.getTongGia()));
 
                 if (!TextUtils.isEmpty(capPhat.getGhiChu())) {
-                    tvNote.setText("Ghi chú: " + capPhat.getGhiChu());
+                    tvNote.setText(getResources().getString(R.string.note) + ": " + capPhat.getGhiChu());
                 } else {
                     tvNote.setVisibility(View.GONE);
                 }
@@ -142,12 +142,12 @@ public class DetailBillActivity extends BaseActivity {
                 }
 
             }, throwable -> {
-                CustomToast.showToastError(this, "Đã xảy ra lỗi", Toast.LENGTH_SHORT);
+                CustomToast.showToastError(this, getResources().getString(R.string.occurre_error), Toast.LENGTH_SHORT);
             }));
 
 
         } else {
-            CustomToast.showToastError(this, "Không lấy được thông tin sản phẩm", Toast.LENGTH_SHORT);
+            CustomToast.showToastError(this, getResources().getString(R.string.do_not_get_infor_of_product), Toast.LENGTH_SHORT);
             finish();
         }
 
@@ -160,7 +160,7 @@ public class DetailBillActivity extends BaseActivity {
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Chi tiết phiếu");
+        getSupportActionBar().setTitle(getResources().getString(R.string.detail_bill));
 
     }
 

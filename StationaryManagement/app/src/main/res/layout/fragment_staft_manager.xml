@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:textSize="22sp"
             android:textColor="@color/color_black"
-            android:text="Danh sách nhân viên"/>
+            android:text="@string/staft_list"/>
 
 
 
@@ -29,7 +29,7 @@
             android:textSize="18sp"
             android:gravity="center"
             android:textColor="@color/color_blue"
-            android:text="Chưa có nhân viên nào"/>
+            android:text="@string/employee__does_not_exist"/>
 
 
         <RelativeLayout
