@@ -40,12 +40,12 @@
     <string name="delete_successful">Delete successful!</string>
     <string name="delete_failed">Delete failed!</string>>
     <string name="select_product">Select product</string>
-    <string name="price" >Price</string>
-    <string name = "date_created">Date crete</string>
-    <string name = "note">Note</string>
-    <string name = "enter_amount">Enter amount</string>
+    <string name="price">Price</string>
+    <string name="date_created">Date crete</string>
+    <string name="note">Note</string>
+    <string name="enter_amount">Enter amount</string>
     <string name="amount_allocation">Enter number of allocation</string>
-    <string name = "amount_do_not_enough">Amount do not enough!</string>
+    <string name="amount_do_not_enough">Amount do not enough!</string>
     <string name="amount_do_not_empty_and_equal_zero">Amount do not empty and equal zero</string>
     <string name="add_successful">Add successful!</string>
     <string name="add_failed">Add failed!</string>>
@@ -105,12 +105,12 @@
 
     <string name="name_department_do_not_empty">Name department do not empty</string>
     <string name="enter_name_department">Enter name department</string>
-    <string name="list" >List</string>
+    <string name="list">List</string>
 
     // Van phong Phẩm
     <string name="no_product">No product</string>
-    <string name ="name_of_product">Name of product</string>
-    <string name ="enter_name_of_product">Enter name of product</string>
+    <string name="name_of_product">Name of product</string>
+    <string name="enter_name_of_product">Enter name of product</string>
     <string name="unit">Unit</string>
     <string name="enter_unit">Enter unit</string>
     <string name="enter_price">Enter price</string>

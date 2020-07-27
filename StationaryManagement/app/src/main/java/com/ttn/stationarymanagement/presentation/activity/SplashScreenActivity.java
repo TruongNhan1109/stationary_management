@@ -22,7 +22,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             LanguageUtils.changeLanguageNotSave(langCode, this);
         }
 
-        Intent intent = HomeActivity.getCallingIntent(this);
+        Intent intent = LoadingActivity.getCallingIntent(this);
         startActivity(intent);
         finish();
     }
