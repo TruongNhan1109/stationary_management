@@ -30,6 +30,7 @@ import com.ttn.stationarymanagement.data.local.WorkWithDb;
 import com.ttn.stationarymanagement.data.local.model.CapPhat;
 import com.ttn.stationarymanagement.data.local.model.NhanVien;
 import com.ttn.stationarymanagement.data.local.model.VanPhongPham;
+import com.ttn.stationarymanagement.presentation.adapter.CustomerSelectAdapter;
 import com.ttn.stationarymanagement.presentation.adapter.SelectProductAdapter;
 import com.ttn.stationarymanagement.presentation.adapter.SelectStaftAdapter;
 import com.ttn.stationarymanagement.presentation.baseview.BaseActivity;
@@ -81,7 +82,9 @@ public class AllocationActivity extends BaseActivity {
     EditText edtNote;
 
     private SelectProductAdapter selectProductAdapter;
-    private SelectStaftAdapter selectStaftAdapter;
+
+ //   private SelectStaftAdapter selectStaftAdapter;
+    private CustomerSelectAdapter selectStaftAdapter;
 
     private List<VanPhongPham> listProducts;
     private List<NhanVien> listStafts;
@@ -300,7 +303,7 @@ public class AllocationActivity extends BaseActivity {
         selectProductAdapter = new SelectProductAdapter(this, listProducts);
         spnSelectProduct.setAdapter(selectProductAdapter);
 
-        selectStaftAdapter = new SelectStaftAdapter(this, listStafts);
+        selectStaftAdapter = new CustomerSelectAdapter(this, listStafts);
         spnSelectStaft.setAdapter(selectStaftAdapter);
 
     }
