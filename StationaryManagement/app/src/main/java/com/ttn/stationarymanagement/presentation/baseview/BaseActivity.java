@@ -19,7 +19,6 @@ public class BaseActivity  extends AppCompatActivity {
         Log.d("MyApp", "onActivityStarted: " + this.getLocalClassName());
     }
 
-
     protected void setupToolbar(Toolbar toolbar, int idSrcString, String... titles) {
 
         setSupportActionBar(toolbar);

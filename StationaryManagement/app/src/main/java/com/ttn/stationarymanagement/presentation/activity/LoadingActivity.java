@@ -35,7 +35,6 @@ public class LoadingActivity extends BaseActivity {
         setContentView(R.layout.activity_loading_fragment);
         ButterKnife.bind(this);
 
-
         TimerTask loading = new TimerTask() {
             @Override
             public void run() {
@@ -53,12 +52,10 @@ public class LoadingActivity extends BaseActivity {
                         }
                     }
                 });
-
             }
         };
 
         timer = new Timer();
         timer.schedule(loading, 250, 350);
-        
     }
 }

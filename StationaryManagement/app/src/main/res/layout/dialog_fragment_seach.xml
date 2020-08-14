@@ -31,18 +31,17 @@
 
             <AutoCompleteTextView
                 android:id="@+id/atv_dialog_fragment_seach_seach_box"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_background_search_white"
                 android:drawableLeft="@drawable/ic_search_blue_24"
                 android:drawablePadding="3dp"
-                android:maxLines="1"
-                android:layout_width="match_parent"
+                android:hint="@string/search"
                 android:imeOptions="actionDone"
                 android:inputType="text"
-                android:background="@drawable/shape_background_search_white"
-                android:layout_height="wrap_content"
-                android:hint="@string/search"/>
-
+                android:maxLines="1"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="12dp" />
 
 
         </LinearLayout>

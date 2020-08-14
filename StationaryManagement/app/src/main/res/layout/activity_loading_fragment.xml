@@ -15,7 +15,7 @@
         <ImageView
             android:layout_width="64dp"
             android:layout_height="64dp"
-            android:src="@mipmap/app_icon"/>
+            android:src="@mipmap/logo_team_4" />
 
 
         <ImageView
