@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <!-- Content of the page -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#fff"
+        android:layout_weight="1"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tvStatus"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_text"
+            android:text="Chế độ vẽ"/>
+
+        <vn.com.ldc.mypaint.DrawingPaper
+            android:id="@+id/drawing"
+            android:layout_width="match_parent"
+            android:background="#fff"
+            android:layout_height="match_parent" />
+
+
+    </LinearLayout>
+
+    <!-- Control change size of the brush -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="vertical">
+
+        <SeekBar
+            android:id="@+id/sbSizeBrush"
+            android:min="1"
+            android:max="20"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+    </LinearLayout>
+
+
+
+    <!-- Control of the page -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/btnBrush"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:background="#fff"
+            android:layout_width="1dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_brush_blue"
+            />
+
+        <ImageButton
+            android:id="@+id/btnZoom"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:background="#fff"
+            android:layout_width="1dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_zoompage_black"
+            />
+
+
+        <ImageButton
+            android:id="@+id/btnErase"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:background="#fff"
+            android:layout_width="1dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_format_paint"
+            />
+        <ImageButton
+            android:id="@+id/btnClear"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:background="#fff"
+            android:layout_width="1dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:src="@drawable/button_new_state"
+            />
+
+        <ImageButton
+            android:id="@+id/btnPalette"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:background="#fff"
+            android:layout_width="1dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:src="@drawable/button_palette_state"
+            />
+
+        <ImageButton
+            android:id="@+id/btnPhoto"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:background="#fff"
+            android:layout_width="1dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:src="@drawable/button_photo_state"
+            />
+
+        <ImageButton
+            android:id="@+id/btnSave"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:background="#fff"
+            android:layout_width="1dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:src="@drawable/button_save_state"
+            />
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
