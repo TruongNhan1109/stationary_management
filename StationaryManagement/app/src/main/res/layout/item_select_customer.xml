@@ -14,8 +14,8 @@
 
         <ImageView
             android:id="@+id/iv_item_select_customer_image"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
             android:scaleType="centerInside"
             android:src="@drawable/ic_people_color_32" />
 
